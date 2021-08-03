@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView
 
 from ..forms import  JobseekerSignUpForm
 from ..models import JobSeeker, User
