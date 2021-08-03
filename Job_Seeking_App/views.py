@@ -62,8 +62,10 @@ def login(request):
     form = AuthenticationForm(request=request, data=request.POST)
     if form.is_valid():
       username = form.cleaned_data.get('username')
+      email = form.cleaned_data.get('email')
+      phone = form.cleaned_data.get('phone')
       password = form.cleaned_data.get('password')
-      user = authenticate(username=username, password=password)
+      user = authenticate(username=username,email=email,phone=phone, password=password)
       if user is not None:
         auth_login(request, user)
         messages.info(request, f"You are now logged in as {username}")
