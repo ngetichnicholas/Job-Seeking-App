@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'Job_Seeking_App',
     'bootstrap4',
     'cloudinary',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +87,7 @@ DATABASES = {
 }
 
 # Email configurations remember to install python-decouple
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
@@ -140,3 +142,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 django_heroku.settings(locals())
+
+
+# Abstract user handling
+AUTH_USER_MODEL='Job_Seeking_App.User'
