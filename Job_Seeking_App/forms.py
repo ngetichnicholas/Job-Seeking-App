@@ -1,7 +1,16 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import JobSeeker,Employer
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm,
+from django.forms.utils import ErrorList
+from django.urls import reverse_lazy
+
+
+
+class ErrorListMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.error_class = CustomErrorList
 
 class JobseekerForm(forms.ModelForm):
     password=forms.CharField(widget=forms.PasswordInput())
@@ -41,3 +50,20 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username','email', 'phone','password1', 'password2',)
+
+class UsersLoginForm(ErrorListMixin, AuthenticationForm):
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        
+        if username is not None:
+            user = get_user_model().objects.filter(email=username).first()
+
+            if user is None:
+                return self.get_invalid_login_error()
+
+            if not user.is_active:
+                link = reverse_lazy('users:account_activation_request')
+                error_message = f"Account has not been activated! <a href={link}>Click here to resend activation link</a>"
+                raise ValidationError(mark_safe(error_message))
+            
+        return username
