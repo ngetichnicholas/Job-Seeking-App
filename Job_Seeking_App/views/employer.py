@@ -24,3 +24,8 @@ class EmployerSignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('employers:employer_dashboard')
+
+@login_required
+class EmployerDashboardView():
+    def employer_dashboard(request):
+        return render(request,'employer_dashboard.html')

@@ -25,3 +25,9 @@ class JobseekerSignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('jobseekers:jobseeker_dashboard')
+
+
+@login_required
+class JobSeekerDashboardView():
+    def jobseeker_dashboard(request):
+        return render(request,'jobseeker_dashboard.html')
