@@ -1,31 +1,28 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.db import transaction
-from django.forms.utils import ValidationError
+from django.contrib.auth.models import User
+from .models import JobSeeker,Employer
 
-from .models import (Employer,JobSeeker, User)
+class JobseekerForm(forms.ModelForm):
+    password=forms.CharField(widget=forms.PasswordInput())
+    class Meta():
+        model=User
+        fields=['first_name','last_name','username','email','password']
+
+class AddJobseekerForm(forms.ModelForm):
+    class Meta():
+        model=JobSeeker
+        fields=['phone','location']
+
+class employerForm(forms.ModelForm):
+    password=forms.CharField(widget=forms.PasswordInput())
+    class Meta():
+        model=User
+        fields=['first_name','last_name','username','email','password']
+
+class AddEmployerForm(forms.ModelForm):
+    class Meta():
+        model=Employer
+        fields=['phone','location']
 
 
-class EmployerSignUpForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = User
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_employer = True
-        if commit:
-            user.save()
-        return user
-
-
-class JobseekerSignUpForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = User
-    
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_jobseeker = True
-        if commit:
-            user.save()
-        return user
-
+        

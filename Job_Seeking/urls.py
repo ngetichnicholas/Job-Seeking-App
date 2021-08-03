@@ -1,7 +1,7 @@
-"""Job_Seeking URL Configuration
+"""myProject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -13,14 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import include, path
-
-from Job_Seeking_App.views import jobseeking, jobseeker, employer
+from django.contrib import admin
+from django.urls import path, include
+from Job_Seeking_App import views
 
 urlpatterns = [
-    path('', include('Job_Seeking_App.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/signup/',jobseeking.SignUpView.as_view(), name='signup'),
-    path('accounts/signup/jobseeker/', jobseeker.JobseekerSignUpView.as_view(), name='jobseeker_signup'),
-    path('accounts/signup/employer/', employer.EmployerSignUpView.as_view(), name='employer_signup'),
+    path('',include('Job_Seeking_App.urls')),
+    path('',views.index,name='index'),
+    path('admin/', admin.site.urls),
+    path('jobseekerDash/',views.jobseekerDash,name='jobseekerDash'),
+    path('employerDash/',views.employerDash,name='employerDash'),
+   
 ]
