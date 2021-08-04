@@ -36,7 +36,7 @@ def registerJobseeker(request):
     else:
         job_seeker_form=JobseekerForm()
         add_jobseeker_form=AddJobseekerForm()
-    return render(request,'registerJobseeker.html',{'job_seeker_form':job_seeker_form,'add_jobseeker_form':add_jobseeker_form,'registered':registered})
+    return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'add_jobseeker_form':add_jobseeker_form,'registered':registered})
 
 
 def registerEmployer(request):
@@ -57,7 +57,7 @@ def registerEmployer(request):
         employer_form=employerForm()
         add_employer_form=AddEmployerForm()
         
-    return render(request,'registerEmployer.html',{'employer_form':employer_form,'add_employer_form':add_employer_form,'registered':registered})
+    return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'add_employer_form':add_employer_form,'registered':registered})
     
 def login(request):
   if request.method == 'POST':
