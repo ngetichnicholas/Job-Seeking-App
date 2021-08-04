@@ -23,6 +23,3 @@ class AddEmployerForm(forms.ModelForm):
     class Meta():
         model=Employer
         fields=['phone','location']
-
-
-        
