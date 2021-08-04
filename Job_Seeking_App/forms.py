@@ -7,10 +7,6 @@ from django.urls import reverse_lazy
 
 
 
-class ErrorListMixin:
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.error_class = CustomErrorList
 
 class JobseekerForm(forms.ModelForm):
     password=forms.CharField(widget=forms.PasswordInput())
