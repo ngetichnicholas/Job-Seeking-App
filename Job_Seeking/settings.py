@@ -8,9 +8,20 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 import django_heroku
+from decouple import config, Csv
 import dj_database_url
-from decouple import config,Csv
+
+
+cloudinary.config( 
+  cloud_name = "dbgfhknhh", 
+  api_key = "546846659569148", 
+  api_secret = "3-1-gRW70DAh_brC3wpXSos_7MY",
+  secure = True
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
