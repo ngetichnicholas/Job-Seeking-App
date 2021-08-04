@@ -9,7 +9,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
 from .models import JobSeeker,Employer 
-from django.contrib.auth.models import User
+from .models import User
 
 # Create your views here.
 
@@ -29,7 +29,8 @@ def registerJobseeker(request):
             jobseeker.set_password(jobseeker.password)
             jobseeker.save()
             add_jobseeker=add_jobseeker_form.save(commit=False)
-            add_jobseeker.jobseeker=jobseeker
+            add_jobseeker.is_jobseeker = True
+            add_jobseeker.user=jobseeker
             add_jobseeker.save()
             registered=True
     else:
@@ -48,7 +49,8 @@ def registerEmployer(request):
             employer.set_password(employer.password)
             employer.save()
             add_emplyer=add_employer_form.save(commit=False)
-            add_emplyer.employer=employer
+            add_emplyer.is_employer = True
+            add_emplyer.user=employer
             add_emplyer.save()
             registered=True
     else:
@@ -79,10 +81,7 @@ def login(request):
 
 @login_required
 def dashboard(request):
-    try:
-        current=JobSeeker.objects.get(jobseeker=request.user)
-    except JobSeeker.DoesNotExist:
-        current=Employer.objects.get(employer=request.user)
+    current = request.user
     if current.is_jobseeker:
         return redirect('jobseekerDash/')
     else:
