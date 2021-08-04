@@ -36,7 +36,15 @@
         </button>
       </div>
       <ul class="list-unstyled components mb-5">
-        <h1>ADMIN DASHBOARD</h1>
+        {% if user.is_authenticated %}
+
+        <a class="nav-item nav-link" href="/logout">Logout</a>
+  
+        {% else %}
+  
+        <a class="nav-item nav-link"  href="{% url 'login' %}">Login</a>
+  
+        {% endif %}
         <li class="active">
           <a href=""><i class="fas fa-home"></i>Employers</a>
         </li>

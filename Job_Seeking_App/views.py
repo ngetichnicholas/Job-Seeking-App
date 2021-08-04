@@ -82,20 +82,22 @@ def login(request):
 @login_required
 def dashboard(request):
     current = request.user
-    if current.is_jobseeker:
-        return redirect('jobseekerDash/')
-    elif current.is_employer:
+    if current.is_employer:
         return redirect('employerDash/')
     elif current.is_admin:
         return redirect('admin_dashboard')
+    else: 
+        return redirect('jobseekerDash/')
     return render(request,'dashboard.html')
 
-    
+@login_required
 def jobseekerDash(request):
     return render(request,'jobseekerDash.html')
-
+@login_required
 def employerDash(request):
     return render(request,'employerDash.html')
-
+@login_required
 def adminDash(request):
-    return render(request,'admin/admin_dashboard.html')
+    jobseekers = User.objects.filter(is_jobseeker=True).all()
+    return render(request,'admin/admin_dashboard.html',{'jobseekers':jobseekers})
+
