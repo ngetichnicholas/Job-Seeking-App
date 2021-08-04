@@ -84,8 +84,10 @@ def dashboard(request):
     current = request.user
     if current.is_jobseeker:
         return redirect('jobseekerDash/')
-    else:
+    elif current.is_employer:
         return redirect('employerDash/')
+    elif current.is_admin:
+        return redirect('admin_dashboard')
     return render(request,'dashboard.html')
 
     
@@ -94,3 +96,6 @@ def jobseekerDash(request):
 
 def employerDash(request):
     return render(request,'employerDash.html')
+
+def adminDash(request):
+    return render(request,'admin/admin_dashboard.html')
