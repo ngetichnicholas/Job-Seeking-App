@@ -1,22 +1,32 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import User
+from django.utils.html import escape, mark_safe
 
-# Create your models here.
+
+class User(AbstractUser):
+    is_admin = models.BooleanField(default=False)
+    is_employer = models.BooleanField(default=False)
+    is_jobseeker = models.BooleanField(default=False)
+
 class JobSeeker(models.Model):
-    is_jobseeker = models.BooleanField(default=True)
-    jobseeker=models.OneToOneField(User,on_delete=models.CASCADE)
-    phone = models.CharField(max_length=25)
-    location = models.CharField(max_length=25,null=True)
+    first_name =models.CharField(max_length=144)
+    last_name = models.CharField(max_length=144)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    email = models.EmailField(unique=True)
+    phone = models.IntegerField()
+    location = models.CharField(max_length=144)
 
     def __str__(self):
-        return self.jobseeker.username
-
+        return self.user.username
 
 class Employer(models.Model):
-    is_jobseeker = models.BooleanField(default=False)
-    employer=models.OneToOneField(User,on_delete=models.CASCADE)
-    phone = models.CharField(max_length=15)
-    location = models.CharField(max_length=25,null=True)
+    first_name =models.CharField(max_length=144)
+    last_name = models.CharField(max_length=144)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    email = models.EmailField(unique=True)
+    phone = models.IntegerField()
+    location = models.CharField(max_length=144)
+
 
     def __str__(self):
-        return self.employer.username
+        return self.user.username
