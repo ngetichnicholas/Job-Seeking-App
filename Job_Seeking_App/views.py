@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import JobseekerForm,AddJobseekerForm,employerForm,AddEmployerForm
+from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -22,21 +22,20 @@ def register(request):
 def registerJobseeker(request):
     registered=False
     if request.method=='POST':
-        job_seeker_form=JobseekerForm(request.POST)
-        add_jobseeker_form=AddJobseekerForm(request.POST)
-        if job_seeker_form.is_valid() and add_jobseeker_form.is_valid():
-            jobseeker=job_seeker_form.save()
-            jobseeker.set_password(jobseeker.password)
-            jobseeker.is_jobseeker = True
-            jobseeker.save()
-            add_jobseeker=add_jobseeker_form.save(commit=False)
-            add_jobseeker.user=jobseeker
-            add_jobseeker.save()
+        job_seeker_form=JobseekerSignUpForm(request.POST)
+        if job_seeker_form.is_valid():
+            user=job_seeker_form.save()
+            user.refresh_from_db()
+            user.profile.first_name = job_seeker_form.cleaned_data.get('first_name')
+            user.profile.last_name = job_seeker_form.cleaned_data.get('last_name')
+            user.profile.email = job_seeker_form.cleaned_data.get('email')
+            user.profile.phone = job_seeker_form.cleaned_data.get('phone')
+            user.is_jobseeker = True
+            user.save()
             registered=True
     else:
-        job_seeker_form=JobseekerForm()
-        add_jobseeker_form=AddJobseekerForm()
-    return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'add_jobseeker_form':add_jobseeker_form,'registered':registered})
+        job_seeker_form=JobseekerSignUpForm()
+    return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
 
 
 def registerEmployer(request):
