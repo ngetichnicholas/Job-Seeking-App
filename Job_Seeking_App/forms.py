@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import Jobs, User
 from .models import JobSeeker,Employer
 
 class JobseekerForm(forms.ModelForm):
@@ -23,3 +23,9 @@ class AddEmployerForm(forms.ModelForm):
     class Meta():
         model=Employer
         fields=['phone','location']
+
+class JobsForm(forms.ModelForm):
+    class Meta():
+        model=Jobs
+        fields= '__all__'
+
