@@ -9,7 +9,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
 from .models import JobSeeker,Employer 
-from django.contrib.auth.models import User
+from .models import User
 
 # Create your views here.
 
@@ -27,15 +27,16 @@ def registerJobseeker(request):
         if job_seeker_form.is_valid() and add_jobseeker_form.is_valid():
             jobseeker=job_seeker_form.save()
             jobseeker.set_password(jobseeker.password)
+            jobseeker.is_jobseeker = True
             jobseeker.save()
             add_jobseeker=add_jobseeker_form.save(commit=False)
-            add_jobseeker.jobseeker=jobseeker
+            add_jobseeker.user=jobseeker
             add_jobseeker.save()
             registered=True
     else:
         job_seeker_form=JobseekerForm()
         add_jobseeker_form=AddJobseekerForm()
-    return render(request,'registerJobseeker.html',{'job_seeker_form':job_seeker_form,'add_jobseeker_form':add_jobseeker_form,'registered':registered})
+    return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'add_jobseeker_form':add_jobseeker_form,'registered':registered})
 
 
 def registerEmployer(request):
@@ -46,16 +47,17 @@ def registerEmployer(request):
         if employer_form.is_valid() and add_employer_form.is_valid():
             employer=employer_form.save()
             employer.set_password(employer.password)
+            employer.is_employer = True
             employer.save()
-            add_emplyer=add_employer_form.save(commit=False)
-            add_emplyer.employer=employer
-            add_emplyer.save()
+            add_employer=add_employer_form.save(commit=False)
+            add_employer.user=employer
+            add_employer.save()
             registered=True
     else:
         employer_form=employerForm()
         add_employer_form=AddEmployerForm()
         
-    return render(request,'registerEmployer.html',{'employer_form':employer_form,'add_employer_form':add_employer_form,'registered':registered})
+    return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'add_employer_form':add_employer_form,'registered':registered})
     
 def login(request):
   if request.method == 'POST':
@@ -79,10 +81,7 @@ def login(request):
 
 @login_required
 def dashboard(request):
-    try:
-        current=JobSeeker.objects.get(jobseeker=request.user)
-    except JobSeeker.DoesNotExist:
-        current=Employer.objects.get(employer=request.user)
+    current = request.user
     if current.is_jobseeker:
         return redirect('jobseekerDash/')
     else:
