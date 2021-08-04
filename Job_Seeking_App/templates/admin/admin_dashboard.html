@@ -4,6 +4,12 @@
 <div class="container">
   <div class="row">
     <h2>Admin Dashboard</h2>
+    {% if jobseekers %}
+    <h2>Jobseekers</h2>
+    {% for jobseeker in jobseekers %}
+    <h2>{{jobseeker.first_name}}</h2>
+    {% endfor %}
+    {% endif %}
   </div>
 </div>
 
