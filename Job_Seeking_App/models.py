@@ -4,6 +4,7 @@ from django.utils.html import escape, mark_safe
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime as dt
+from django.db import IntegrityError
 
 
 class User(AbstractUser):
@@ -32,7 +33,7 @@ class JobSeeker(models.Model):
     availability = models.CharField(choices=JOBSEEKER_AVAILABILITY, default="Available", max_length=20)
     salary = models.IntegerField(default=0)
     job_category = models.CharField(max_length=300,choices=JOb_CATEGORIES)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     bio =models.TextField(null=True,blank=True)
