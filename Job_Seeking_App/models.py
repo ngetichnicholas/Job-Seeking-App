@@ -40,12 +40,17 @@ class JobSeeker(models.Model):
     profile_picture =models.ImageField(upload_to='profiles')
     verified = models.BooleanField(default=False)
 
-
     @receiver(post_save, sender=User)
     def update_jobseeker_signal(sender, instance, created, **kwargs):
         if created:
             JobSeeker.objects.create(user=instance)
         instance.profile.save()
+
+    def save_jobseeker(self):
+        self.save()
+
+    def delete_jobseeker(self):
+        self.delete()
 
     def __str__(self):
         return self.user.username
@@ -59,13 +64,17 @@ class Employer(models.Model):
     location = models.CharField(max_length=144,null=True,blank=True)
     company_name = models.CharField(max_length=144,null=True,blank=True)
 
-
     @receiver(post_save, sender=User)
     def update_employer_signal(sender, instance, created, **kwargs):
         if created:
             Employer.objects.create(user=instance)
         instance.employer.save()
 
+    def save_employer(self):
+        self.save()
+
+    def delete_employer(self):
+        self.delete()
 
     def __str__(self):
         return self.employer.username
@@ -76,13 +85,11 @@ JOB_TYPE = (
     ('3', "Internship"),
 )
 
-
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
-
 
 class Jobs(models.Model):
     user = models.ForeignKey(User, related_name='User', on_delete=models.CASCADE)
@@ -96,7 +103,6 @@ class Jobs(models.Model):
     company_name = models.CharField(max_length=300)
     company_description = models.CharField(max_length=3000,null=True)
     published_date = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return self.title
