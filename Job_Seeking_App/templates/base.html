@@ -7,6 +7,7 @@
     <title>Job Seeking</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -19,6 +20,13 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
                     </li>
+                    {% if current_user.profile.profile_picture.url %}
+                    <a href="{% url 'jobseeker_profile'%}"><img class="profile_picture"
+                      src="{{ current_user.profile.profile_picture.url }}" style="height: 1cm; width:1cm; border-radius:50%" alt=""></a>
+                      {% else %}
+                      <a  href="{% url 'jobseeker_profile'%}"><img class="profile_picture"
+                        src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" alt=""></a>
+                        {% endif %}
                     <li class="nav-item active">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>

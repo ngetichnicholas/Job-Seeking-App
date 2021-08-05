@@ -92,6 +92,31 @@ def dashboard(request):
     return render(request,'dashboard.html')
 
 @login_required
+def jobseeker_profile(request):
+  current_user = request.user
+  
+  return render(request,'jobseekers/profile.html',{"current_user":current_user})
+
+@login_required
+def update_jobseeker_profile(request):
+  if request.method == 'POST':
+    user_form = UpdateJobseeker(request.POST,instance=request.user)
+    profile_form = UpdateJobseekerProfile(request.POST,request.FILES,instance=request.user.profile)
+    if user_form.is_valid() and profile_form.is_valid():
+      user_form.save()
+      profile_form.save()
+      messages.success(request,'Your Profile account has been updated successfully')
+      return redirect('jobseeker_profile')
+  else:
+    user_form = UpdateJobseeker(instance=request.user)
+    profile_form = UpdateJobseekerProfile(instance=request.user.profile) 
+  params = {
+    'user_form':user_form,
+    'profile_form':profile_form
+  }
+  return render(request,'jobseekers/update.html',params)
+
+@login_required
 def jobseekerDash(request):
     return render(request,'jobseekerDash.html')
 
