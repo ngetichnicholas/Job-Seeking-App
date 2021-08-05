@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views as app_views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('',app_views.index,name='index'),
@@ -27,3 +29,5 @@ urlpatterns = [
     
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
 ]
+if settings.DEBUG:
+  urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
