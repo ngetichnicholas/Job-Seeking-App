@@ -13,6 +13,16 @@ urlpatterns = [
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
+    path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
+    path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
+
     path('admin_dashboard/',app_views.adminDash,name='admin_dashboard'),
+    path('all_jobseekers',app_views.all_jobseekers,name='all_jobseekers'),
+    path('verified_jobseekers',app_views.verified_jobseekers,name='verified_jobseekers'),
+    path('unverified_jobseekers',app_views.unverified_jobseekers,name='unverified_jobseekers'),
+    path('verify_jobseeker/<int:jobseeker_id>',app_views.verify_jobseeker,name='verify_jobseeker'),
+    path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
+    path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
+    
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
 ]
