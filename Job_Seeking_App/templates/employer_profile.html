@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{%load static%}
+{% load crispy_forms_tags %}
 {% block content %}
 
     <nav class="navbar navbar-light bg-light p-3">
@@ -17,7 +19,7 @@
         
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                  Jane Doe
+                  {{employer.user.first_name}} {{employer.user.last_name}}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -76,7 +78,7 @@
                                     <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
                                     <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
                                   </svg>
-                              <span class="ml-2">Logout</span>
+                              <span class="ml-2"> <a href="{% url 'logout' %}">Logout</a></span>
                             </a>
                           </li>
                       </ul>
@@ -133,17 +135,26 @@
                                 <img src="https://cutt.ly/wQbftsL" alt="" class="rounded image-responsive img-fluid">
                                 
                             </div>
-                            {% if user.is_authenticated%}
                             <div class="col-md-5">
-                                <p class="my-4">Name: {{employer.first_name}} {{employer.last_name}}</p>
-                                <p class="my-4">Email: {{is_employer.email}}</p>
+                                <p class="my-4">Name: {{employer.user.first_name}} {{employer.user.last_name}}</p>
+                                <p class="my-4">Email: {{employer.user.email}}</p>
                                 <p class="my-4">Phone: {{employer.phone}}</p>
                                 <p class="my-4">Location: {{employer.location}}</p>
-                                <p class="my-4">Company: Tesla</p>
+                                <p class="my-4">Company: {{employer.company_name}}</p>
                             </div>
-                            
-                            {%endif%}
+                            <div class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-md ">
+                                  <div class="modal-content">
+                                      <form action="" method="post" novalidate enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
+                                          {% csrf_token%}
+                                          {{ form|crispy}}
+                                          <button type="submit" class="btn btn-primary btn-sm"> Update Profile</button>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
                         </div>
+                       
                     </div>
                    
                 </div>
