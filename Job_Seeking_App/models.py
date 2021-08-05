@@ -94,7 +94,7 @@ class Jobs(models.Model):
     category = models.ForeignKey(Category, related_name='Category', on_delete=models.CASCADE)
     salary = models.CharField(max_length=30, blank=True)
     company_name = models.CharField(max_length=300)
-    company_description = models.CharField(max_length=3000,null=True)
+    company_description = models.TextField(max_length=3000,null=True)
     published_date = models.DateTimeField(auto_now_add=True)
 
 
