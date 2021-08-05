@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import JobseekerForm,AddJobseekerForm,employerForm,AddEmployerForm
+from .forms import JobsForm, JobseekerForm,AddJobseekerForm,employerForm,AddEmployerForm
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -94,3 +94,14 @@ def jobseekerDash(request):
 
 def employerDash(request):
     return render(request,'employerDash.html')
+
+
+def jobs(request):
+    form=JobsForm()
+    if request.method=='POST':
+        form=JobsForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    context={'form':form}
+    return render(request,'jobs.html',context)
