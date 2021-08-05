@@ -134,7 +134,6 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
-
 @login_required
 def employerDash(request):
     employer=Employer.objects.all()
