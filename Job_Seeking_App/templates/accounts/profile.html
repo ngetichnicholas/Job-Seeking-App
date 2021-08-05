@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{% block content%}
+<div class="container">
+	{% if profile%}
+
+	{%for profile in profile%}
+		<div class="row" style="padding-bottom:20px">
+		
+			<div class="col-md-4">
+				<img class="center-block img-responsive img-circle" src="{{profile.profile_pic.url}}" alt="" style="width:170px; height:170px">
+			</div>
+			<div class="col-md-8">
+				<h2><strong>{{profile.user}}</strong></h2>
+				<h4>{{profile.bio}}</h4>
+					{%if profile.user.id == user.id%}
+						<a class="btn btn-sm btn-primary" href="{% url 'updateProfile' %}"> Update Profile</a>
+						
+					{%else%}
+						 {%if is_follow%}
+						 <a href="{% url 'user_follow' profile.user.id %}" class="btn btn-danger">Unfollow</a>
+						 {%else%}
+						 <a href="{% url 'user_follow' profile.user.id %}" class="btn btn-success">Follow</a>
+				         {%endif%}
+				        
+					{%endif%}
+			</div>
+		
+		</div>
+	
+	{%endfor%}
+		</div>
+
+	
+		
+	
+<hr>	
+</div>
+

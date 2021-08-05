@@ -39,6 +39,8 @@ class JobSeeker(models.Model):
     bio =models.TextField(null=True,blank=True)
     profile_picture =models.ImageField(upload_to='profiles')
     verified = models.BooleanField(default=False)
+    resume_header = models.CharField(max_length=100)
+    upload_resume = models.FileField(upload_to='documents')
 
 
     @receiver(post_save, sender=User)
