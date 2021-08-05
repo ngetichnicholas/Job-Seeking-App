@@ -1,11 +1,38 @@
 {% extends 'base.html' %}
+{%load static%}
 {% block content %}
-
 <div class="container">
-    <div class="jumbotron">
-        <h2>Employer Dash</h2>
-        <hr>
-    </div>
+  <div class="row">
+    <div class="col-md-11">
+      <h5>POTENTIAL CANDIDATES: </h5>
+      <hr>
+      <div class="card card-body">
+          <table class="table table-sm">
+              <tr>
+                  <th>View</th>
+                  <th>Names</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Location</th>
+                  <th>Availability</th>
+                  <th>Salary</th>
+              </tr>
+              {% for job_seeker in job_seekers %}
+              <tr>
+                <td><a href="{{job_seeker.id}}" class="btn-btn-sm btn-outline-info">view</a></td>
+                  <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
+                  <td>{{job_seeker.email}}</td>
+                  <td>{{job_seeker.phone}}</td>
+                  <td>{{job_seeker.location}}</td>
+                  <td>{{job_seeker.availability}}</td>
+                  <td>{{job_seeker.salary}}</td>
+              </tr>
+              {%endfor%}
+             
+          </table>
+      </div>
+  </div>
+  <div class="col-md-1"></div>
+  </div>
 </div>
-
 {% endblock %}
