@@ -14,5 +14,6 @@ urlpatterns = [
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
+    path('jobs/',app_views.jobs,name='jobs'),
    
 ]
