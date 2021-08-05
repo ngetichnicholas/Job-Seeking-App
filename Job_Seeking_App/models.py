@@ -1,7 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
+class profile( models.Model):
+    user = models.OneToOneField(User,on_delete = models.CASCADE)
+    bio = models.TextField(max_length=300)
+    date_created= models.DateField(auto_now_add=True )
+
+
+    def __str__(self):
+        return  f'{self.user.username} Profile'
+
 class JobSeeker(models.Model):
     is_jobseeker = models.BooleanField(default=True)
     jobseeker=models.OneToOneField(User,on_delete=models.CASCADE)
