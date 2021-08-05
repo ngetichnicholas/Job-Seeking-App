@@ -14,5 +14,9 @@ urlpatterns = [
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
+
     path('admin_dashboard/',app_views.adminDash,name='admin_dashboard'),
+    path('all_jobseekers',app_views.all_jobseekers,name='all_jobseekers'),
+    path('verified_jobseekers',app_views.verified_jobseekers,name='verified_jobseekers'),
+    path('unverified_jobseekers',app_views.unverified_jobseekers,name='unverified_jobseekers'),
 ]

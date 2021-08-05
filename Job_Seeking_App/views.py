@@ -96,6 +96,23 @@ def employerDash(request):
     return render(request,'employerDash.html')
 @login_required
 def adminDash(request):
-    jobseekers = User.objects.filter(is_jobseeker=True).all()
-    return render(request,'admin/admin_dashboard.html',{'jobseekers':jobseekers})
+    all_jobseekers = User.objects.filter(is_jobseeker=True).all()
+    verified_jobseekers = JobSeeker.objects.filter(verified=True).all()
+    unverified_jobseekers = JobSeeker.objects.filter(verified = False).all()
+    return render(request,'admin/admin_dashboard.html',{'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
+# ADMIN VIEWS
+# JobSeeker views
+def all_jobseekers(request):
+    all_jobseekers = JobSeeker.objects.all()
+    return render(request,'admin/jobseekers/all_jobseekers.html',{'all_jobseekers':all_jobseekers})
+
+@login_required
+def verified_jobseekers(request):
+    verified_jobseekers = JobSeeker.objects.filter(verified = True).all()
+    return render(request,'history.html',{'verified_jobseekers':verified_jobseekers})
+
+@login_required
+def unverified_jobseekers(request):
+    unverified_jobseekers = JobSeeker.objects.filter(verified=False).all()
+    return render(request,'history.html',{'unverified_jobseekers':unverified_jobseekers})
