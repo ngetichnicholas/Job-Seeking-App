@@ -91,9 +91,21 @@ def dashboard(request):
 @login_required
 def jobseekerDash(request):
     return render(request,'jobseekerDash.html')
+
+
 @login_required
 def employerDash(request):
-    return render(request,'employerDash.html')
+    
+    job_seekers=JobSeeker.objects.all()
+    context={
+        "job_seekers":job_seekers,
+    }
+    return render(request,'employerDash.html',context)
+
+
+
+
+
 @login_required
 def adminDash(request):
     jobseekers = User.objects.filter(is_jobseeker=True).all()
