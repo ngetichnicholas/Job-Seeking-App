@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'Job_Seeking_App',
     'bootstrap4',
     'cloudinary',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

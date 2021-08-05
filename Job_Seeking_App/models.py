@@ -68,7 +68,7 @@ class Employer(models.Model):
 
 
     def __str__(self):
-        return self.employer.username
+        return self.user.username
 
 JOB_TYPE = (
     ('1', "Full time"),
