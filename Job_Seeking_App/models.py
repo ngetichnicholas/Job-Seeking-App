@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
+from cloudinary.models import CloudinaryField
 
 
 class User(AbstractUser):
@@ -37,7 +38,7 @@ class JobSeeker(models.Model):
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     bio =models.TextField(null=True,blank=True)
-    profile_picture =models.ImageField(upload_to='profiles')
+    profile_picture =CloudinaryField('image')
     verified = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
