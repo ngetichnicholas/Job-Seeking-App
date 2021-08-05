@@ -11,7 +11,6 @@
         <form action="" method="POST">
             {% csrf_token %}
             {% bootstrap_form job_seeker_form%}
-            {% bootstrap_form add_jobseeker_form%}
             <input type="submit" value="Register" class="btn btn-primary">
         </form>
     {% endif %}

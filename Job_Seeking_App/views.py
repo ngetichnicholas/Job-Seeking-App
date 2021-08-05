@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import JobsForm, JobseekerForm,AddJobseekerForm,employerForm,AddEmployerForm
+from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -22,42 +22,40 @@ def register(request):
 def registerJobseeker(request):
     registered=False
     if request.method=='POST':
-        job_seeker_form=JobseekerForm(request.POST)
-        add_jobseeker_form=AddJobseekerForm(request.POST)
-        if job_seeker_form.is_valid() and add_jobseeker_form.is_valid():
-            jobseeker=job_seeker_form.save()
-            jobseeker.set_password(jobseeker.password)
-            jobseeker.is_jobseeker = True
-            jobseeker.save()
-            add_jobseeker=add_jobseeker_form.save(commit=False)
-            add_jobseeker.user=jobseeker
-            add_jobseeker.save()
+        job_seeker_form=JobseekerSignUpForm(request.POST)
+        if job_seeker_form.is_valid():
+            user=job_seeker_form.save()
+            user.refresh_from_db()
+            user.profile.first_name = job_seeker_form.cleaned_data.get('first_name')
+            user.profile.last_name = job_seeker_form.cleaned_data.get('last_name')
+            user.profile.email = job_seeker_form.cleaned_data.get('email')
+            user.profile.phone = job_seeker_form.cleaned_data.get('phone')
+            user.is_jobseeker = True
+            user.save()
             registered=True
     else:
-        job_seeker_form=JobseekerForm()
-        add_jobseeker_form=AddJobseekerForm()
-    return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'add_jobseeker_form':add_jobseeker_form,'registered':registered})
+        job_seeker_form=JobseekerSignUpForm()
+    return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
 
 
 def registerEmployer(request):
     registered=False
     if request.method=='POST':
-        employer_form=employerForm(request.POST)
-        add_employer_form=AddEmployerForm(request.POST)
-        if employer_form.is_valid() and add_employer_form.is_valid():
-            employer=employer_form.save()
-            employer.set_password(employer.password)
-            employer.is_employer = True
-            employer.save()
-            add_employer=add_employer_form.save(commit=False)
-            add_employer.user=employer
-            add_employer.save()
+        employer_form=EmployerSignUpForm(request.POST)
+        if employer_form.is_valid():
+            user=employer_form.save()
+            user.refresh_from_db()
+            user.employer.first_name = employer_form.cleaned_data.get('first_name')
+            user.employer.last_name = employer_form.cleaned_data.get('last_name')
+            user.employer.email = employer_form.cleaned_data.get('email')
+            user.employer.phone = employer_form.cleaned_data.get('phone')
+            user.is_employer = True
+            user.save()
             registered=True
     else:
-        employer_form=employerForm()
-        add_employer_form=AddEmployerForm()
+        employer_form=EmployerSignUpForm()
         
-    return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'add_employer_form':add_employer_form,'registered':registered})
+    return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'registered':registered})
     
 def login(request):
   if request.method == 'POST':
@@ -82,26 +80,22 @@ def login(request):
 @login_required
 def dashboard(request):
     current = request.user
-    if current.is_jobseeker:
-        return redirect('jobseekerDash/')
-    else:
+    if current.is_employer:
         return redirect('employerDash/')
+    elif current.is_admin:
+        return redirect('admin_dashboard')
+    else: 
+        return redirect('jobseekerDash/')
     return render(request,'dashboard.html')
 
-    
+@login_required
 def jobseekerDash(request):
     return render(request,'jobseekerDash.html')
-
+@login_required
 def employerDash(request):
     return render(request,'employerDash.html')
+@login_required
+def adminDash(request):
+    jobseekers = User.objects.filter(is_jobseeker=True).all()
+    return render(request,'admin/admin_dashboard.html',{'jobseekers':jobseekers})
 
-
-def jobs(request):
-    form=JobsForm()
-    if request.method=='POST':
-        form=JobsForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    context={'form':form}
-    return render(request,'jobs.html',context)
