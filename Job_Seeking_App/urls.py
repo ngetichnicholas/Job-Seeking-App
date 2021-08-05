@@ -10,7 +10,6 @@ urlpatterns = [
     path('accounts/login/',app_views.login,name='login'),
     path('logout/',auth_views.LogoutView.as_view(template_name = 'registration/logout.html'),name='logout'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
-    path('employerDash/',app_views.employerDash,name='employerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
@@ -22,6 +21,6 @@ urlpatterns = [
     path('verify_jobseeker/<int:jobseeker_id>',app_views.verify_jobseeker,name='verify_jobseeker'),
     path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
     path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
-
-
+    
+    path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
 ]

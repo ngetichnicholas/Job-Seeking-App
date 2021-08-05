@@ -35,3 +35,10 @@ class EmployerSignUpForm(UserCreationForm):
     fields = ('username', 'first_name', 'last_name', 'email','phone', 'password1', 'password2', )
 
 
+class UpdateEmployerForm(forms.ModelForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
+    class Meta:
+        model = Employer
+        fields = ('first_name', 'last_name', 'email','phone', )
+
