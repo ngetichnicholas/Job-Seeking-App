@@ -14,6 +14,26 @@ class JobseekerSignUpForm(UserCreationForm):
     model = User
     fields = ('username', 'first_name', 'last_name', 'email','phone', 'password1', 'password2', )
 
+class UpdateJobseekerProfile(forms.ModelForm):
+  class Meta:
+    model = JobSeeker
+    fields = ('phone', 'availability', 'salary','location', 'bio', 'profile_picture', )
+
+class UpdateJobseeker(forms.ModelForm):
+  email = forms.EmailField()
+  class Meta:
+    model = User
+    fields = ['username','first_name', 'last_name','email']
+
+class AdminJobseekerVerifyForm(forms.ModelForm):
+  verified = forms.BooleanField()
+
+  class Meta:
+    model = User
+
+    fields = ('verified',)
+
+
 class EmployerSignUpForm(UserCreationForm):
   first_name = forms.CharField(max_length=100, help_text='Last Name')
   last_name = forms.CharField(max_length=100, help_text='Last Name')
@@ -25,4 +45,11 @@ class EmployerSignUpForm(UserCreationForm):
     model = User
     fields = ('username', 'first_name', 'last_name', 'email','phone', 'password1', 'password2', )
 
+
+class UpdateEmployerForm(forms.ModelForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
+    class Meta:
+        model = Employer
+        fields = ('first_name', 'last_name', 'email','phone', )
 
