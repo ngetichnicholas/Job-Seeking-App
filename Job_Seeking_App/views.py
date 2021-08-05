@@ -1,12 +1,15 @@
-from django.shortcuts import render,redirect
+from django.http.response import Http404
+from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,Http404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+
 
 from .models import JobSeeker,Employer 
 from .models import User
@@ -91,11 +94,84 @@ def dashboard(request):
 @login_required
 def jobseekerDash(request):
     return render(request,'jobseekerDash.html')
+
+
 @login_required
 def employerDash(request):
-    return render(request,'employerDash.html')
+    employer=Employer.objects.all()
+    job_seekers=JobSeeker.objects.all()
+    context={
+        "job_seekers":job_seekers,
+        "employer":employer
+    }
+    return render(request,'employerDash.html',context)
+
+@login_required
+def employerProfile(request,id):
+    form=UpdateEmployerForm
+    employer=Employer.objects.get(id=id)
+    context={
+        "employer":employer,
+        "form":form
+    }
+    return render(request,'employer_profile.html',context)
+
+
+
+
+
 @login_required
 def adminDash(request):
-    jobseekers = User.objects.filter(is_jobseeker=True).all()
-    return render(request,'admin/admin_dashboard.html',{'jobseekers':jobseekers})
+    all_jobseekers = User.objects.filter(is_jobseeker=True).all()
+    verified_jobseekers = JobSeeker.objects.filter(verified=True).all()
+    unverified_jobseekers = JobSeeker.objects.filter(verified = False).all()
+    return render(request,'admin/admin_dashboard.html',{'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
+# ADMIN VIEWS
+# JobSeeker views
+@login_required
+def all_jobseekers(request):
+    all_jobseekers = JobSeeker.objects.all()
+    return render(request,'admin/jobseekers/all_jobseekers.html',{'all_jobseekers':all_jobseekers})
+
+@login_required
+def verified_jobseekers(request):
+    verified_jobseekers = JobSeeker.objects.filter(verified = True).all()
+    return render(request,'admin/jobseekers/verified_jobseekers.html',{'verified_jobseekers':verified_jobseekers})
+
+@login_required
+def unverified_jobseekers(request):
+    unverified_jobseekers = JobSeeker.objects.filter(verified=False).all()
+    return render(request,'admin/jobseekers/unverified_jobseekers.html',{'unverified_jobseekers':unverified_jobseekers})
+
+@login_required
+def verify_jobseeker(request, jobseeker_id):
+  jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
+  if request.method == 'POST':
+    update_jobseeker_form = AdminJobseekerVerifyForm(request.POST,request.FILES, instance=jobseeker)
+    if update_jobseeker_form.is_valid():
+      update_jobseeker_form.save()
+      messages.success(request, f'jobseeker updated!')
+      return redirect('admin_dashboard')
+  else:
+    update_jobseeker_form = AdminJobseekerVerifyForm(instance=jobseeker)
+
+  return render(request, 'admin/jobseekers/update_jobseeker.html', {"update_jobseeker_form":update_jobseeker_form})
+
+@login_required
+def delete_jobseeker(request,jobseeker_id):
+  jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
+  if jobseeker:
+    jobseeker.delete_jobseeker()
+  return redirect('admin_dashboard')
+
+#Get single jobseeker
+@login_required
+def jobseeker_details(request,jobseeker_id):
+  try:
+    jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
+
+  except ObjectDoesNotExist:
+    raise Http404()
+
+  return render(request,'admin/jobseekers/jobseeker_details.html',{'jobseeker':jobseeker})
