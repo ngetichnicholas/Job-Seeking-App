@@ -28,8 +28,8 @@ JOb_CATEGORIES = (
 )
 
 class JobSeeker(models.Model):
-    first_name =models.CharField(max_length=144)
-    last_name = models.CharField(max_length=144)
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
     availability = models.CharField(choices=JOBSEEKER_AVAILABILITY, default="Available", max_length=20)
     salary = models.IntegerField(default=0)
@@ -57,8 +57,8 @@ class JobSeeker(models.Model):
         return self.user.username
 
 class Employer(models.Model):
-    first_name =models.CharField(max_length=144)
-    last_name = models.CharField(max_length=144)
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="employer")
     email = models.EmailField()
     phone = models.IntegerField(null=True,blank=True)
