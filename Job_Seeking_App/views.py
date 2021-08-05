@@ -94,8 +94,9 @@ def dashboard(request):
 @login_required
 def jobseeker_profile(request):
   current_user = request.user
+  documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
   
-  return render(request,'jobseekers/profile.html',{"current_user":current_user})
+  return render(request,'jobseekers/profile.html',{"documents":documents,"current_user":current_user})
 
 @login_required
 def update_jobseeker_profile(request):
@@ -119,6 +120,19 @@ def update_jobseeker_profile(request):
 @login_required
 def jobseekerDash(request):
     return render(request,'jobseekerDash.html')
+
+@login_required
+def upload_file(request):
+    if request.method == 'POST':
+        upload_form = UploadFileForm(request.POST, request.FILES)
+        if upload_form.is_valid():
+            upload = upload_form.save(commit=False)
+            upload.jobseeker = request.user.profile
+            upload.save()
+            return redirect('jobseeker_profile')
+    else:
+        upload_form = UploadFileForm()
+    return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
 
 @login_required

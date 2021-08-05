@@ -56,6 +56,15 @@ class JobSeeker(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class FileUpload(models.Model):
+    name = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='documents/pdfs/')
+    jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='documents')
+
+    def __str__(self):
+        return self.name
+
 class Employer(models.Model):
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
