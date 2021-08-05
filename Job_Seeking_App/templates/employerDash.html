@@ -16,6 +16,7 @@
                   <th>Location</th>
                   <th>Availability</th>
                   <th>Salary</th>
+                  <th>Hire</th>
               </tr>
               {% for job_seeker in job_seekers %}
               <tr>
@@ -26,6 +27,7 @@
                   <td>{{job_seeker.location}}</td>
                   <td>{{job_seeker.availability}}</td>
                   <td>{{job_seeker.salary}}</td>
+                  <td><a href="" class="btn btn-outline-info btn-sm">Hire</a></td>
               </tr>
               {%endfor%}
              

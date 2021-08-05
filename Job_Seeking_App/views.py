@@ -52,6 +52,7 @@ def registerEmployer(request):
             user.is_employer = True
             user.save()
             registered=True
+            return redirect('login')
     else:
         employer_form=EmployerSignUpForm()
         
