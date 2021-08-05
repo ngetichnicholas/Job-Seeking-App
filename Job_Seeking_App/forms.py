@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User
-from .models import JobSeeker,Employer
+from .models import *
 
 class JobseekerSignUpForm(UserCreationForm):
   email = forms.EmailField(max_length=150, help_text='Email')
@@ -21,6 +21,11 @@ class UpdateJobseeker(forms.ModelForm):
   class Meta:
     model = User
     fields = ['username','first_name', 'last_name','email']
+
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = FileUpload
+        fields = ('name','pdf')
 
 class AdminJobseekerVerifyForm(forms.ModelForm):
   verified = forms.BooleanField()
