@@ -20,7 +20,7 @@ def index(request):
     return render(request,'index.html')
 
 def register(request):
-    return render(request,'register.html')
+    return render(request,'registration/register.html')
 
 def registerJobseeker(request):
     registered=False
@@ -119,7 +119,7 @@ def update_jobseeker_profile(request):
 
 @login_required
 def jobseekerDash(request):
-    return render(request,'jobseekerDash.html')
+    return render(request,'jobseekers/jobseeker_dashboard.html')
 
 @login_required
 def upload_file(request):
@@ -142,7 +142,7 @@ def employerDash(request):
         "job_seekers":job_seekers,
         "employer":employer
     }
-    return render(request,'employerDash.html',context)
+    return render(request,'employers/employer_dashboard.html',context)
 
 @login_required
 def employerProfile(request,id):
