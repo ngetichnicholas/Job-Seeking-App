@@ -41,22 +41,21 @@ def registerJobseeker(request):
 def registerEmployer(request):
     registered=False
     if request.method=='POST':
-        employer_form=employerForm(request.POST)
-        add_employer_form=AddEmployerForm(request.POST)
-        if employer_form.is_valid() and add_employer_form.is_valid():
-            employer=employer_form.save()
-            employer.set_password(employer.password)
-            employer.is_employer = True
-            employer.save()
-            add_employer=add_employer_form.save(commit=False)
-            add_employer.user=employer
-            add_employer.save()
+        employer_form=EmployerSignUpForm(request.POST)
+        if employer_form.is_valid():
+            user=employer_form.save()
+            user.refresh_from_db()
+            user.employer.first_name = employer_form.cleaned_data.get('first_name')
+            user.employer.last_name = employer_form.cleaned_data.get('last_name')
+            user.employer.email = employer_form.cleaned_data.get('email')
+            user.employer.phone = employer_form.cleaned_data.get('phone')
+            user.is_employer = True
+            user.save()
             registered=True
     else:
-        employer_form=employerForm()
-        add_employer_form=AddEmployerForm()
+        employer_form=EmployerSignUpForm()
         
-    return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'add_employer_form':add_employer_form,'registered':registered})
+    return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'registered':registered})
     
 def login(request):
   if request.method == 'POST':
