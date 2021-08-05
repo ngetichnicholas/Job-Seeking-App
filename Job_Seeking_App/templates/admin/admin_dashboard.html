@@ -3,13 +3,26 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <h2>Admin Dashboard</h2>
-    {% if jobseekers %}
-    <h2>Jobseekers</h2>
-    {% for jobseeker in jobseekers %}
-    <h2>{{jobseeker.first_name}}</h2>
-    {% endfor %}
-    {% endif %}
+    <div class="col-md-3">
+      <a href="{% url 'all_jobseekers' %}" class="notification all_jobseekers">
+        <span class="btns">All Jobseekers</span>
+        <span class="badge1">{{all_jobseekers.count}}</span>
+      </a>
+     </div>
+     <div class="col-md-3">
+      <a href="{% url 'verified_jobseekers' %}" class="notification verified">
+        <span class="btns">Verified Jobseeker Profiles</span>
+        <span class="badge2">{{verified_jobseekers.count}}</span>
+      </a>
+
+     </div>
+     <div class="col-md-3">
+      <a href="{% url 'unverified_jobseekers' %}" class="notification unverified">
+        <span class="btns">Unverified Jobseeker Profiles </span>
+        <span class="badge3">{{unverified_jobseekers.count}}</span>
+      </a>
+
+     </div>
   </div>
 </div>
 
