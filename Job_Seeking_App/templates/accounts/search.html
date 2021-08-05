@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{% block content%}
+
+
+<div class="container">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><h3>Search results for the search term: <strong>{{message}}</strong></h3></div>
+		  {%if profiles%}
+		  	{% for profile in profiles %}
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-2">
+						<a href="{% url 'profile' profile.id %}"><img class="img-responsive img-circle" src="{{profile.profile_pic.url}}" alt="" style="width:50px; height:50px"></a>
+					</div>
+					<div class="col-md-10" style="padding-top:11px">
+						<a href="{% url 'profile' profile.id %}">{{profile.user.username}}</a>
+					</div>
+				</div>
+			</div>
+		{%endfor%}
+		{%else%}
+		<div class="panel-body">
+				<h3 class="text-center">No user with the name <strong>{{message}}</strong> exists!</h3>
+			</div>
+		{%endif%}
+	    
+	  
+	</div>
+	</div>
+	<div class="col-md-2"></div>
+
+</div>
+
+
+
+{%endblock%}
