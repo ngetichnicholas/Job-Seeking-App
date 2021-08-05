@@ -51,10 +51,12 @@ class JobSeeker(models.Model):
 class Employer(models.Model):
     first_name =models.CharField(max_length=144)
     last_name = models.CharField(max_length=144)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employer")
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="employer")
     email = models.EmailField()
-    phone = models.IntegerField()
-    location = models.CharField(max_length=144)
+    phone = models.IntegerField(null=True,blank=True)
+    location = models.CharField(max_length=144,null=True,blank=True)
+    company_name = models.CharField(max_length=144,null=True,blank=True)
+
 
     @receiver(post_save, sender=User)
     def update_employer_signal(sender, instance, created, **kwargs):
