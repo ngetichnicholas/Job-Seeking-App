@@ -12,6 +12,7 @@ urlpatterns = [
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
+    path('upload_file',app_views.upload_file,name='upload_file'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
     path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
     path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
