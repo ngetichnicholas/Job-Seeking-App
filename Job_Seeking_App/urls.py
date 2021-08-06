@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views as app_views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('',app_views.index,name='index'),
@@ -12,7 +14,7 @@ urlpatterns = [
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
-    path('employerDash/',app_views.employerDash,name='employerDash'),
+    path('upload_file',app_views.upload_file,name='upload_file'),
     path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
     path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
 
@@ -23,6 +25,12 @@ urlpatterns = [
     path('verify_jobseeker/<int:jobseeker_id>',app_views.verify_jobseeker,name='verify_jobseeker'),
     path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
     path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
-    
+
+
+    # get single jobseeker details from
+    path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
+    path('employerDash/',app_views.employerDash,name='employerDash'),
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
 ]
+if settings.DEBUG:
+  urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
