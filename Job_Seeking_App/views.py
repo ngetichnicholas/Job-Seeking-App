@@ -154,10 +154,6 @@ def employerProfile(request,id):
     }
     return render(request,'employer_profile.html',context)
 
-
-
-
-
 @login_required
 def adminDash(request):
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
