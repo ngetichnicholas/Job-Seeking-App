@@ -58,6 +58,14 @@
               <th>Location</th>
               <td>{{user.profile.location}}</td>
             </tr>
+            <tr>
+              <th>Availability</th>
+              <td>{{user.profile.availability}}</td>
+            </tr>
+            <tr>
+              <th>Job_Category</th>
+              <td>{{user.profile.job_category}}</td>
+            </tr>
           </table>
           <div class="text-center">
           <a  href="{% url 'update_jobseeker_profile' %}">
