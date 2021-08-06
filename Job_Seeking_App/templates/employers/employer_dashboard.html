@@ -20,7 +20,7 @@
               </tr>
               {% for job_seeker in job_seekers %}
               <tr>
-                <td><a href="{% url 'jobseeker_details' job_seeker.id%}" class="btn-btn-sm btn-outline-info">view</a></td>
+                <td><a href="{% url 'specific_details' job_seeker.id%}" class="btn-btn-sm btn-outline-info">view</a></td>
                   <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
