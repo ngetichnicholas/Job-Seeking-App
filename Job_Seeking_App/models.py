@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
+from cloudinary.models import CloudinaryField
 
 
 class User(AbstractUser):
@@ -27,8 +28,8 @@ JOb_CATEGORIES = (
 )
 
 class JobSeeker(models.Model):
-    first_name =models.CharField(max_length=144)
-    last_name = models.CharField(max_length=144)
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
     availability = models.CharField(choices=JOBSEEKER_AVAILABILITY, default="Available", max_length=20)
     salary = models.IntegerField(default=0)
@@ -37,7 +38,7 @@ class JobSeeker(models.Model):
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     bio =models.TextField(null=True,blank=True)
-    profile_picture =models.ImageField(upload_to='profiles')
+    profile_picture =CloudinaryField('image')
     verified = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
@@ -55,9 +56,18 @@ class JobSeeker(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class FileUpload(models.Model):
+    name = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='documents/pdfs/')
+    jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='documents')
+
+    def __str__(self):
+        return self.name
+
 class Employer(models.Model):
-    first_name =models.CharField(max_length=144)
-    last_name = models.CharField(max_length=144)
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="employer")
     email = models.EmailField()
     phone = models.IntegerField(null=True,blank=True)

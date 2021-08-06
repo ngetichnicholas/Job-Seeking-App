@@ -20,7 +20,7 @@ def index(request):
     return render(request,'index.html')
 
 def register(request):
-    return render(request,'register.html')
+    return render(request,'registration/register.html')
 
 def registerJobseeker(request):
     registered=False
@@ -92,9 +92,47 @@ def dashboard(request):
     return render(request,'dashboard.html')
 
 @login_required
-def jobseekerDash(request):
-    return render(request,'jobseekerDash.html')
+def jobseeker_profile(request):
+  current_user = request.user
+  documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
+  
+  return render(request,'jobseekers/profile.html',{"documents":documents,"current_user":current_user})
 
+@login_required
+def update_jobseeker_profile(request):
+  if request.method == 'POST':
+    user_form = UpdateJobseeker(request.POST,instance=request.user)
+    profile_form = UpdateJobseekerProfile(request.POST,request.FILES,instance=request.user.profile)
+    if user_form.is_valid() and profile_form.is_valid():
+      user_form.save()
+      profile_form.save()
+      messages.success(request,'Your Profile account has been updated successfully')
+      return redirect('jobseeker_profile')
+  else:
+    user_form = UpdateJobseeker(instance=request.user)
+    profile_form = UpdateJobseekerProfile(instance=request.user.profile) 
+  params = {
+    'user_form':user_form,
+    'profile_form':profile_form
+  }
+  return render(request,'jobseekers/update.html',params)
+
+@login_required
+def jobseekerDash(request):
+    return render(request,'jobseekers/jobseeker_dashboard.html')
+
+@login_required
+def upload_file(request):
+    if request.method == 'POST':
+        upload_form = UploadFileForm(request.POST, request.FILES)
+        if upload_form.is_valid():
+            upload = upload_form.save(commit=False)
+            upload.jobseeker = request.user.profile
+            upload.save()
+            return redirect('jobseeker_profile')
+    else:
+        upload_form = UploadFileForm()
+    return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
 @login_required
 def employerDash(request):
@@ -104,7 +142,7 @@ def employerDash(request):
         "job_seekers":job_seekers,
         "employer":employer
     }
-    return render(request,'employerDash.html',context)
+    return render(request,'employers/employer_dashboard.html',context)
 
 @login_required
 def employerProfile(request,id):
