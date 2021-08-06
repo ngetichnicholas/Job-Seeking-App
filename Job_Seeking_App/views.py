@@ -1,4 +1,5 @@
 from django.http.response import Http404
+from .email import send_verification_email
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404
@@ -195,10 +196,14 @@ def unverified_jobseekers(request):
 @login_required
 def verify_jobseeker(request, jobseeker_id):
   jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
+  name = jobseeker.first_name
+  email = jobseeker.email
   if request.method == 'POST':
     update_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=jobseeker)
     if update_jobseeker_form.is_valid():
       update_jobseeker_form.save()
+      send_verification_email(name, email)
+      data = {'success': 'You have been successfully added to mailing list'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
