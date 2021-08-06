@@ -70,6 +70,7 @@ class Employer(models.Model):
     last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="employer")
     email = models.EmailField()
+    profile_picture =CloudinaryField('employer')
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     company_name = models.CharField(max_length=144,null=True,blank=True)
