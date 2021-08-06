@@ -37,22 +37,40 @@
       </div>
       <ul class="list-unstyled components mb-5">
         {% if user.is_authenticated %}
-
-        <a class="nav-item nav-link" href="/logout">Logout</a>
-  
+        <li class="active">
+          <a href="/logout">Logout</a>
+        </li>
         {% else %}
-  
-        <a class="nav-item nav-link"  href="{% url 'login' %}">Login</a>
-  
+        <li class="active">
+            <a  href="{% url 'login' %}">Login</a>
+        </li>
         {% endif %}
         <li class="active">
           <a href="{% url 'admin_dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
         </li>
         <li class="active">
-          <a href=""><i class="fas fa-home"></i>Employers</a>
+          <a href="">JOBSEEKERS</a>
         </li>
         <li class="active">
-            <a href=""><i class="fas fa-book"></i>Job Seekers</a>
+            <a href="{% url 'all_jobseekers' %}"><i class="fas fa-book"></i>All Jobseekers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'verified_jobseekers' %}"><i class="fas fa-book"></i> Verified Jobseekers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'unverified_jobseekers' %}"><i class="fas fa-book"></i> Unverified Jobseekers</a>
+        </li>
+        <li class="active">
+          <a href="">EMPLOYERS</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'all_employers' %}"><i class="fas fa-book"></i>All employers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'verified_employers' %}"><i class="fas fa-book"></i> Verified employers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'unverified_employers' %}"><i class="fas fa-book"></i> Unverified employers</a>
         </li>
       </ul>
 
