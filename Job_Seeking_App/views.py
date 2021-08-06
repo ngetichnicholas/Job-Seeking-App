@@ -135,6 +135,7 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
+# employers and misc
 @login_required
 def employerDash(request):
     employer=Employer.objects.all()
@@ -155,6 +156,20 @@ def employerProfile(request,id):
     }
     return render(request,'employer_profile.html',context)
 
+# specific jobseeker
+@login_required
+def single_jobseeker(request,jobseeker_id):
+  try:
+    jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
+
+  except ObjectDoesNotExist:
+    raise Http404()
+
+  return render(request,'jobseekers/single_jobseeker.html',{'jobseeker':jobseeker})
+
+
+
+# admin
 
 @login_required
 def adminDash(request):
