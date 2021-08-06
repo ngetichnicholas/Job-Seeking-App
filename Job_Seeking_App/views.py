@@ -138,8 +138,8 @@ def upload_file(request):
 # employers and misc
 @login_required
 def employerDash(request):
+    job_seekers = JobSeeker.objects.filter(verified = True).all()
     employer=Employer.objects.all()
-    job_seekers=JobSeeker.objects.all()
     context={
         "job_seekers":job_seekers,
         "employer":employer
