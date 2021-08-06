@@ -17,3 +17,9 @@
   });
 
 })(jQuery);
+
+// hiring functionality...hire eventlistener
+function hireJobSeeker(){
+	console.log("button was consoled");
+ 
+}
