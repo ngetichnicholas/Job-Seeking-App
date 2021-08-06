@@ -15,7 +15,6 @@ urlpatterns = [
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('upload_file',app_views.upload_file,name='upload_file'),
-    path('employerDash/',app_views.employerDash,name='employerDash'),
     path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
     path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
 
@@ -27,6 +26,7 @@ urlpatterns = [
     path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
     path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
     
+    path('employerDash/',app_views.employerDash,name='employerDash'),
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
 ]
 if settings.DEBUG:
