@@ -1,0 +1,26 @@
+{% extends 'admin/admin_base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <hr>
+
+      <div class="" id="myContent">
+        <form class="forms" action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+            <label for="" class="border-bottom mb-4 text-center">Verify Employers</label>
+            {% bootstrap_form update_employer_form%}
+          </fieldset>
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+{% endblock %}
