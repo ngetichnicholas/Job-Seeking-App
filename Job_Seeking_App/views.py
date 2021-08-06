@@ -55,6 +55,7 @@ def registerEmployer(request):
             user.is_employer = True
             user.save()
             registered=True
+            return redirect('login')
     else:
         employer_form=EmployerSignUpForm()
         
@@ -134,10 +135,11 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
+# employers and misc
 @login_required
 def employerDash(request):
+    job_seekers = JobSeeker.objects.filter(verified = True).all()
     employer=Employer.objects.all()
-    job_seekers=JobSeeker.objects.all()
     context={
         "job_seekers":job_seekers,
         "employer":employer
@@ -152,11 +154,22 @@ def employerProfile(request,id):
         "employer":employer,
         "form":form
     }
-    return render(request,'employer_profile.html',context)
+    return render(request,'employers/employer_profile.html',context)
+
+# specific jobseeker
+@login_required
+def single_jobseeker(request,jobseeker_id):
+  try:
+    jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
+
+  except ObjectDoesNotExist:
+    raise Http404()
+
+  return render(request,'jobseekers/single_jobseeker.html',{'jobseeker':jobseeker})
 
 
 
-
+# admin
 
 @login_required
 def adminDash(request):
