@@ -74,6 +74,7 @@ class Employer(models.Model):
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     company_name = models.CharField(max_length=144,null=True,blank=True)
+    verified = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
     def update_employer_signal(sender, instance, created, **kwargs):
