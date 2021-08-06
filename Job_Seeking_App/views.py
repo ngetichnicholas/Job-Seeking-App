@@ -213,7 +213,7 @@ def verify_jobseeker(request, jobseeker_id):
 
 @login_required
 def delete_jobseeker(request,jobseeker_id):
-  jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
+  jobseeker = User.objects.get(pk=jobseeker_id)
   if jobseeker:
     jobseeker.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -262,7 +262,7 @@ def verify_employer(request, employer_id):
 
 @login_required
 def delete_employer(request,employer_id):
-  employer = Employer.objects.get(pk=employer_id)
+  employer = User.objects.get(pk=employer_id)
   if employer:
     employer.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
