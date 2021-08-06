@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="text-center">
+          <div>
+            {% if user.profile.profile_picture.url %}
+            <img class="profile_picture"
+               src="{{ user.profile.profile_picture.url }}" style="height: 20vh; width:20vh;" alt="{{ profile.name }}">
+               {% else %}
+              <img class="profile_picture"
+                 src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 20vh; width:20vh;" alt="{{ profile.name }}">
+                 {% endif %}
+              </div>
+          <div>
+            <h2 class="text-monospace ml-3 pt-2"><small><strong>{{user.username}}</strong></small></h2>
+          </div>
+        </div>
+        <hr>
+
+        <div class="" id="myContent">
+          <form class="forms" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              {% bootstrap_form user_form%}
+              {% bootstrap_form profile_form%}
+            </fieldset>
+            <div class="form-group">
+              <button class="btn btn-outline-success" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+{% endblock %}
