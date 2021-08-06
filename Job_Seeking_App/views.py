@@ -1,4 +1,5 @@
 from django.http.response import Http404
+from .email import send_verification_email
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
@@ -189,7 +190,6 @@ def single_jobseeker(request,jobseeker_id):
 def hireJobseeker(request):
   return JsonResponse("hired",safe=False)
 
-
 # admin
 
 @login_required
@@ -203,7 +203,7 @@ def adminDash(request):
 # JobSeeker views
 @login_required
 def all_jobseekers(request):
-    all_jobseekers = JobSeeker.objects.all()
+    all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     return render(request,'admin/jobseekers/all_jobseekers.html',{'all_jobseekers':all_jobseekers})
 
 @login_required
@@ -219,23 +219,27 @@ def unverified_jobseekers(request):
 @login_required
 def verify_jobseeker(request, jobseeker_id):
   jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
+  name = jobseeker.first_name
+  email = jobseeker.email
   if request.method == 'POST':
-    update_jobseeker_form = AdminJobseekerVerifyForm(request.POST,request.FILES, instance=jobseeker)
+    update_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=jobseeker)
     if update_jobseeker_form.is_valid():
       update_jobseeker_form.save()
+      send_verification_email(name, email)
+      data = {'success': 'You have been successfully added to mailing list'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
-    update_jobseeker_form = AdminJobseekerVerifyForm(instance=jobseeker)
+    update_jobseeker_form = AdminVerifyUserForm(instance=jobseeker)
 
   return render(request, 'admin/jobseekers/update_jobseeker.html', {"update_jobseeker_form":update_jobseeker_form})
 
 @login_required
 def delete_jobseeker(request,jobseeker_id):
-  jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
+  jobseeker = User.objects.get(pk=jobseeker_id)
   if jobseeker:
-    jobseeker.delete_jobseeker()
-  return redirect('admin_dashboard')
+    jobseeker.delete_user()
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 #Get single jobseeker
 @login_required
@@ -247,3 +251,52 @@ def jobseeker_details(request,jobseeker_id):
     raise Http404()
 
   return render(request,'admin/jobseekers/jobseeker_details.html',{'jobseeker':jobseeker})
+
+
+  #Admin Employer views
+@login_required
+def all_employers(request):
+    all_employers = User.objects.filter(is_employer=True).all()
+    return render(request,'admin/employers/all_employers.html',{'all_employers':all_employers})
+
+@login_required
+def verified_employers(request):
+    verified_employers = Employer.objects.filter(verified = True).all()
+    return render(request,'admin/employers/verified_employers.html',{'verified_employers':verified_employers})
+
+@login_required
+def unverified_employers(request):
+    unverified_employers = Employer.objects.filter(verified=False).all()
+    return render(request,'admin/employers/unverified_employers.html',{'unverified_employers':unverified_employers})
+
+@login_required
+def verify_employer(request, employer_id):
+  employer = Employer.objects.get(pk=employer_id)
+  if request.method == 'POST':
+    update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
+    if update_employer_form.is_valid():
+      update_employer_form.save()
+      messages.success(request, f'employer updated!')
+      return redirect('admin_dashboard')
+  else:
+    update_employer_form = AdminVerifyUserForm(instance=employer)
+
+  return render(request, 'admin/employers/update_employer.html', {"update_employer_form":update_employer_form})
+
+@login_required
+def delete_employer(request,employer_id):
+  employer = User.objects.get(pk=employer_id)
+  if employer:
+    employer.delete_user()
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+#Get single employer
+@login_required
+def employer_details(request,employer_id):
+  try:
+    employer =get_object_or_404(Employer, pk = employer_id)
+
+  except ObjectDoesNotExist:
+    raise Http404()
+
+  return render(request,'admin/employers/employer_details.html',{'employer':employer})

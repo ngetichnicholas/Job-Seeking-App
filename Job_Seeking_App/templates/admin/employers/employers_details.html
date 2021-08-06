@@ -1,0 +1,30 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <table class="table table-bordered">
+          <tr>
+            <th>First Name</th>
+            <td>{{employer.first_name}}</td>
+          </tr>
+          <tr>
+            <th>Last Name</th>
+            <td>{{employer.last_name}}</td>
+          </tr>
+          <tr>
+            <th>Verification Status</th>
+            <td>{{employer.verified}}</td>
+          </tr>
+          <tr>
+            <th>Phone No</th>
+            <td>{{employer.phone}}</td>
+          </tr>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+{% endblock %}
