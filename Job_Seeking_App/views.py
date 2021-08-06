@@ -154,7 +154,7 @@ def employerProfile(request,id):
         "employer":employer,
         "form":form
     }
-    return render(request,'employer_profile.html',context)
+    return render(request,'employers/employer_profile.html',context)
 
 # specific jobseeker
 @login_required
