@@ -20,7 +20,7 @@ def index(request):
     return render(request,'index.html')
 
 def register(request):
-    return render(request,'register.html')
+    return render(request,'registration/register.html')
 
 def registerJobseeker(request):
     registered=False
@@ -94,8 +94,9 @@ def dashboard(request):
 @login_required
 def jobseeker_profile(request):
   current_user = request.user
+  documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
   
-  return render(request,'jobseekers/profile.html',{"current_user":current_user})
+  return render(request,'jobseekers/profile.html',{"documents":documents,"current_user":current_user})
 
 @login_required
 def update_jobseeker_profile(request):
@@ -118,18 +119,31 @@ def update_jobseeker_profile(request):
 
 @login_required
 def jobseekerDash(request):
-    return render(request,'jobseekerDash.html')
-
+    return render(request,'jobseekers/jobseeker_dashboard.html')
 
 @login_required
+def upload_file(request):
+    if request.method == 'POST':
+        upload_form = UploadFileForm(request.POST, request.FILES)
+        if upload_form.is_valid():
+            upload = upload_form.save(commit=False)
+            upload.jobseeker = request.user.profile
+            upload.save()
+            return redirect('jobseeker_profile')
+    else:
+        upload_form = UploadFileForm()
+    return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
+
+# employers and misc
+@login_required
 def employerDash(request):
+    job_seekers = JobSeeker.objects.filter(verified = True).all()
     employer=Employer.objects.all()
-    job_seekers=JobSeeker.objects.all()
     context={
         "job_seekers":job_seekers,
         "employer":employer
     }
-    return render(request,'employerDash.html',context)
+    return render(request,'employers/employer_dashboard.html',context)
 
 @login_required
 def employerProfile(request,id):
@@ -139,11 +153,22 @@ def employerProfile(request,id):
         "employer":employer,
         "form":form
     }
-    return render(request,'employer_profile.html',context)
+    return render(request,'employers/employer_profile.html',context)
+
+# specific jobseeker
+@login_required
+def single_jobseeker(request,jobseeker_id):
+  try:
+    jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
+
+  except ObjectDoesNotExist:
+    raise Http404()
+
+  return render(request,'jobseekers/single_jobseeker.html',{'jobseeker':jobseeker})
 
 
 
-
+# admin
 
 @login_required
 def adminDash(request):
