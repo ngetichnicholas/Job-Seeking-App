@@ -13,6 +13,9 @@ class User(AbstractUser):
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
 
+    def delete_user(self):
+        self.delete()
+
 JOBSEEKER_AVAILABILITY = (
     ('Available', "Available"),
     ('Not Available', "Not Available"),
