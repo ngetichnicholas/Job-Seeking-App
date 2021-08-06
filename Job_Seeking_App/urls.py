@@ -28,9 +28,13 @@ urlpatterns = [
 
 
     # get single jobseeker details from
+
     path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
+    path('update_employer/',app_views.update_employer,name='update_employer'),
+    # hire
+    path('hireJobseeker/',app_views.hireJobseeker,name='hireJobseeker'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
