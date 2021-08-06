@@ -10,42 +10,13 @@
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'index' %}">Home</a>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                {% if user.is_authenticated %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                    </li>
-                    {% if current_user.profile.profile_picture.url %}
-                    <a href="{% url 'jobseeker_profile'%}"><img class="profile_picture"
-                      src="{{ current_user.profile.profile_picture.url }}" style="height: 1cm; width:1cm; border-radius:50%" alt=""></a>
-                      {% else %}
-                      <a  href="{% url 'jobseeker_profile'%}"><img class="profile_picture"
-                        src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" alt=""></a>
-                        {% endif %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                {% else %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                {% endif %}
-               
-            </ul>
-            
-        </div>
-    </nav>
+    {% include 'navbar.html' %}
+
     <div class="container">
         {% block content %}
         {% endblock %}
     </div>
+    
 </body>
+
 </html>
