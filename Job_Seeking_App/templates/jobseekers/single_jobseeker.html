@@ -5,7 +5,21 @@
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
+      {% if documents %}
+          {% for document in documents %}
+          <div class="">
+            <h2>{{document.name}}</h2>
+            <a  href="{{ document.pdf.url }}" download="" class="btn btn-outline-success">View Document</a>
+        </div>
+        {% endfor %}
+        {% endif %} 
         <table class="table table-bordered">
+          <center>
+            <div class="image-holder my-5">
+              <img src="{{jobseeker.profile_picture.url }}" class="img-responsive img-fluid col-md-5" alt="">
+            </div>
+            
+          </center>
           <tr>
             <th>First Name</th>
             <td>{{jobseeker.first_name}}</td>
@@ -25,10 +39,6 @@
           <tr>
             <th>Salary Expectation</th>
             <td>Ksh {{jobseeker.salary}}</td>
-          </tr>
-          <tr>
-            <th>Verification Status</th>
-            <td>{{jobseeker.verified}}</td>
           </tr>
           <tr>
             <th>Phone No</th>
