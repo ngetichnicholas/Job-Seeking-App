@@ -1,3 +1,6 @@
+body {
+  background-color: #eeebe4;
+}
 .notification {
   background-color: #258DC0;
   color: white;
@@ -78,6 +81,9 @@
 .masthead {
   background-image: url('../images/banner4-carousel1.jpg') !important;
 }
+#mainNav {
+  background-color: #F8F9FA;
+}
 
 .navbar-brand, #mainNav ul li a {
   color: #F4623A !important;
@@ -92,6 +98,11 @@
   z-index: 1030;
 }
 
-
-
- 
+.btn, .card {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+.form-control {
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
