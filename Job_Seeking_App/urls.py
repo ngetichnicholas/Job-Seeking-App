@@ -26,11 +26,22 @@ urlpatterns = [
     path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
     path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
 
+    path('all_employers',app_views.all_employers,name='all_employers'),
+    path('verified_employers',app_views.verified_employers,name='verified_employers'),
+    path('unverified_employers',app_views.unverified_employers,name='unverified_employers'),
+    path('verify_employer/<int:employer_id>',app_views.verify_employer,name='verify_employer'),
+    path('delete_employer/<int:employer_id>', app_views.delete_employer,name='delete_employer'),
+    path('employer_details/<int:employer_id>', app_views.employer_details,name='employer_details'),
+
 
     # get single jobseeker details from
+
     path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
+    path('update_employer/',app_views.update_employer,name='update_employer'),
+    # hire
+    path('hireJobseeker/',app_views.hireJobseeker,name='hireJobseeker'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

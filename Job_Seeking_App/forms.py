@@ -27,7 +27,7 @@ class UploadFileForm(forms.ModelForm):
         model = FileUpload
         fields = ('name','pdf')
 
-class AdminJobseekerVerifyForm(forms.ModelForm):
+class AdminVerifyUserForm(forms.ModelForm):
   verified = forms.BooleanField()
 
   class Meta:
@@ -49,5 +49,9 @@ class UpdateEmployerForm(forms.ModelForm):
 
     class Meta:
         model = Employer
-        fields = ('first_name', 'last_name', 'email','phone', )
+        fields = ('location', 'company_name', 'email','phone', )
 
+class UpdateEmployerProfile(forms.ModelForm):
+    class Meta:
+        model = Employer
+        fields = ('profile_picture', )
