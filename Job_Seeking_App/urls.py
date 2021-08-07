@@ -35,7 +35,6 @@ urlpatterns = [
 
 
     # get single jobseeker details from
-
     path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
     path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
