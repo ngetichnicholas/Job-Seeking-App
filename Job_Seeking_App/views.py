@@ -36,6 +36,7 @@ def registerJobseeker(request):
             user.is_jobseeker = True
             user.save()
             registered=True
+            return redirect('login')
     else:
         job_seeker_form=JobseekerSignUpForm()
     return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
@@ -304,7 +305,8 @@ def delete_employer(request,employer_id):
 def employer_details(request,employer_id):
   try:
     employer =get_object_or_404(Employer, pk = employer_id)
-
+    
+  
   except ObjectDoesNotExist:
     raise Http404()
 
