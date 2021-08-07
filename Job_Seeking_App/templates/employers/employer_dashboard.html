@@ -21,13 +21,14 @@
               {% for job_seeker in job_seekers %}
               <tr>
                 <td><a href="{% url 'specific_details' job_seeker.id%}" class="btn-btn-sm btn-outline-info">view</a></td>
+                <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
                   <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
                   <td>{{job_seeker.location}}</td>
                   <td>{{job_seeker.availability}}</td>
                   <td>{{job_seeker.salary}}</td>
-                  <td><a href="" class="btn btn-outline-info btn-sm">Hire</a></td>
+                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" >Hire</button></td>
               </tr>
               {%endfor%}
              
@@ -37,4 +38,16 @@
   <div class="col-md-1"></div>
   </div>
 </div>
+<script>
+let hireJobSeeker = document.getElementsByClassName("hireJobSeeker");
+
+for (let i =0; i<hireJobSeeker.length; i++) {
+  hireJobSeeker[i].addEventListener("click",function (){
+    let seekerId=this.dataset.product;
+    let action=this.dataset.action;
+    console.log("seekerId:",seekerId); 
+  })
+}
+
+</script>
 {% endblock %}

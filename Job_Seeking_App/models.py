@@ -13,6 +13,9 @@ class User(AbstractUser):
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
 
+    def delete_user(self):
+        self.delete()
+
 JOBSEEKER_AVAILABILITY = (
     ('Available', "Available"),
     ('Not Available', "Not Available"),
@@ -74,6 +77,7 @@ class Employer(models.Model):
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     company_name = models.CharField(max_length=144,null=True,blank=True)
+    verified = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
     def update_employer_signal(sender, instance, created, **kwargs):
