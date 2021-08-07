@@ -1,4 +1,3 @@
-
 .notification {
   background-color: #258DC0;
   color: white;
@@ -77,13 +76,20 @@
 }
 
 .masthead {
-  background-image: url('../images/work4.jpg');
-  background-size: cover;
+  background-image: url('../images/banner4-carousel1.jpg') !important;
 }
-#mainNav {
-  background-color: #F8F9FA;
-  color: black;
+
+.navbar-brand, #mainNav ul li a {
+  color: #F4623A !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
 }
-#mainNav ul li a {
-  color: black !important;
+.fixed-top {
+  position: unset !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
 }
+
+ 
