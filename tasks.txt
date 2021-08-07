@@ -1,0 +1,8 @@
+Polish UI
+Coplete Employer Dashboard
+Complete Jopseeker Dashboard
+Complete Admin Dashboard
+Research on Daraja MPESA API
+Work on email and phone login options
+Complete Search functionality
+Write Tests
