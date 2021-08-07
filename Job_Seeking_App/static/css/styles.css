@@ -37,8 +37,8 @@
   right: -10px;
   padding: 2px 10px;
   border-radius: 50%;
-  background-color: rgb(26, 91, 231);
-  color: white;
+  background-color: rgb(2, 57, 177);
+  color: rgb(126, 5, 5);
 }
 .seek{
     color: azure;
@@ -52,6 +52,26 @@
   margin-left: 2rem;
   margin-right: 2rem;
 }
-.jumbotron mt-5{
+.circle{
   background-color: red;
+  width: 250px;
+  height: 200px;
+  border-radius: 50%;
+  border: 15px solid rgb(172, 11, 11);
+  box-shadow: 0 0 10px rgb(172, 11, 11);
+  margin-left: 100%;
+
+}
+.circle2{
+  background-color: red;
+  width: 250px;
+  height: 200px;
+  border-radius: 50%;
+  border: 15px solid rgb(172, 11, 11);
+  box-shadow: 0 0 10px rgb(172, 11, 11);
+  margin-right: 200%;
+}
+.big{
+  margin-bottom: 20px;
+  background-color: midnightblue;
 }
