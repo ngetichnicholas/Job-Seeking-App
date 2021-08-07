@@ -36,6 +36,7 @@ def registerJobseeker(request):
             user.is_jobseeker = True
             user.save()
             registered=True
+            return redirect('login')
     else:
         job_seeker_form=JobseekerSignUpForm()
     return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
@@ -191,11 +192,15 @@ def update_employer(request):
 def single_jobseeker(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
-
+    documents = FileUpload.objects.filter(jobseeker_id = jobseeker_id)
+    context ={
+      'jobseeker':jobseeker,
+      'documents':documents,
+    }
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'jobseekers/single_jobseeker.html',{'jobseeker':jobseeker})
+  return render(request,'jobseekers/single_jobseeker.html',context)
 # show hired jobseeker on employers dashboard
 def hireJobseeker(request):
   return JsonResponse("hired",safe=False)
@@ -305,7 +310,8 @@ def delete_employer(request,employer_id):
 def employer_details(request,employer_id):
   try:
     employer =get_object_or_404(Employer, pk = employer_id)
-
+    
+  
   except ObjectDoesNotExist:
     raise Http404()
 
