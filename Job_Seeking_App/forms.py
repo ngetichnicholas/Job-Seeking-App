@@ -49,7 +49,7 @@ class UpdateEmployerForm(forms.ModelForm):
 
     class Meta:
         model = Employer
-        fields = ('location', 'company_name', 'email','phone', )
+        fields = ( 'first_name', 'last_name', 'email', 'phone',  'location', 'company_name', )
 
 class UpdateEmployerProfile(forms.ModelForm):
     class Meta:
