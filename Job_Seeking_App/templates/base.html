@@ -1,3 +1,6 @@
+{% load bootstrap4 %}
+{% load static %}
+{% load cloudinary %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +20,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../static/css/styles.css">
+
+    {% block styles %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% endblock styles %}
+
 </head>
 
 <body>
