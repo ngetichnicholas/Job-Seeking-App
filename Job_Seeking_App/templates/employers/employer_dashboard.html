@@ -28,7 +28,7 @@
                   <td>{{job_seeker.location}}</td>
                   <td>{{job_seeker.availability}}</td>
                   <td>{{job_seeker.salary}}</td>
-                  <td><a href="mailto:{{job_seeker.user.email}}" class="btn-btn-sm btn-outline-info">Contact</a></td>
+                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" ><a href="mailto:{{job_seeker.user.email}}">Contact</a></button></td>
               </tr>
               {%endfor%}
              

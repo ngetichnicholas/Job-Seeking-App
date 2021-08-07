@@ -193,17 +193,12 @@ def single_jobseeker(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
     documents = FileUpload.objects.filter(jobseeker_id = jobseeker_id)
-    context ={
-      'jobseeker':jobseeker,
-      'documents':documents,
-    }
+
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'jobseekers/single_jobseeker.html',context)
+  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker})
 # show hired jobseeker on employers dashboard
-def hireJobseeker(request):
-  return JsonResponse("hired",safe=False)
 
 # admin
 
@@ -234,14 +229,14 @@ def unverified_jobseekers(request):
 @login_required
 def verify_jobseeker(request, jobseeker_id):
   jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
-  name = jobseeker.first_name
+  name = jobseeker.user.username
   email = jobseeker.email
   if request.method == 'POST':
     update_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=jobseeker)
     if update_jobseeker_form.is_valid():
       update_jobseeker_form.save()
       send_verification_email(name, email)
-      data = {'success': 'You have been successfully added to mailing list'}
+      data = {'success': 'Verification sent'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
