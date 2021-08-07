@@ -39,17 +39,17 @@
             <table class="table table-bordered">
               <center>
                 <div class="image-holder my-2">
-                  <img src="{{employer.profile_picture.url}}" class="img-responsive img-fluid col-md-12" alt="">
+                  <img src="{{user.employer.profile_picture.url}}" class="img-responsive img-fluid col-md-12" alt="">
                 </div>
                 
               </center>
               <tr>
                 <th>First Name</th>
-                <td>{{employer.user.first_name}}</td>
+                <td>{{user.first_name}}</td>
               </tr>
               <tr>
                 <th>Last Name</th>
-                <td>{{employer.user.last_name}}</td>
+                <td>{{user.last_name}}</td>
               </tr>
               <tr>
                 <th>Username</th>
@@ -57,23 +57,24 @@
               </tr>
               <tr>
                 <th>Phone</th>
-                <td>{{employer.phone}}</td>
+                <td>{{user.employer.phone}}</td>
               </tr>
               <tr>
                 <th>Email Address</th>
-                <td>{{employer.user.email}}</td>
+                <td>{{user.employer.user.email}}</td>
               </tr>
               <tr>
                 <th>Location</th>
-                <td>{{employer.location}}</td>
+                <td>{{user.employer.location}}</td>
               </tr>
               <tr>
                 <th>Company</th>
-                <td>{{employer.company_name}}</td>
+                <td>{{user.employer.company_name}}</td>
               </tr>
             </table>
             <center>
-              <a href="{% url 'update_employer'%}" class="btn btn-outline-success">Update Profile</a>
+              
+              <a href="{% url 'update_employer'%}" class="btn btn-outline-success mb-5">Update Profile</a>
             </center>
             
             <!-- test begin -->
@@ -129,4 +130,3 @@
 </style>
 
 {% endblock %}
-Kiru1960

@@ -49,9 +49,9 @@ class UpdateEmployerForm(forms.ModelForm):
 
     class Meta:
         model = Employer
-        fields = ( 'first_name', 'last_name', 'email', 'phone',  'location', 'company_name', )
+        fields = ( 'first_name', 'last_name', 'email', )
 
 class UpdateEmployerProfile(forms.ModelForm):
     class Meta:
         model = Employer
-        fields = ('profile_picture', )
+        fields = ('profile_picture','phone',  'location', 'company_name',  )
