@@ -165,11 +165,10 @@ def employerProfile(request):
   
 
 # update employers
-# employer updated
 def update_employer(request):
   if request.method == 'POST':
     u_form = UpdateEmployerForm(request.POST,instance=request.user)
-    p_form = UpdateEmployerProfile(request.POST,request.FILES,instance=request.user.profile)
+    p_form = UpdateEmployerProfile(request.POST,request.FILES,instance=request.user.employer)
     if u_form.is_valid() and p_form.is_valid():
       u_form.save()
       p_form.save()
@@ -177,7 +176,7 @@ def update_employer(request):
       return redirect('employer_profile')
   else:
     u_form = UpdateEmployerForm(instance=request.user)
-    p_form = UpdateEmployerProfile(instance=request.user.profile) 
+    p_form = UpdateEmployerProfile(instance=request.user.employer) 
   context = {
     'u_form':u_form,
     'p_form':p_form
@@ -310,4 +309,4 @@ def employer_details(request,employer_id):
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'admin/employers/employer_details.html',{'employer':employer})
+  return render(request,'admin/employers/employers_details.html',{'employer':employer})
