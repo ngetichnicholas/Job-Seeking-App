@@ -5,6 +5,7 @@
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
+      
         <table class="table table-bordered">
           <center>
             <div class="image-holder my-5">
@@ -36,9 +37,21 @@
             <th>Phone No</th>
             <td>{{jobseeker.phone}}</td>
           </tr>
+          <tr>
+            <th>Resume</th>
+            <td> {% if documents %}
+              {% for document in documents %}
+              <div class="">
+                <a  href="{{ document.pdf.url }}" download="" class="btn btn-sm btn-outline-success">View Document</a>
+            </div>
+            {% endfor %}
+            {% endif %} </td>
+          </tr>
         </table>
     </div>
-    <div class="col-md-1"></div>
+    <div class="col-md-1">
+     
+    </div>
   </div>
 </div>
 {% endblock %}
