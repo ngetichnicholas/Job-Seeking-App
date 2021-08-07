@@ -75,3 +75,15 @@
   margin-bottom: 20px;
   background-color: midnightblue;
 }
+
+.masthead {
+  background-image: url('../images/work4.jpg');
+  background-size: cover;
+}
+#mainNav {
+  background-color: #F8F9FA;
+  color: black;
+}
+#mainNav ul li a {
+  color: black !important;
+}
