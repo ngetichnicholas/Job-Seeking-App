@@ -45,11 +45,11 @@
               </center>
               <tr>
                 <th>First Name</th>
-                <td>{{user.employer.first_name}}</td>
+                <td>{{user.first_name}}</td>
               </tr>
               <tr>
                 <th>Last Name</th>
-                <td>{{user.employer.last_name}}</td>
+                <td>{{user.last_name}}</td>
               </tr>
               <tr>
                 <th>Username</th>
@@ -73,7 +73,8 @@
               </tr>
             </table>
             <center>
-              <a href="{% url 'update_employer'%}" class="btn btn-outline-success">Update Profile</a>
+              
+              <a href="{% url 'update_employer'%}" class="btn btn-outline-success mb-5">Update Profile</a>
             </center>
             
             <!-- test begin -->
@@ -129,4 +130,3 @@
 </style>
 
 {% endblock %}
-Kiru1960
