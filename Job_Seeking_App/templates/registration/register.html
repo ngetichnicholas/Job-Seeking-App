@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div  style="background-color: #BF2180;margin-top: 20px; padding-bottom: 50px; width: 60%;" >
-    <h1 class="display-3">Register Here!</h1>
-   
-    <hr class="my-2">
-    <p class="lead">
-        <a class="btn btn-light btn-lg" href="{% url 'registerJobseeker' %}" role="button">Jobseeker</a>
-        <a class="btn btn-light btn-lg" href="{% url 'registerEmployer' %}" role="button">Employer</a>
-    </p>
-</div>
+<div class="jumbotron jumbotron-fluid" style="margin-top: 140px;">
+    <div class="container">
+      <h1 class="display-4">Sign up for a free account today</h1>
+      <p class="lead">Select below the type of account you want to create</p>
+      <hr class="my-2">
+      <p class="lead">
+          <a style=" width: 100px; height: 70px;" class="btn btn-success lg" href="{% url 'registerJobseeker' %}" role="button" disabled>
+            <span class="spinner-grow spinner-grow-sm"></span>
+            Jobseeker..</a>
+            <a style=" width: 100px; height: 70px;" class="btn btn-success lg"href="{% url 'registerEmployer' %}" role="button" disabled>
+              <span class="spinner-grow spinner-grow-sm"></span>
+              Employer..</a>
+      </p>
+    </div>
+  </div>
+  
+  
 {% endblock %}
+<style>
+
+</style>

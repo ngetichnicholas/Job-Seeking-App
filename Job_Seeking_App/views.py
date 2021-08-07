@@ -55,6 +55,7 @@ def registerEmployer(request):
             user.is_employer = True
             user.save()
             registered=True
+            return redirect('login')
     else:
         employer_form=EmployerSignUpForm()
         
@@ -84,7 +85,7 @@ def login(request):
 def dashboard(request):
     current = request.user
     if current.is_employer:
-        return redirect('employerDash/')
+        return redirect('employer_profile/')
     elif current.is_admin:
         return redirect('admin_dashboard')
     else: 
@@ -153,20 +154,29 @@ def employerProfile(request,id):
     }
     return render(request,'employers/employer_profile.html',context)
   
+# test
+@login_required
+def employerProfile(request):
+    employer=request.user
+    context={
+        "employer":employer,
+    }
+    return render(request,'employers/employer_profile.html',context)
+  
+
 # update employers
-# employer updated
 def update_employer(request):
   if request.method == 'POST':
     u_form = UpdateEmployerForm(request.POST,instance=request.user)
-    p_form = UpdateEmployerProfile(request.POST,request.FILES,instance=request.user.profile)
+    p_form = UpdateEmployerProfile(request.POST,request.FILES,instance=request.user.employer)
     if u_form.is_valid() and p_form.is_valid():
       u_form.save()
       p_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('employerDash')
+      return redirect('employer_profile')
   else:
     u_form = UpdateEmployerForm(instance=request.user)
-    p_form = UpdateEmployerProfile(instance=request.user.profile) 
+    p_form = UpdateEmployerProfile(instance=request.user.employer) 
   context = {
     'u_form':u_form,
     'p_form':p_form
@@ -181,14 +191,13 @@ def update_employer(request):
 def single_jobseeker(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
+    documents = FileUpload.objects.filter(jobseeker_id = jobseeker_id)
 
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'jobseekers/single_jobseeker.html',{'jobseeker':jobseeker})
+  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker})
 # show hired jobseeker on employers dashboard
-def hireJobseeker(request):
-  return JsonResponse("hired",safe=False)
 
 # admin
 
@@ -299,4 +308,4 @@ def employer_details(request,employer_id):
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'admin/employers/employer_details.html',{'employer':employer})
+  return render(request,'admin/employers/employers_details.html',{'employer':employer})
