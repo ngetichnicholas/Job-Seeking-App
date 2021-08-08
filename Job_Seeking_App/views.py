@@ -4,13 +4,15 @@ from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+
 from django.urls import reverse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user,allowed_users,admin_only
 
 from .models import JobSeeker,Employer 
 from .models import User
@@ -37,6 +39,8 @@ def registerJobseeker(request):
             user.profile.email = job_seeker_form.cleaned_data.get('email')
             user.profile.phone = job_seeker_form.cleaned_data.get('phone')
             user.is_jobseeker = True
+            group = Group.objects.get(name = 'jobseeker')
+            user.groups.add(group)
             user.save()
             registered=True
             return redirect('login')
@@ -207,6 +211,7 @@ def single_jobseeker(request,jobseeker_id):
 # admin
 
 @login_required
+@admin_only
 def adminDash(request):
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     verified_jobseekers = JobSeeker.objects.filter(verified=True).all()
@@ -215,22 +220,26 @@ def adminDash(request):
 
 # ADMIN VIEWS
 # JobSeeker views
+@allowed_users(allowed_roles=['admin'])
 @login_required
 def all_jobseekers(request):
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     return render(request,'admin/jobseekers/all_jobseekers.html',{'all_jobseekers':all_jobseekers})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def verified_jobseekers(request):
     verified_jobseekers = JobSeeker.objects.filter(verified = True).all()
     return render(request,'admin/jobseekers/verified_jobseekers.html',{'verified_jobseekers':verified_jobseekers})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def unverified_jobseekers(request):
     unverified_jobseekers = JobSeeker.objects.filter(verified=False).all()
     return render(request,'admin/jobseekers/unverified_jobseekers.html',{'unverified_jobseekers':unverified_jobseekers})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def verify_jobseeker(request, jobseeker_id):
   jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
   name = jobseeker.user.username
@@ -249,6 +258,7 @@ def verify_jobseeker(request, jobseeker_id):
   return render(request, 'admin/jobseekers/update_jobseeker.html', {"update_jobseeker_form":update_jobseeker_form})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def delete_jobseeker(request,jobseeker_id):
   jobseeker = User.objects.get(pk=jobseeker_id)
   if jobseeker:
@@ -257,6 +267,7 @@ def delete_jobseeker(request,jobseeker_id):
 
 #Get single jobseeker
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def jobseeker_details(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
@@ -269,21 +280,25 @@ def jobseeker_details(request,jobseeker_id):
 
   #Admin Employer views
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def all_employers(request):
     all_employers = User.objects.filter(is_employer=True).all()
     return render(request,'admin/employers/all_employers.html',{'all_employers':all_employers})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def verified_employers(request):
     verified_employers = Employer.objects.filter(verified = True).all()
     return render(request,'admin/employers/verified_employers.html',{'verified_employers':verified_employers})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def unverified_employers(request):
     unverified_employers = Employer.objects.filter(verified=False).all()
     return render(request,'admin/employers/unverified_employers.html',{'unverified_employers':unverified_employers})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def verify_employer(request, employer_id):
   employer = Employer.objects.get(pk=employer_id)
   if request.method == 'POST':
@@ -298,6 +313,7 @@ def verify_employer(request, employer_id):
   return render(request, 'admin/employers/update_employer.html', {"update_employer_form":update_employer_form})
 
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def delete_employer(request,employer_id):
   employer = User.objects.get(pk=employer_id)
   if employer:
@@ -306,6 +322,7 @@ def delete_employer(request,employer_id):
 
 #Get single employer
 @login_required
+@allowed_users(allowed_roles=['admin'])
 def employer_details(request,employer_id):
   try:
     employer =get_object_or_404(Employer, pk = employer_id)
