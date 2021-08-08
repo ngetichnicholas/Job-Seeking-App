@@ -94,6 +94,20 @@ class Employer(models.Model):
     def __str__(self):
         return self.user.username
 
+# previous projects
+class Portfolio(models.Model):
+    jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='portfolio')
+    name = models.CharField(max_length=50)
+    link=models.URLField(max_length=555)
+
+    def __str__(self):
+        return f"Portfolio {self.id}"
+
+    class Meta:
+        verbose_name = ("Portfolio")
+        verbose_name_plural = ("Portfolio")
+
+
 # JOB_TYPE = (
 #     ('1', "Full time"),
 #     ('2', "Part time"),
