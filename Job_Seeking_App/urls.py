@@ -11,9 +11,9 @@ urlpatterns = [
     path('registerEmployer/',app_views.registerEmployer,name='registerEmployer'),
     path('accounts/login/',app_views.login,name='login'),
     path('logout/',auth_views.LogoutView.as_view(template_name = 'index.html'),name='logout'),
+    
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
-    path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('upload_file',app_views.upload_file,name='upload_file'),
     path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
     path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
