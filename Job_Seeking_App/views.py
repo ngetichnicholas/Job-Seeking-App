@@ -240,8 +240,8 @@ def add_portfolios(request):
 @admin_only
 def adminDash(request):
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
-    verified_jobseekers = JobSeeker.objects.filter(verified=True).all()
-    unverified_jobseekers = JobSeeker.objects.filter(verified = False).all()
+    verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
+    unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
     return render(request,'admin/admin_dashboard.html',{'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
 # ADMIN VIEWS
@@ -255,13 +255,13 @@ def all_jobseekers(request):
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def verified_jobseekers(request):
-    verified_jobseekers = JobSeeker.objects.filter(verified = True).all()
+    verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
     return render(request,'admin/jobseekers/verified_jobseekers.html',{'verified_jobseekers':verified_jobseekers})
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def unverified_jobseekers(request):
-    unverified_jobseekers = JobSeeker.objects.filter(verified=False).all()
+    unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
     return render(request,'admin/jobseekers/unverified_jobseekers.html',{'unverified_jobseekers':unverified_jobseekers})
 
 @login_required
@@ -314,13 +314,13 @@ def all_employers(request):
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def verified_employers(request):
-    verified_employers = Employer.objects.filter(verified = True).all()
+    verified_employers = User.objects.filter(verified = True,is_employer = True).all()
     return render(request,'admin/employers/verified_employers.html',{'verified_employers':verified_employers})
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def unverified_employers(request):
-    unverified_employers = Employer.objects.filter(verified=False).all()
+    unverified_employers = User.objects.filter(verified = False,is_employer=True).all()
     return render(request,'admin/employers/unverified_employers.html',{'unverified_employers':unverified_employers})
 
 @login_required
