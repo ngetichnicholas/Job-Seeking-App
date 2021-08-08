@@ -193,11 +193,12 @@ def single_jobseeker(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
     documents = FileUpload.objects.filter(jobseeker_id = jobseeker_id)
+    portfolios=Portfolio.objects.filter(jobseeker_id = jobseeker_id)
 
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker})
+  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker,"portfolios":portfolios})
 # show hired jobseeker on employers dashboard
 
 # admin

@@ -10,6 +10,7 @@
         <h1>Registration for Employers:</h1>
         <form action="" method="POST">
             {% csrf_token %}
+            {% bootstrap_form employer_form%}
             <br>
             <br>
             <input type="submit" value="Register" class="btn btn-light btn-block">
