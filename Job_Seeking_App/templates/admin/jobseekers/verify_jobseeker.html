@@ -12,7 +12,8 @@
           {% csrf_token %}
           <fieldset class="form-group">
             <label for="" class="border-bottom mb-4 text-center">Verify Jobseeker</label>
-            {% bootstrap_form update_jobseeker_form%}
+            {% bootstrap_form jobseeker_form%}
+
           </fieldset>
           <div class="form-group">
             <button class="btn btn-primary" type="submit">Update</button>
