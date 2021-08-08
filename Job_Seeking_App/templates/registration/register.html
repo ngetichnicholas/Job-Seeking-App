@@ -1,13 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<div  style="background-color: #BF2180;margin-top: 20px; padding-bottom: 50px; width: 60%;" >
-    <h1 class="display-3">Register Here!</h1>
-   
-    <hr class="my-2">
-    <p class="lead">
-        <a class="btn btn-light btn-lg" href="{% url 'registerJobseeker' %}" role="button">Jobseeker</a>
-        <a class="btn btn-light btn-lg" href="{% url 'registerEmployer' %}" role="button">Employer</a>
-    </p>
+<div class="container d-flex justify-content-center align-items-center" style="margin-top: 30px;"> 
+  <div class="session-container">
+    <div class="row">
+      <div class="col-md-8">
+        <p class="subtitle" style="text-align: center;">Register to get any new job update so you don't miss out</p>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Example text area</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <button type="button" class="btn btn-primary button">Submit</button>
+          </div>
+        </div>
+        <div class="col-md-4"> 
+            <div class="img-container"><img src="https://blogcdn.123rf.com/wp-content/uploads/2021/02/123RF-blog-header-11.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
 </div>
 {% endblock %}
