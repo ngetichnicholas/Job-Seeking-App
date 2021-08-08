@@ -10,6 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from .decorators import unauthenticated_user
 
 from .models import JobSeeker,Employer 
 from .models import User
@@ -19,9 +20,11 @@ from .models import User
 def index(request):
     return render(request,'index.html')
 
+@unauthenticated_user
 def register(request):
     return render(request,'registration/register.html')
 
+@unauthenticated_user
 def registerJobseeker(request):
     registered=False
     if request.method=='POST':
@@ -41,7 +44,7 @@ def registerJobseeker(request):
         job_seeker_form=JobseekerSignUpForm()
     return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
 
-
+@unauthenticated_user
 def registerEmployer(request):
     registered=False
     if request.method=='POST':
@@ -61,7 +64,8 @@ def registerEmployer(request):
         employer_form=EmployerSignUpForm()
         
     return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'registered':registered})
-    
+
+@unauthenticated_user   
 def login(request):
   if request.method == 'POST':
     form = AuthenticationForm(request=request, data=request.POST)
