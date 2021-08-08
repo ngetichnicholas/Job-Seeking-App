@@ -61,6 +61,8 @@ def registerEmployer(request):
             user.employer.email = employer_form.cleaned_data.get('email')
             user.employer.phone = employer_form.cleaned_data.get('phone')
             user.is_employer = True
+            group = Group.objects.get(name = 'employer')
+            user.groups.add(group)
             user.save()
             registered=True
             return redirect('login')
@@ -102,6 +104,7 @@ def dashboard(request):
     return render(request,'dashboard.html')
 
 @login_required
+@allowed_users(allowed_roles=['admin','jobseeker'])
 def jobseeker_profile(request):
   current_user = request.user
   documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
@@ -109,6 +112,7 @@ def jobseeker_profile(request):
   return render(request,'jobseekers/profile.html',{"documents":documents,"current_user":current_user})
 
 @login_required
+@allowed_users(allowed_roles=['admin','jobseeker'])
 def update_jobseeker_profile(request):
   if request.method == 'POST':
     user_form = UpdateJobseeker(request.POST,instance=request.user)
@@ -128,10 +132,12 @@ def update_jobseeker_profile(request):
   return render(request,'jobseekers/update.html',params)
 
 @login_required
+@allowed_users(allowed_roles=['admin','jobseeker'])
 def jobseekerDash(request):
     return render(request,'jobseekers/jobseeker_dashboard.html')
 
 @login_required
+@allowed_users(allowed_roles=['admin','jobseeker'])
 def upload_file(request):
     if request.method == 'POST':
         upload_form = UploadFileForm(request.POST, request.FILES)
@@ -146,6 +152,7 @@ def upload_file(request):
 
 # employers and misc
 @login_required
+@allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
     job_seekers = JobSeeker.objects.filter(verified = True).all()
     employer=Employer.objects.all()
@@ -156,6 +163,7 @@ def employerDash(request):
     return render(request,'employers/employer_dashboard.html',context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','employer'])
 def employerProfile(request,id):
     employer=Employer.objects.get(id=id)
     context={
@@ -165,6 +173,7 @@ def employerProfile(request,id):
   
 # test
 @login_required
+@allowed_users(allowed_roles=['admin','employer'])
 def employerProfile(request):
     employer=request.user
     context={
@@ -174,6 +183,8 @@ def employerProfile(request):
   
 
 # update employers
+@login_required
+@allowed_users(allowed_roles=['admin','employer'])
 def update_employer(request):
   if request.method == 'POST':
     u_form = UpdateEmployerForm(request.POST,instance=request.user)
@@ -193,10 +204,9 @@ def update_employer(request):
   return render(request,'employers/update_employer.html',context)
 
   
-
-
 # specific jobseeker
 @login_required
+@allowed_users(allowed_roles=['admin','employer'])
 def single_jobseeker(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
