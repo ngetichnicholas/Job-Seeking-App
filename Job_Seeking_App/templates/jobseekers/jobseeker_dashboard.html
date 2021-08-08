@@ -59,11 +59,19 @@
               <td>{{user.profile.location}}</td>
             </tr>
           </table>
+          <div class="d-flex justify-content-between">
+            <div class="text-center">
+              <a  href="{% url 'update_jobseeker_profile' %}">
+              <button class="btn btn-success">Update Details</button>
+            </a>
+          </div>
+          <!-- add button -->
           <div class="text-center">
-          <a  href="{% url 'update_jobseeker_profile' %}">
-          <button class="btn btn-success">Update Details</button>
-        </a>
-      </div>
+            <a  href="{% url 'portfolio' %}">
+            <button class="btn btn-success">Add portfolio</button>
+          </a>
+        </div>
+          </div>
         </div>
         <div class="col-md-3"></div>
       </div>

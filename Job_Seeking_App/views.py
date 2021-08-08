@@ -115,7 +115,7 @@ def update_jobseeker_profile(request):
     profile_form = UpdateJobseekerProfile(instance=request.user.profile) 
   params = {
     'user_form':user_form,
-    'profile_form':profile_form
+    'profile_form':profile_form,
   }
   return render(request,'jobseekers/update.html',params)
 
@@ -193,12 +193,28 @@ def single_jobseeker(request,jobseeker_id):
   try:
     jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
     documents = FileUpload.objects.filter(jobseeker_id = jobseeker_id)
+    portfolios=Portfolio.objects.filter(jobseeker_id = jobseeker_id)
 
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker})
-# show hired jobseeker on employers dashboard
+  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker,"portfolios":portfolios})
+
+
+# jobseeker update portfolio
+def add_portfolios(request):
+  if request.method == 'POST':
+    port_form=AddPortfolio(request.POST,instance=request.user)
+    if port_form.is_valid():
+      port_form.save()
+      messages.success(request,'Your Portfolio has been added')
+      return redirect('jobseeker_profile')
+  else:
+    port_form = AddPortfolio(instance=request.user)
+  context = {
+    'port_form': port_form,
+    }
+  return render(request,"jobseekers/portfolio.html",context)
 
 # admin
 
