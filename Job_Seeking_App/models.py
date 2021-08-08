@@ -13,6 +13,13 @@ class User(AbstractUser):
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
+    email = models.EmailField()
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
+    profile_picture =CloudinaryField('image')
+    location = models.CharField(max_length=144,null=True,blank=True)
+    phone = models.IntegerField(null=True,blank=True)
+
 
     def delete_user(self):
         self.delete()
@@ -32,17 +39,11 @@ JOb_CATEGORIES = (
 )
 
 class JobSeeker(models.Model):
-    first_name =models.CharField(max_length=144,null=True,blank=True)
-    last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
     availability = models.CharField(choices=JOBSEEKER_AVAILABILITY, default="Available", max_length=20)
     salary = models.IntegerField(default=0)
     job_category = models.CharField(max_length=300,choices=JOb_CATEGORIES)
-    email = models.EmailField()
-    phone = models.IntegerField(null=True,blank=True)
-    location = models.CharField(max_length=144,null=True,blank=True)
     bio =models.TextField(null=True,blank=True)
-    profile_picture =CloudinaryField('image')
 
     @receiver(post_save, sender=User)
     def update_jobseeker_signal(sender, instance, created, **kwargs):
@@ -69,13 +70,7 @@ class FileUpload(models.Model):
         return self.name
 
 class Employer(models.Model):
-    first_name =models.CharField(max_length=144,null=True,blank=True)
-    last_name = models.CharField(max_length=144,null=True,blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="employer")
-    email = models.EmailField()
-    profile_picture =CloudinaryField('employer')
-    phone = models.IntegerField(null=True,blank=True)
-    location = models.CharField(max_length=144,null=True,blank=True)
     company_name = models.CharField(max_length=144,null=True,blank=True)
 
     @receiver(post_save, sender=User)
