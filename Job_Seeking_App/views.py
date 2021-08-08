@@ -267,17 +267,17 @@ def verify_jobseeker(request, jobseeker_id):
   name = user.username
   email = user.email
   if request.method == 'POST':
-    update_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=user)
-    if update_jobseeker_form.is_valid():
-      update_jobseeker_form.save()
+    verify_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=user)
+    if verify_jobseeker_form.is_valid():
+      verify_jobseeker_form.save()
       send_verification_email(name, email)
       data = {'success': 'Verification sent'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
-    update_jobseeker_form = AdminVerifyUserForm(instance=user)
+    verify_jobseeker_form = AdminVerifyUserForm(instance=user)
 
-  return render(request, 'admin/jobseekers/verify_jobseeker.html', {"update_jobseeker_form":update_jobseeker_form})
+  return render(request, 'admin/jobseekers/verify_jobseeker.html', {"verify_jobseeker_form":verify_jobseeker_form})
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
