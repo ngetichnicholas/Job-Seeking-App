@@ -10,7 +10,7 @@ urlpatterns = [
     path('registerJobseeker/',app_views.registerJobseeker,name='registerJobseeker'),
     path('registerEmployer/',app_views.registerEmployer,name='registerEmployer'),
     path('accounts/login/',app_views.login,name='login'),
-    path('logout/',auth_views.LogoutView.as_view(template_name = 'registration/logout.html'),name='logout'),
+    path('logout/',auth_views.LogoutView.as_view(template_name = 'index.html'),name='logout'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
@@ -26,11 +26,19 @@ urlpatterns = [
     path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
     path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
 
+    path('all_employers',app_views.all_employers,name='all_employers'),
+    path('verified_employers',app_views.verified_employers,name='verified_employers'),
+    path('unverified_employers',app_views.unverified_employers,name='unverified_employers'),
+    path('verify_employer/<int:employer_id>',app_views.verify_employer,name='verify_employer'),
+    path('delete_employer/<int:employer_id>', app_views.delete_employer,name='delete_employer'),
+    path('employer_details/<int:employer_id>', app_views.employer_details,name='employer_details'),
+
 
     # get single jobseeker details from
     path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
-    path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
+    path('employer_profile/',app_views.employerProfile,name='employer_profile'),
+    path('update_employer/',app_views.update_employer,name='update_employer'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

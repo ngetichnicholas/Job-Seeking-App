@@ -5,6 +5,6 @@ from django.contrib import admin
 admin.site.register(JobSeeker)
 admin.site.register(Employer)
 admin.site.register(User)
-admin.site.register(Category)
-admin.site.register(Jobs)
+# admin.site.register(Category)
+# admin.site.register(Jobs)
 admin.site.register(FileUpload)
