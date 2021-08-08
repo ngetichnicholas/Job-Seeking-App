@@ -14,8 +14,6 @@
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Location</th>
-                  <th scope="col">Availability</th>
-                  <th scope="col">Salary</th>
                   <th scope="col">Hire</th>
               </tr>
               {% for job_seeker in job_seekers %}
@@ -26,9 +24,7 @@
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
                   <td>{{job_seeker.location}}</td>
-                  <td>{{job_seeker.availability}}</td>
-                  <td>{{job_seeker.salary}}</td>
-                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" ><a href="mailto:{{job_seeker.user.email}}">Contact</a></button></td>
+                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" ><a href="mailto:{{job_seeker.email}}">Contact</a></button></td>
               </tr>
               {%endfor%}
              
