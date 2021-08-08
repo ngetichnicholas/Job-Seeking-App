@@ -13,6 +13,9 @@ class User(AbstractUser):
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
 
+    def delete_user(self):
+        self.delete()
+
 JOBSEEKER_AVAILABILITY = (
     ('Available', "Available"),
     ('Not Available', "Not Available"),
@@ -74,6 +77,7 @@ class Employer(models.Model):
     phone = models.IntegerField(null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
     company_name = models.CharField(max_length=144,null=True,blank=True)
+    verified = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
     def update_employer_signal(sender, instance, created, **kwargs):
@@ -90,33 +94,33 @@ class Employer(models.Model):
     def __str__(self):
         return self.user.username
 
-JOB_TYPE = (
-    ('1', "Full time"),
-    ('2', "Part time"),
-    ('3', "Internship"),
-)
+# JOB_TYPE = (
+#     ('1', "Full time"),
+#     ('2', "Part time"),
+#     ('3', "Internship"),
+# )
 
-class Category(models.Model):
-    name = models.CharField(max_length=200)
+# class Category(models.Model):
+#     name = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-class Jobs(models.Model):
-    user = models.ForeignKey(User, related_name='User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=300)
-    description = models.TextField(max_length=3000,null=True)
-    tags = models.CharField(max_length=144,null=True)
-    location = models.CharField(max_length=300)
-    job_type = models.CharField(choices=JOB_TYPE, max_length=1)
-    category = models.ForeignKey(Category, related_name='Category', on_delete=models.CASCADE)
-    salary = models.CharField(max_length=30, blank=True)
-    company_name = models.CharField(max_length=300)
-    company_description = models.TextField(max_length=3000,null=True)
-    published_date = models.DateTimeField(auto_now_add=True)
+# class Jobs(models.Model):
+#     user = models.ForeignKey(User, related_name='User', on_delete=models.CASCADE)
+#     title = models.CharField(max_length=300)
+#     description = models.TextField(max_length=3000,null=True)
+#     tags = models.CharField(max_length=144,null=True)
+#     location = models.CharField(max_length=300)
+#     job_type = models.CharField(choices=JOB_TYPE, max_length=1)
+#     category = models.ForeignKey(Category, related_name='Category', on_delete=models.CASCADE)
+#     salary = models.CharField(max_length=30, blank=True)
+#     company_name = models.CharField(max_length=300)
+#     company_description = models.TextField(max_length=3000,null=True)
+#     published_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
 
 
