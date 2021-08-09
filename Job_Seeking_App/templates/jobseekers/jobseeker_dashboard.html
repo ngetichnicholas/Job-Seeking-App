@@ -6,10 +6,10 @@
     <div class="col-md-3"></div>
     <div class="col-md-6 text-center">
       {% if user.profile.profile_picture.url %}
-      <img class="profile_picture"
+      <img class="profile_picture my-4"
          src="{{ user.profile.profile_picture.url }}" style="height: 20vh; width:20vh;" alt="">
          {% else %}
-        <img class="profile_picture"
+        <img class="profile_picture my-4"
            src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 20vh; width:20vh;" alt="">
            {% endif %}
 
@@ -57,6 +57,14 @@
             <tr>
               <th>Location</th>
               <td>{{user.profile.location}}</td>
+            </tr>
+            <tr>
+              <th>Availability</th>
+              <td>{{user.profile.availability}}</td>
+            </tr>
+            <tr>
+              <th>Job_Category</th>
+              <td>{{user.profile.job_category}}</td>
             </tr>
           </table>
           <div class="text-center">
