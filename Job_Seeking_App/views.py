@@ -17,6 +17,8 @@ from .decorators import unauthenticated_user,allowed_users,admin_only
 from .models import JobSeeker,Employer 
 from .models import User
 
+from django_daraja.mpesa.core import MpesaClient
+
 # Create your views here.
 
 def index(request):
@@ -322,17 +324,30 @@ def unverified_employers(request):
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def verify_employer(request, employer_id):
-  employer = Employer.objects.get(pk=employer_id)
+  employer = User.objects.get(pk=employer_id)
   if request.method == 'POST':
     update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
     if update_employer_form.is_valid():
+      cl = MpesaClient()
+      token = cl.access_token()
+      phone_number = '0725470732'
+      amount = 1
+      account_reference = 'reference'
+      transaction_desc = 'Description'
+      callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+      response = cl.stk_push(phone_number, amount, account_reference,  transaction_desc, callback_url)
       update_employer_form.save()
-      messages.success(request, f'employer updated!')
+      messages.success(request, f'employer verified!')
+      return HttpResponse(response.text)
       return redirect('admin_dashboard')
   else:
     update_employer_form = AdminVerifyUserForm(instance=employer)
 
   return render(request, 'admin/employers/update_employer.html', {"update_employer_form":update_employer_form})
+
+def stk_push_callback(request):
+  data = request.body
+  # You can do whatever you want with the notification received from MPESA here.
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
