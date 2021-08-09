@@ -1,4 +1,6 @@
-
+body {
+  background-color: #eeebe4;
+}
 .notification {
   background-color: #258DC0;
   color: white;
@@ -75,13 +77,32 @@
   margin-bottom: 20px;
   background-color: midnightblue;
 }
-.session-container{
-  width: 85%;
-  padding: 50px;
-  background-color: white;
-  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
-  border-radius: 10px;
+
+.masthead {
+  background-image: url('../images/banner4-carousel1.jpg') !important;
 }
-.button{
-  width: 100%;
+#mainNav {
+  background-color: #F8F9FA;
+}
+
+.navbar-brand, #mainNav ul li a {
+  color: #F4623A !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+}
+.fixed-top {
+  position: unset !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.btn, .card {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+.form-control {
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
