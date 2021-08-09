@@ -1,0 +1,94 @@
+{% load bootstrap4 %}
+{% load static %}
+{% load cloudinary %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" href="https://res.cloudinary.com/dbos9xidr/image/upload/v1626082454/as8ixvziyd2bq9i5yqzl.jpg">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../static/css/admin.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if title %}
+  <title>{{title}}</title>
+  {% else %}
+  <title>Admin panel</title>
+  {% endif %}
+
+  {% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% endblock styles %}
+</head>
+
+<body>
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+      </div>
+      <ul class="list-unstyled components mb-5">
+        {% if user.is_authenticated %}
+        <li class="active">
+          <a href="/logout">Logout</a>
+        </li>
+        {% else %}
+        <li class="active">
+            <a  href="{% url 'login' %}">Login</a>
+        </li>
+        {% endif %}
+        <li class="active">
+          <a href="{% url 'admin_dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+        </li>
+        <li class="active">
+          <a href="">JOBSEEKERS</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'all_jobseekers' %}"><i class="fas fa-book"></i>All Jobseekers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'verified_jobseekers' %}"><i class="fas fa-book"></i> Verified Jobseekers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'unverified_jobseekers' %}"><i class="fas fa-book"></i> Unverified Jobseekers</a>
+        </li>
+        <li class="active">
+          <a href="">EMPLOYERS</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'all_employers' %}"><i class="fas fa-book"></i>All employers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'verified_employers' %}"><i class="fas fa-book"></i> Verified employers</a>
+        </li>
+        <li class="active">
+          <a href="{% url 'unverified_employers' %}"><i class="fas fa-book"></i> Unverified employers</a>
+        </li>
+      </ul>
+
+    </nav>
+
+      <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </div>
+  {% block scripts %}
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../static/js/popper.js"></script>
+  <script src="../../static/js/bootstrap.min.js"></script>
+  <script src="../../static/js/main.js"></script>
+  {% bootstrap_javascript %}
+  {% endblock scripts %}
+</body>
+
+</html>

@@ -19,9 +19,13 @@ from Job_Seeking_App import views
 
 urlpatterns = [
     path('',include('Job_Seeking_App.urls')),
+<<<<<<< HEAD
     path('',views.index,name='index'),
     path('admin/', admin.site.urls),
     path('jobseekerDash/',views.jobseekerDash,name='jobseekerDash'),
     path('employerDash/',views.employerDash,name='employerDash'),
    
+=======
+    path('admin/', admin.site.urls),   
+>>>>>>> 3662b7c21f59a2bab1d415e3ad25ea40807efe87
 ]
