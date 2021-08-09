@@ -11,7 +11,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-import django_heroku
+import django_on_heroku
 from decouple import config, Csv
 import dj_database_url
 
@@ -151,5 +151,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
 AUTH_USER_MODEL = 'Job_Seeking_App.User'
