@@ -1,49 +1,42 @@
 {%extends "base.html"%}
-{%load bootstrap4%}
+{% load bootstrap4 %}
 {% block content %}
-
-    <!-- <div class="login"> -->
-        <!-- <div class="container d-flex justify-content-center align-items-center" style="margin-top: 30px;"> 
-            <div class="session-container">
-
-            </div>
-        </div> -->
-        <!-- </div> -->
-        <div class="row  w-100">
-            <!-- Empty div -->
-            
-                
-        
-            <div class="col-md-6">
-                {% if form.errors %}
-                <p> Password or Username is incorrect </p>
-                {% endif %}
-                <div class="panel panel-light">
-        
-                    <div class="panel-body card p-5 mb-5 mt-5" style="background-color: #e1ecf1;">
-                        <h3 class="text-center">Welcome to our<br> job-seeking app</h3>
-                        <p>log in to get new job that intrest you!!</p>
-                        <form method="post">
-                            {% csrf_token %}
-                            {% bootstrap_form form %}
-        
-                            <div class="form-group">
-                              <br>
-                              <br>
-                                <input type="submit" class="btn btn-light btn-block" value="Login">
-                            </div>
-                            <p class="container" style="color: white;">You dont have an account? <a href="/register" style="color: rgb(0, 0, 0);"> Register</a></p>
-        
-                        </form>
-        
-                    </div>
-        
-                </div>
-        
-            </div>
-            <!-- empty div -->
-            <div class="col-md-6">
-                <img src="https://blogcdn.123rf.com/wp-content/uploads/2021/02/123RF-blog-header-11.jpg" style="margin-top: 50px ;padding-right: 50%;margin-bottom: 30%;height: 67%; ">
-            </div>
+<div class="container">
+  <div class="row">
+    <!-- Empty div -->
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      {% if messages %}
+        {% for message in messages %}
+        <p class="text-center"> {{ message }}</p>
+          {% endfor %}
+      {% endif %}
+      <div class="card">
+        <div class="card-header">
+            <h3>Sign In</h3>
         </div>
+        <div class="card-body">
+
+          <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form%}
+
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary btn-sm" value="Login">
+            </div>
+            <input type="hidden" name="next" value="{{next}}">
+            <p>You dont have an account? <a href="{% url 'register' %}"> Register</a></p>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- empty div -->
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
 {% endblock %}

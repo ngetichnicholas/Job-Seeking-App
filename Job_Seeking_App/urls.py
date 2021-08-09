@@ -10,10 +10,10 @@ urlpatterns = [
     path('registerJobseeker/',app_views.registerJobseeker,name='registerJobseeker'),
     path('registerEmployer/',app_views.registerEmployer,name='registerEmployer'),
     path('accounts/login/',app_views.login,name='login'),
-    path('logout/',auth_views.LogoutView.as_view(template_name = 'registration/logout.html'),name='logout'),
+    path('logout/',auth_views.LogoutView.as_view(template_name = 'index.html'),name='logout'),
+    
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
-    path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('upload_file',app_views.upload_file,name='upload_file'),
     path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
     path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
@@ -35,13 +35,11 @@ urlpatterns = [
 
 
     # get single jobseeker details from
-
     path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
-    path('employer_profile/<id>',app_views.employerProfile,name='employer_profile'),
+    path('employer_profile/',app_views.employerProfile,name='employer_profile'),
     path('update_employer/',app_views.update_employer,name='update_employer'),
-    # hire
-    path('hireJobseeker/',app_views.hireJobseeker,name='hireJobseeker'),
+    path('portfolio/',app_views.add_portfolios,name='portfolio'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

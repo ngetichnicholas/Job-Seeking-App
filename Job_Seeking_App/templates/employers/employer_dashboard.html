@@ -6,17 +6,17 @@
     <div class="col-md-11">
       <h5>POTENTIAL CANDIDATES: </h5>
       <hr>
-      <div class="card card-body">
-          <table class="table table-sm">
+      <div class="card card-body table-responsive">
+          <table class="table table-sm table-hover table-dark ">
               <tr>
-                  <th>View</th>
-                  <th>Names</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Location</th>
-                  <th>Availability</th>
-                  <th>Salary</th>
-                  <th>Hire</th>
+                  <th scope="col" >View</th>
+                  <th scope="col">Names</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Availability</th>
+                  <th scope="col">Salary</th>
+                  <th scope="col">Hire</th>
               </tr>
               {% for job_seeker in job_seekers %}
               <tr>
@@ -28,11 +28,12 @@
                   <td>{{job_seeker.location}}</td>
                   <td>{{job_seeker.availability}}</td>
                   <td>{{job_seeker.salary}}</td>
-                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" >Hire</button></td>
+                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" ><a href="mailto:{{job_seeker.user.email}}">Contact</a></button></td>
               </tr>
               {%endfor%}
              
           </table>
+          
       </div>
   </div>
   <div class="col-md-1"></div>

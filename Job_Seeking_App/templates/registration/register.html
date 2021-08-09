@@ -1,26 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center" style="margin-top: 30px;"> 
-  <div class="session-container">
-    <div class="row">
-      <div class="col-md-8">
-        <p class="subtitle" style="text-align: center;">Register to get any new job update so you don't miss out</p>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example text area</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-          <div class="mb-3">
-            <button type="button" class="btn btn-primary button">Submit</button>
-          </div>
-        </div>
-        <div class="col-md-4"> 
-            <div class="img-container"><img src="https://blogcdn.123rf.com/wp-content/uploads/2021/02/123RF-blog-header-11.jpg" alt=""></div>
-        </div>
-      </div>
+
+<div class="jumbotron jumbotron-fluid" style="margin-top: 140px;">
+    <div class="container">
+      <h1 class="display-4">Sign up for a free account today</h1>
+      <p class="lead">Select below the type of account you want to create</p>
+      <hr class="my-2">
+      <p class="lead">
+          <a style=" width: 100px; height: 70px;" class="btn btn-success lg" href="{% url 'registerJobseeker' %}" role="button" disabled>
+            <span class="spinner-grow spinner-grow-sm"></span>
+            Jobseeker..</a>
+            <a style=" width: 100px; height: 70px;" class="btn btn-success lg"href="{% url 'registerEmployer' %}" role="button" disabled>
+              <span class="spinner-grow spinner-grow-sm"></span>
+              Employer..</a>
+      </p>
     </div>
-</div>
+  </div>
+  
+  
 {% endblock %}
