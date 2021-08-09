@@ -25,8 +25,8 @@
           <form class="forms" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
-              {% bootstrap_form user_form%}
-              {% bootstrap_form jobseeker_form%}
+              {% bootstrap_form u_form%}
+              {% bootstrap_form p_form%}
             </fieldset>
             <div class="form-group">
               <button class="btn btn-outline-success" type="submit">Update</button>

@@ -6,35 +6,45 @@
     <div class="col-md-11">
       <h5>POTENTIAL CANDIDATES: </h5>
       <hr>
-      <div class="card card-body">
-          <table class="table table-sm">
+      <div class="card card-body table-responsive">
+          <table class="table table-sm table-hover table-dark ">
               <tr>
-                  <th>View</th>
-                  <th>Names</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Location</th>
-                  <th>Availability</th>
-                  <th>Salary</th>
-                  <th>Hire</th>
+                  <th scope="col" >View</th>
+                  <th scope="col">Names</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Hire</th>
               </tr>
               {% for job_seeker in job_seekers %}
               <tr>
                 <td><a href="{% url 'specific_details' job_seeker.id%}" class="btn-btn-sm btn-outline-info">view</a></td>
+                <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
                   <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
                   <td>{{job_seeker.location}}</td>
-                  <td>{{job_seeker.availability}}</td>
-                  <td>{{job_seeker.salary}}</td>
-                  <td><a href="" class="btn btn-outline-info btn-sm">Hire</a></td>
+                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" ><a href="mailto:{{job_seeker.email}}">Contact</a></button></td>
               </tr>
               {%endfor%}
              
           </table>
+          
       </div>
   </div>
   <div class="col-md-1"></div>
   </div>
 </div>
+<script>
+let hireJobSeeker = document.getElementsByClassName("hireJobSeeker");
+
+for (let i =0; i<hireJobSeeker.length; i++) {
+  hireJobSeeker[i].addEventListener("click",function (){
+    let seekerId=this.dataset.product;
+    let action=this.dataset.action;
+    console.log("seekerId:",seekerId); 
+  })
+}
+
+</script>
 {% endblock %}
