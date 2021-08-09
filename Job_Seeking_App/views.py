@@ -30,44 +30,40 @@ def register(request):
 def registerJobseeker(request):
     registered=False
     if request.method=='POST':
-        job_seeker_form=JobseekerSignUpForm(request.POST)
+        job_seeker_form=UserSignUpForm(request.POST)
         if job_seeker_form.is_valid():
             user=job_seeker_form.save()
             user.refresh_from_db()
-            user.profile.first_name = job_seeker_form.cleaned_data.get('first_name')
-            user.profile.last_name = job_seeker_form.cleaned_data.get('last_name')
-            user.profile.email = job_seeker_form.cleaned_data.get('email')
-            user.profile.phone = job_seeker_form.cleaned_data.get('phone')
+            user.email = job_seeker_form.cleaned_data.get('email')
             user.is_jobseeker = True
+            group, created = Group.objects.get_or_create(name='jobseeker')
             group = Group.objects.get(name = 'jobseeker')
             user.groups.add(group)
             user.save()
             registered=True
             return redirect('login')
     else:
-        job_seeker_form=JobseekerSignUpForm()
+        job_seeker_form=UserSignUpForm()
     return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
 
 @unauthenticated_user
 def registerEmployer(request):
     registered=False
     if request.method=='POST':
-        employer_form=EmployerSignUpForm(request.POST)
+        employer_form=UserSignUpForm(request.POST)
         if employer_form.is_valid():
             user=employer_form.save()
             user.refresh_from_db()
-            user.employer.first_name = employer_form.cleaned_data.get('first_name')
-            user.employer.last_name = employer_form.cleaned_data.get('last_name')
-            user.employer.email = employer_form.cleaned_data.get('email')
-            user.employer.phone = employer_form.cleaned_data.get('phone')
+            user.email = employer_form.cleaned_data.get('email')
             user.is_employer = True
+            group, created = Group.objects.get_or_create(name='employer')
             group = Group.objects.get(name = 'employer')
             user.groups.add(group)
             user.save()
             registered=True
             return redirect('login')
     else:
-        employer_form=EmployerSignUpForm()
+        employer_form=UserSignUpForm()
         
     return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'registered':registered})
 
@@ -115,19 +111,19 @@ def jobseeker_profile(request):
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def update_jobseeker_profile(request):
   if request.method == 'POST':
-    user_form = UpdateJobseeker(request.POST,instance=request.user)
-    profile_form = UpdateJobseekerProfile(request.POST,request.FILES,instance=request.user.profile)
-    if user_form.is_valid() and profile_form.is_valid():
+    user_form = UpdateUserProfile(request.POST,request.FILES,instance=request.user)
+    jobseeker_form = UpdateJobseekerProfile(request.POST,instance=request.user.profile)
+    if user_form.is_valid() and jobseeker_form.is_valid():
       user_form.save()
-      profile_form.save()
+      jobseeker_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
       return redirect('jobseeker_profile')
   else:
-    user_form = UpdateJobseeker(instance=request.user)
-    profile_form = UpdateJobseekerProfile(instance=request.user.profile) 
+    user_form = UpdateUserProfile(instance=request.user)
+    jobseeker_form = UpdateJobseekerProfile(instance=request.user.profile) 
   params = {
     'user_form':user_form,
-    'profile_form':profile_form,
+    'jobseeker_form':jobseeker_form
   }
   return render(request,'jobseekers/update.html',params)
 
@@ -154,7 +150,7 @@ def upload_file(request):
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
-    job_seekers = JobSeeker.objects.filter(verified = True).all()
+    job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
     context={
         "job_seekers":job_seekers,
@@ -187,15 +183,15 @@ def employerProfile(request):
 @allowed_users(allowed_roles=['admin','employer'])
 def update_employer(request):
   if request.method == 'POST':
-    u_form = UpdateEmployerForm(request.POST,instance=request.user)
-    p_form = UpdateEmployerProfile(request.POST,request.FILES,instance=request.user.employer)
+    u_form = UpdateUserProfile(request.POST,request.FILES,instance=request.user)
+    p_form = UpdateEmployerProfile(request.POST,instance=request.user.employer)
     if u_form.is_valid() and p_form.is_valid():
       u_form.save()
       p_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
       return redirect('employer_profile')
   else:
-    u_form = UpdateEmployerForm(instance=request.user)
+    u_form = UpdateUserProfile(instance=request.user)
     p_form = UpdateEmployerProfile(instance=request.user.employer) 
   context = {
     'u_form':u_form,
@@ -216,7 +212,7 @@ def single_jobseeker(request,jobseeker_id):
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'jobseekers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker,"portfolios":portfolios})
+  return render(request,'employers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker,"portfolios":portfolios})
 
 
 # jobseeker update portfolio
@@ -267,21 +263,21 @@ def unverified_jobseekers(request):
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def verify_jobseeker(request, jobseeker_id):
-  jobseeker = JobSeeker.objects.get(pk=jobseeker_id)
-  name = jobseeker.user.username
-  email = jobseeker.email
+  user = User.objects.get(pk=jobseeker_id)
+  name = user.username
+  email = user.email
   if request.method == 'POST':
-    update_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=jobseeker)
-    if update_jobseeker_form.is_valid():
-      update_jobseeker_form.save()
+    verify_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=user)
+    if verify_jobseeker_form.is_valid():
+      verify_jobseeker_form.save()
       send_verification_email(name, email)
       data = {'success': 'Verification sent'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
-    update_jobseeker_form = AdminVerifyUserForm(instance=jobseeker)
+    verify_jobseeker_form = AdminVerifyUserForm(instance=user)
 
-  return render(request, 'admin/jobseekers/update_jobseeker.html', {"update_jobseeker_form":update_jobseeker_form})
+  return render(request, 'admin/jobseekers/verify_jobseeker.html', {"verify_jobseeker_form":verify_jobseeker_form})
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
