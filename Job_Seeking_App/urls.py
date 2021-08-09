@@ -1,13 +1,8 @@
 from django.urls import path
 from . import views as app_views
 from django.contrib.auth import views as auth_views
-<<<<<<< HEAD
-
-app_name='jobSeekingApp'
-=======
 from django.conf import settings
 from django.conf.urls.static import static
->>>>>>> 3662b7c21f59a2bab1d415e3ad25ea40807efe87
 
 urlpatterns = [
     path('',app_views.index,name='index'),
@@ -15,14 +10,6 @@ urlpatterns = [
     path('registerJobseeker/',app_views.registerJobseeker,name='registerJobseeker'),
     path('registerEmployer/',app_views.registerEmployer,name='registerEmployer'),
     path('accounts/login/',app_views.login,name='login'),
-<<<<<<< HEAD
-    path('logout/',auth_views.LogoutView.as_view(template_name = 'registration/logout.html'),name='logout'),
-    path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
-    path('employerDash/',app_views.employerDash,name='employerDash'),
-    path('dashboard',app_views.dashboard,name='dashboard'),
-   
-]
-=======
     path('logout/',auth_views.LogoutView.as_view(template_name = 'index.html'),name='logout'),
     
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
@@ -56,4 +43,3 @@ urlpatterns = [
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
->>>>>>> 3662b7c21f59a2bab1d415e3ad25ea40807efe87
