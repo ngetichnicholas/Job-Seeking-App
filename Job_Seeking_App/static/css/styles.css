@@ -1,4 +1,6 @@
-
+body {
+  background-color: #eeebe4;
+}
 .notification {
   background-color: #258DC0;
   color: white;
@@ -37,8 +39,8 @@
   right: -10px;
   padding: 2px 10px;
   border-radius: 50%;
-  background-color: rgb(26, 91, 231);
-  color: white;
+  background-color: rgb(2, 57, 177);
+  color: rgb(126, 5, 5);
 }
 .seek{
     color: azure;
@@ -51,4 +53,67 @@
   text-align: center;
   margin-left: 2rem;
   margin-right: 2rem;
+}
+.circle{
+  background-color: red;
+  width: 250px;
+  height: 200px;
+  border-radius: 50%;
+  border: 15px solid rgb(172, 11, 11);
+  box-shadow: 0 0 10px rgb(172, 11, 11);
+  margin-left: 100%;
+
+}
+.circle2{
+  background-color: red;
+  width: 250px;
+  height: 200px;
+  border-radius: 50%;
+  border: 15px solid rgb(172, 11, 11);
+  box-shadow: 0 0 10px rgb(172, 11, 11);
+  margin-right: 200%;
+}
+.big{
+  margin-bottom: 20px;
+  background-color: midnightblue;
+}
+
+.masthead {
+  background-image: url('../images/banner4-carousel1.jpg') !important;
+}
+#mainNav {
+  background-color: #F8F9FA;
+}
+
+.navbar-brand, #mainNav ul li a {
+  color: #F4623A !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+}
+.fixed-top {
+  position: unset !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.btn, .card {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+.form-control {
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 5vh !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
