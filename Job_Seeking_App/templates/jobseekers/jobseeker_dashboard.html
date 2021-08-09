@@ -7,10 +7,10 @@
     <div class="col-md-6 text-center">
       {% if user.profile.profile_picture.url %}
       <img class="profile_picture my-4"
-         src="{{ user.profile.profile_picture.url }}" style="height: 60vh; width:60vh;" alt="">
+         src="{{ user.profile.profile_picture.url }}" style="height: 20vh; width:20vh;" alt="">
          {% else %}
         <img class="profile_picture my-4"
-           src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 60vh; width:60vh;" alt="">
+           src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 20vh; width:20vh;" alt="">
            {% endif %}
 
         <h2 class="">{{user.username}}</h2>
@@ -63,17 +63,25 @@
               <td>{{user.profile.availability}}</td>
             </tr>
             <tr>
+              <th>Job Category</th>
+              <td>{{user.profile.job_category}}</td>
+            </tr>
+            <tr>
+              <th>Availability</th>
+              <td>{{user.profile.availability}}</td>
+            </tr>
+            <tr>
               <th>Job_Category</th>
               <td>{{user.profile.job_category}}</td>
             </tr>
           </table>
-          <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-between">
             <div class="text-center">
               <a  href="{% url 'update_jobseeker_profile' %}">
               <button class="btn btn-success">Update Details</button>
             </a>
           </div>
-        <!-- add button -->
+          <!-- add button -->
           <div class="text-center">
             <a  href="{% url 'portfolio' %}">
             <button class="btn btn-success">Add portfolio</button>

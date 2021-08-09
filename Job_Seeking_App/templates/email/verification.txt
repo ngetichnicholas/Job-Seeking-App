@@ -1,0 +1,6 @@
+Hello {{name}}
+
+Your profile has been successfully verified
+
+Regards,
+Nicholas Ngetich
