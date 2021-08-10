@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'crispy_forms',
     'django_daraja',
+    'phonenumber_field',
     ]
 
 MIDDLEWARE = [

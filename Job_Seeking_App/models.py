@@ -88,6 +88,11 @@ class Employer(models.Model):
     def __str__(self):
         return self.user.username
 
+class Payments(models.Model):
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
+    phone = models.CharField(max_length=144,null=True,blank=True)
+
 # previous projects
 class Portfolio(models.Model):
     jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='portfolio')
