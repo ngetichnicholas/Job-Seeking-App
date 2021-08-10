@@ -12,7 +12,7 @@ body {
 }
 
 .notification:hover {
-  background: white;
+  background: rgb(255, 250, 250);
 }
 
 .unverified .badge3 {
@@ -54,35 +54,11 @@ body {
   margin-left: 2rem;
   margin-right: 2rem;
 }
-.circle{
-  background-color: red;
-  width: 250px;
-  height: 200px;
-  border-radius: 50%;
-  border: 15px solid rgb(172, 11, 11);
-  box-shadow: 0 0 10px rgb(172, 11, 11);
-  margin-left: 100%;
-
-}
-.circle2{
-  background-color: red;
-  width: 250px;
-  height: 200px;
-  border-radius: 50%;
-  border: 15px solid rgb(172, 11, 11);
-  box-shadow: 0 0 10px rgb(172, 11, 11);
-  margin-right: 200%;
-}
-.big{
-  margin-bottom: 20px;
-  background-color: midnightblue;
-}
-
 .masthead {
-  background-image: url('../images/banner4-carousel1.jpg') !important;0706897620
+  background-image: url('https://www.wgu.edu/content/dam/web-sites/blog-newsroom/blog/images/national/2019/october/achieve-job-security-in-uncertain-world.jpg') !important;
 }
 #mainNav {
-  background-color: #F8F9FA;
+  background-color: white;
 }
 
 .navbar-brand, #mainNav ul li a {
@@ -116,4 +92,17 @@ body {
   height: 5vh !important;
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
+}
+.register{
+  background-color: rgb(216, 192, 192);
+  width: 100%;
+}
+.container7{
+  background-color: rgb(216, 192, 192);
+}
+.container8{
+  background-color:rgb(216, 192, 192);
+}
+.container9{
+  background-color: rgb(216, 192, 192);
 }
