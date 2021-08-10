@@ -33,6 +33,8 @@ urlpatterns = [
     path('delete_employer/<int:employer_id>', app_views.delete_employer,name='delete_employer'),
     path('employer_details/<int:employer_id>', app_views.employer_details,name='employer_details'),
 
+    path('daraja/stk-push', app_views.stk_push_callback, name='mpesa_stk_push_callback'),
+
 
     # get single jobseeker details from
     path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
