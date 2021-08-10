@@ -19,5 +19,6 @@ from Job_Seeking_App import views
 
 urlpatterns = [
     path('',include('Job_Seeking_App.urls')),
+    path('api/v1/', include('mpesa_api.urls')),
     path('admin/', admin.site.urls),   
 ]
