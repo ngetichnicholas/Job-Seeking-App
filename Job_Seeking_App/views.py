@@ -434,3 +434,7 @@ def employer_details(request,employer_id):
 
   return render(request,'admin/employers/employers_details.html',{'employer':employer})
 
+#                           admin calender
+
+def calender(request):
+  return render(request,'admin/calender.html')
