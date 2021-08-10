@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'crispy_forms',
     'django_daraja',
-]
+    'advertising',]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,6 +80,10 @@ TEMPLATES = [
         },
     },
 ]
+TEMPLATE_CONTEXT_PROCESSORS = (
+# Other context processors would go here
+'adcode.context_processors.current_placements',
+)
 
 WSGI_APPLICATION = 'Job_Seeking.wsgi.application'
 
