@@ -162,20 +162,13 @@ def employerDash(request):
 
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
-def employerProfile(request,id):
-    employer=Employer.objects.get(id=id)
-    context={
-        "employer":employer,
-    }
-    return render(request,'employers/employer_profile.html',context)
-  
-# test
-@login_required
-@allowed_users(allowed_roles=['admin','employer'])
 def employerProfile(request):
+  # notifications on avialable jobseeker
     employer=request.user
+    available=User.objects.filter(is_jobseeker= True,verified=True).all()
     context={
         "employer":employer,
+        "available":available,
     }
     return render(request,'employers/employer_profile.html',context)
   
