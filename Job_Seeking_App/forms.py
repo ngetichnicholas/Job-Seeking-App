@@ -48,4 +48,4 @@ class AddPortfolio(forms.ModelForm):
 class VerifyEmployer(forms.ModelForm):
   class Meta:
     model = Payments
-    fields = ['first_name', 'last_name','phone']
+    fields = ['first_name', 'last_name','mpesa_number']
