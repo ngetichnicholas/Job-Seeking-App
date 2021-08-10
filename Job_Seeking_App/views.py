@@ -206,7 +206,7 @@ def employerDash(request):
     employer=Employer.objects.all()
     first_name = request.POST.get('first_name')
     last_name = request.POST.get('last_name')
-    phone = request.POST.get('phone')
+    phone = request.POST.get('mpesa_number')
     if request.method == 'POST':
         verify_employer_form = VerifyEmployer(request.POST,instance=request.user)
         if verify_employer_form.is_valid():
@@ -228,7 +228,7 @@ def employerDash(request):
             }
             response = requests.post(api_url, json=request, headers=headers)
             user = verify_employer_form.save()
-            # user.verified = True
+            user.verified = True
             user.save()
             return HttpResponse('You will receive mpesa pop up, please enter your pin')
     else:
