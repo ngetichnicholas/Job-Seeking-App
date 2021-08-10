@@ -330,7 +330,7 @@ def verify_employer(request, employer_id):
     if update_employer_form.is_valid():
       cl = MpesaClient()
       token = cl.access_token()
-      phone_number = '0725470732'
+      phone_number = '0797077078'
       amount = 1
       account_reference = 'reference'
       transaction_desc = 'Description'
