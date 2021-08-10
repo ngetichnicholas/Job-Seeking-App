@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import fields
 from .models import User
 from .models import *
 
@@ -43,3 +44,8 @@ class AddPortfolio(forms.ModelForm):
     class Meta:
         model = Portfolio
         fields = ('name','link',  )
+
+class VerifyEmployer(forms.ModelForm):
+  class Meta:
+    model = Payments
+    fields = ['first_name', 'last_name','phone']
