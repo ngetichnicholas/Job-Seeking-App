@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'crispy_forms',
     'django_daraja',
-    'advertising',]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
