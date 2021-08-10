@@ -28,10 +28,12 @@ from django_daraja.mpesa.core import MpesaClient
 def index(request):
     return render(request,'index.html')
 
+#                                   signup and login
 @unauthenticated_user
 def register(request):
     return render(request,'registration/register.html')
 
+#                                   signup and jobseeker
 @unauthenticated_user
 def registerJobseeker(request):
     registered=False
@@ -51,6 +53,8 @@ def registerJobseeker(request):
     else:
         job_seeker_form=UserSignUpForm()
     return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
+
+#                                   signup and employer
 
 @unauthenticated_user
 def registerEmployer(request):
@@ -73,6 +77,9 @@ def registerEmployer(request):
         
     return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'registered':registered})
 
+
+#                                   Login users
+
 @unauthenticated_user   
 def login(request):
   if request.method == 'POST':
@@ -94,6 +101,9 @@ def login(request):
   form = AuthenticationForm()
   return render(request = request,template_name = "registration/login.html",context={"form":form})
 
+
+#                                   Redirect users to their respective dashboards
+
 @login_required
 def dashboard(request):
     current = request.user
@@ -103,7 +113,9 @@ def dashboard(request):
         return redirect('admin_dashboard')
     else: 
         return redirect('jobseekerDash/')
-    return render(request,'dashboard.html')
+
+
+#                                   jobseeker profile and profile update
 
 @login_required
 @allowed_users(allowed_roles=['admin','jobseeker'])
@@ -138,6 +150,9 @@ def update_jobseeker_profile(request):
 def jobseekerDash(request):
     return render(request,'jobseekers/jobseeker_dashboard.html')
 
+
+#                                   jobseekers upload resumes
+
 @login_required
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def upload_file(request):
@@ -151,6 +166,26 @@ def upload_file(request):
     else:
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
+
+
+#                                     jobseekers Add portfolio
+
+def add_portfolios(request):
+  if request.method == 'POST':
+    port_form=AddPortfolio(request.POST,instance=request.user)
+    if port_form.is_valid():
+      port_form.save()
+      messages.success(request,'Your Portfolio has been added')
+      return redirect('jobseeker_profile')
+  else:
+    port_form = AddPortfolio(instance=request.user)
+  context = {
+    'port_form': port_form,
+    }
+  return render(request,"jobseekers/portfolio.html",context)
+
+
+#                                   Employers dashboard to view all available jobseekers
 
 # Mpesa payment
 def getAccessToken(request):
@@ -205,20 +240,21 @@ def employerDash(request):
     }
     return render(request,'employers/employer_dashboard.html',context)
 
+
+#                                   Employers profile and update profile
+
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def employerProfile(request):
-  # notifications on avialable jobseeker
     employer=request.user
-    available=User.objects.filter(is_jobseeker= True,verified=True).all()
+    available=User.objects.filter(is_jobseeker= True,verified=True).all() # notifications on avialable jobseeker
     context={
         "employer":employer,
         "available":available,
     }
     return render(request,'employers/employer_profile.html',context)
-  
 
-# update employers
+
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def update_employer(request):
@@ -240,7 +276,9 @@ def update_employer(request):
   return render(request,'employers/update_employer.html',context)
 
   
-# specific jobseeker
+#                                   Employers view details of a specific_jobseeker
+
+
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def single_jobseeker(request,jobseeker_id):
@@ -255,30 +293,18 @@ def single_jobseeker(request,jobseeker_id):
   return render(request,'employers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker,"portfolios":portfolios})
 
 
-# jobseeker update portfolio
-def add_portfolios(request):
-  if request.method == 'POST':
-    port_form=AddPortfolio(request.POST,instance=request.user)
-    if port_form.is_valid():
-      port_form.save()
-      messages.success(request,'Your Portfolio has been added')
-      return redirect('jobseeker_profile')
-  else:
-    port_form = AddPortfolio(instance=request.user)
-  context = {
-    'port_form': port_form,
-    }
-  return render(request,"jobseekers/portfolio.html",context)
+#                                                         Admin
 
-# admin
+#                                   Admin view for all jobseekers and employers
 
 @login_required
 @admin_only
 def adminDash(request):
+    jobseekers=JobSeeker.objects.all()
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
     unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
-    return render(request,'admin/admin_dashboard.html',{'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
+    return render(request,'admin/admin_dashboard.html',{"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
 # ADMIN VIEWS
 # JobSeeker views
@@ -407,3 +433,4 @@ def employer_details(request,employer_id):
     raise Http404()
 
   return render(request,'admin/employers/employers_details.html',{'employer':employer})
+
