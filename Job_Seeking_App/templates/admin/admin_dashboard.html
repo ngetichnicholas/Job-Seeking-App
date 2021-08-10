@@ -2,7 +2,42 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="container">
-<h2>Admin Dashboard</h2>
+        <div class="container">
+            <div class="col-md-8">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        
 </div>
+<script>
+    let myChart=document.getElementById("myChart").getContext("2d");
 
+let massChart=new Chart(myChart, {
+    type: "bar",
+    data: {
+        labels: [{% for jobseeker in jobseekers %} "{{jobseeker.user}}" ,{%endfor%}],
+        datasets:[{
+            label:"Salary expectations",
+            data: [{% for jobseeker in jobseekers %} "{{jobseeker.salary}}" ,{%endfor%}],
+            backgroundColor:[
+                "black",
+                "red",
+                "blue",
+                "green",
+                "brown",
+                "purple",
+            ],
+            borderColor:"red",
+            borderWidth:2,
+            hoverBorderWidth:6,
+            hoverBorderColor: "#fff",
+        }]
+    },
+    options: {}
+})
+
+// jobseekers count
+
+
+</script>
 {% endblock %}
