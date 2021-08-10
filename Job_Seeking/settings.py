@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'cloudinary',
     'crispy_forms',
+    'djangoseo',
 ]
 
 MIDDLEWARE = [
