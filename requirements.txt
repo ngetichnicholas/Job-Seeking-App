@@ -11,6 +11,7 @@ django-bootstrap4==3.0.1
 django-crispy-forms==1.12.0
 django-on-heroku==1.1.2
 django-registration==2.4.1
+django-seo==0.3.5
 django-six==1.0.4
 django-tinymce==2.5.0
 django-urls==1.1.3
