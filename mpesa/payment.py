@@ -25,7 +25,7 @@ def mpesa_payment():
         "PartyA": 254725470732,
         "PartyB": keys.business_shortCode,
         "PhoneNumber": keys.phone_number,
-        "CallBackURL": "https://mysterious-oasis-16355.herokuapp.com/api/payments/transaction/",
+        "CallBackURL": "https://job-seeking-app.herokuapp.com/api/payments/transaction/",
         "AccountReference": "test aware",
         "TransactionDesc": "Pay School Fees",
     }
