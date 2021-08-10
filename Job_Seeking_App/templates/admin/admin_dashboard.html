@@ -6,7 +6,6 @@
             <div class="col-md-8">
                 <canvas id="myChart"></canvas>
             </div>
-            <div class="col-md-4"></div>
         </div>
         
 </div>
@@ -18,7 +17,7 @@ let massChart=new Chart(myChart, {
     data: {
         labels: [{% for jobseeker in jobseekers %} "{{jobseeker.user}}" ,{%endfor%}],
         datasets:[{
-            label:"Population",
+            label:"Salary expectations",
             data: [{% for jobseeker in jobseekers %} "{{jobseeker.salary}}" ,{%endfor%}],
             backgroundColor:[
                 "black",
@@ -36,6 +35,9 @@ let massChart=new Chart(myChart, {
     },
     options: {}
 })
+
+// jobseekers count
+
 
 </script>
 {% endblock %}

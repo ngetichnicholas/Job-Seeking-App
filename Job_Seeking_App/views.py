@@ -387,3 +387,4 @@ def employer_details(request,employer_id):
     raise Http404()
 
   return render(request,'admin/employers/employers_details.html',{'employer':employer})
+
