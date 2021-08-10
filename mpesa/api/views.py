@@ -15,47 +15,34 @@ class CallBackApiView(CreateAPIView):
         print(request.data, "this is request.data")
 
         """
-        {'Body':
-            {'stkCallback':
+        {'Body': 
+            {'stkCallback': 
              {
-                'CheckoutRequestID': 'ws_CO_DMZ_401669274_11032019190235305',
-                'MerchantRequestID': '19927-3244045-1',
-                'ResultCode': 0,
-                'ResultDesc': 'The service request is processed successfully.',
+                'MerchantRequestID': '2012-9133539-1', 
+                'CheckoutRequestID': 'ws_CO_110820210205212082', 
+                'ResultCode': 0, 
+                'ResultDesc': 'The service request is processed successfully.', 
                 'CallbackMetadata': {
                                         'Item': [
-                                                {'Name': 'Amount', 'Value': 1.0},
-                                                {'Name': 'MpesaReceiptNumber', 'Value': 'NCB1FW1DFZ'},
-                                                {'Name': 'Balance'},
-                                                {'Name': 'TransactionDate', 'Value': 20190311190244},
-                                                {'Name': 'PhoneNumber', 'Value': 254718821114}
+                                                {'Name': 'Amount', 'Value': 1.0}, 
+                                                {'Name': 'MpesaReceiptNumber', 'Value': 'PHB2GO0BYW'}, 
+                                                {'Name': 'TransactionDate', 'Value': 20210811020535}, 
+                                                {'Name': 'PhoneNumber', 'Value': 254725470732}
                                                 ]
                                     }
-
-                                    }
                 }
+            }
         }
-
         """
+
         merchant_request_id = request.data["Body"]["stkCallback"]["MerchantRequestID"]
         checkout_request_id = request.data["Body"]["stkCallback"]["CheckoutRequestID"]
         result_code = request.data["Body"]["stkCallback"]["ResultCode"]
         result_description = request.data["Body"]["stkCallback"]["ResultDesc"]
-        amount = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0][
-            "Value"
-        ]
-        mpesa_receipt_number = request.data["Body"]["stkCallback"]["CallbackMetadata"][
-            "Item"
-        ][1]["Value"]
-
-        balance = ""
-        transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"][
-            "Item"
-        ][3]["Value"]
-
-        phone_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][
-            4
-        ]["Value"]
+        amount = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0]["Value"]
+        mpesa_receipt_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][1]["Value"]
+        transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Value"]
+        phone_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][3]["Value"]
 
         from datetime import datetime
 
@@ -76,7 +63,6 @@ class CallBackApiView(CreateAPIView):
             ResultCode=result_code,
             ResultDesc=result_description,
             MpesaReceiptNumber=mpesa_receipt_number,
-            Balance=balance,
             TransactionDate=aware_transaction_datetime,
             PhoneNumber=phone_number,
         )
