@@ -19,5 +19,6 @@ from Job_Seeking_App import views
 
 urlpatterns = [
     path('',include('Job_Seeking_App.urls')),
-    path('admin/', admin.site.urls),   
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls'))  
 ]

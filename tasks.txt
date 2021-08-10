@@ -1,8 +1,1 @@
-Nancy - Work on  MPESA API
-Roney - Complete Search functionality
-Peter - Create Employer User Tests
-Roney - Create Jobseeker User Tests
-Yusuf - Create File Upload Tests
-Anne - Create Admin User Tests
-Nick - Work on Adverts
-Victor - Work on SEO
+MPESA api

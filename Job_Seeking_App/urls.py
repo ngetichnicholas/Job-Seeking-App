@@ -36,6 +36,7 @@ urlpatterns = [
     path('daraja/stk-push', app_views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('access/token', app_views.getAccessToken, name='get_mpesa_access_token'),
     path('online/lipa', app_views.employerDash, name='lipa_na_mpesa'),
+    path('successful', app_views.success, name='success'),
 
 
     # get single jobseeker details from
