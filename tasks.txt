@@ -1,8 +1,8 @@
-Polish UI
-Coplete Employer Dashboard
-Complete Jopseeker Dashboard
-Complete Admin Dashboard
-Research on Daraja MPESA API
-Work on email and phone login options
-Complete Search functionality
-Write Tests
+Nancy - Work on  MPESA API
+Roney - Complete Search functionality
+Peter - Create Employer User Tests
+Roney - Create Jobseeker User Tests
+Yusuf - Create File Upload Tests
+Anne - Create Admin User Tests
+Nick - Work on Adverts
+Victor - Work on SEO
