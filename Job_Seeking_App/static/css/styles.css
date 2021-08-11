@@ -55,14 +55,14 @@ body {
   margin-right: 2rem;
 }
 .masthead {
-  background-image: url('https://www.wgu.edu/content/dam/web-sites/blog-newsroom/blog/images/national/2019/october/achieve-job-security-in-uncertain-world.jpg') !important;
+  background-image: url('../images/banner4-carousel1.jpg') !important;
 }
 #mainNav {
   background-color: white;
 }
 
 .navbar-brand, #mainNav ul li a {
-  color: brown!important;
+  color: orangered!important;
   font-weight: 900 !important;
   text-transform: uppercase;
 }
@@ -93,16 +93,4 @@ body {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
 }
-.register{
-  background-color: rgb(216, 192, 192);
-  width: 100%;
-}
-.container7{
-  background-color: rgb(216, 192, 192);
-}
-.container8{
-  background-color:rgb(216, 192, 192);
-}
-.container9{
-  background-color: rgb(216, 192, 192);
-}
+
