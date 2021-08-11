@@ -4,7 +4,7 @@ body {
   font-size: 14px;
   line-height: 1.8;
   font-weight: normal;
-  background: #fff;
+  background: rgb(151, 145, 145);
   color: gray; }
 
 a {
@@ -196,3 +196,13 @@ a[data-toggle="collapse"] {
 
 .subscribe-form .form-control {
   background: #4897fc; }
+
+
+  .session-container{
+    width: 85%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+  }
+
+/* calender */
