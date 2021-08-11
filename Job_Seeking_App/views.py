@@ -17,7 +17,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from .decorators import unauthenticated_user,allowed_users,admin_only
-
+import os
 from .models import JobSeeker,Employer 
 from .models import User
 
@@ -176,7 +176,9 @@ def add_portfolios(request):
     if port_form.is_valid():
       port_form.save()
       messages.success(request,'Your Portfolio has been added')
+      print(port_form)
       return redirect('jobseeker_profile')
+
   else:
     port_form = AddPortfolio(instance=request.user)
   context = {
