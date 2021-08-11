@@ -21,7 +21,7 @@ from .decorators import unauthenticated_user,allowed_users,admin_only
 from .models import JobSeeker,Employer 
 from .models import User
 
-from django_daraja.mpesa.core import MpesaClient
+# from django_daraja.mpesa.core import MpesaClient
 
 # Create your views here.
 
