@@ -21,7 +21,6 @@ from .decorators import unauthenticated_user,allowed_users,admin_only
 from .models import JobSeeker,Employer 
 from .models import User
 
-from django_daraja.mpesa.core import MpesaClient
 import os
 
 # Create your views here.
@@ -210,41 +209,14 @@ def stk_push_callback(request):
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
     user = request.user
+    payment_form = PaymentForm()
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
-    first_name = request.POST.get('first_name')
-    last_name = request.POST.get('last_name')
-    phone = request.POST.get('mpesa_number')
-    if request.method == 'POST':
-        verify_employer_form = VerifyEmployer(request.POST,instance=request.user)
-        if verify_employer_form.is_valid():
-            access_token = MpesaAccessToken.validated_mpesa_access_token
-            api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-            headers = {"Authorization": "Bearer %s" % access_token}
-            request = {
-                "BusinessShortCode": LipanaMpesaPpassword.Business_short_code,
-                "Password": LipanaMpesaPpassword.decode_password,
-                "Timestamp": LipanaMpesaPpassword.lipa_time,
-                "TransactionType": "CustomerPayBillOnline",
-                "Amount": 1,
-                "PartyA": 254725470732,  # replace with your phone number to get stk push
-                "PartyB": LipanaMpesaPpassword.Business_short_code,
-                "PhoneNumber": phone,  # replace with your phone number to get stk push
-                "CallBackURL": "https://sandbox.safaricom.co.ke/mpesa/",
-                "AccountReference": "Nicholas Ngetich",
-                "TransactionDesc": "Pay to get verified"
-            }
-            response = requests.post(api_url, json=request, headers=headers)
-            user = verify_employer_form.save()
-            # user.verified = True
-            user.save()
-            return HttpResponse('You will receive mpesa pop up, please enter your pin')
-    else:
-        verify_employer_form = VerifyEmployer()
+    
     context={
         "job_seekers":job_seekers,
         "employer":employer,
-        "verify_employer_form":verify_employer_form
+        "payment_form":payment_form
     }
     return render(request,'employers/employer_dashboard.html',context)
 
@@ -400,17 +372,8 @@ def verify_employer(request, employer_id):
   if request.method == 'POST':
     update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
     if update_employer_form.is_valid():
-      cl = MpesaClient()
-      token = cl.access_token()
-      phone_number = '0725470732'
-      amount = 20
-      account_reference = 'reference'
-      transaction_desc = 'Description'
-      callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
-      response = cl.stk_push(phone_number, amount, account_reference,  transaction_desc, callback_url)
       update_employer_form.save()
       messages.success(request, f'employer verified!')
-      return HttpResponse(response.text)
       return redirect('admin_dashboard')
   else:
     update_employer_form = AdminVerifyUserForm(instance=employer)
