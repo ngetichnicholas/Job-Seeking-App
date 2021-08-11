@@ -3,6 +3,10 @@ from .email import send_verification_email
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
@@ -148,34 +152,68 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
+# Mpesa payment
+def getAccessToken(request):
+    consumer_key = 'RzeH7NKGIqJQFo2GhnOYTiW2FIvIWxA2'
+    consumer_secret = 'DeGC9Ecimu5xB5Rw'
+    api_URL = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+    r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+    mpesa_access_token = json.loads(r.text)
+    validated_mpesa_access_token = mpesa_access_token['access_token']
+    return HttpResponse(validated_mpesa_access_token)
+
 # employers and misc
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
+    user = request.user
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
+    phone = request.POST.get('phone')
+    if request.method == 'POST':
+        verify_employer_form = VerifyEmployer(request.POST,instance=request.user)
+        if verify_employer_form.is_valid():
+            access_token = MpesaAccessToken.validated_mpesa_access_token
+            api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+            headers = {"Authorization": "Bearer %s" % access_token}
+            request = {
+                "BusinessShortCode": LipanaMpesaPpassword.Business_short_code,
+                "Password": LipanaMpesaPpassword.decode_password,
+                "Timestamp": LipanaMpesaPpassword.lipa_time,
+                "TransactionType": "CustomerPayBillOnline",
+                "Amount": 1,
+                "PartyA": 254725470732,  # replace with your phone number to get stk push
+                "PartyB": LipanaMpesaPpassword.Business_short_code,
+                "PhoneNumber": phone,  # replace with your phone number to get stk push
+                "CallBackURL": "https://sandbox.safaricom.co.ke/mpesa/",
+                "AccountReference": "Nicholas Ngetich",
+                "TransactionDesc": "Testing stk push"
+            }
+            response = requests.post(api_url, json=request, headers=headers)
+            user = verify_employer_form.save()
+            # user.verified = True
+            user.save()
+            return HttpResponse('You will receive mpesa pop up, please enter your pin')
+    else:
+        verify_employer_form = VerifyEmployer()
     context={
         "job_seekers":job_seekers,
-        "employer":employer
+        "employer":employer,
+        "verify_employer_form":verify_employer_form
     }
     return render(request,'employers/employer_dashboard.html',context)
 
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
-def employerProfile(request,id):
-    employer=Employer.objects.get(id=id)
-    context={
-        "employer":employer,
-    }
-    return render(request,'employers/employer_profile.html',context)
-  
-# test
-@login_required
-@allowed_users(allowed_roles=['admin','employer'])
 def employerProfile(request):
+  # notifications on avialable jobseeker
     employer=request.user
+    available=User.objects.filter(is_jobseeker= True,verified=True).all()
     context={
         "employer":employer,
+        "available":available,
     }
     return render(request,'employers/employer_profile.html',context)
   
@@ -330,8 +368,8 @@ def verify_employer(request, employer_id):
     if update_employer_form.is_valid():
       cl = MpesaClient()
       token = cl.access_token()
-      phone_number = '0797077078'
-      amount = 1
+      phone_number = '0725470732'
+      amount = 20
       account_reference = 'reference'
       transaction_desc = 'Description'
       callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
