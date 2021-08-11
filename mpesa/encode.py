@@ -1,5 +1,5 @@
 import base64
-import keys
+from . import keys
 
 
 
