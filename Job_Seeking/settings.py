@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'cloudinary',
     'crispy_forms',
-    'django_daraja',
+   
     
     ]
 
