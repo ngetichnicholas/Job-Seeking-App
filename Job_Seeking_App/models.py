@@ -6,6 +6,8 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
+
+
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
@@ -58,6 +60,11 @@ class JobSeeker(models.Model):
     def __str__(self):
         return self.user.username
 
+    @classmethod
+    def search_by_category(cls,search_term):
+        jobs = cls.objects.filter(job_category__name__icontains=search_term)
+        return jobs
+
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=100)
@@ -104,7 +111,4 @@ class Portfolio(models.Model):
     class Meta:
         verbose_name = ("Portfolio")
         verbose_name_plural = ("Portfolio")
-
-
-
 
