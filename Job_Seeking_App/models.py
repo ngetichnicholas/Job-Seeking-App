@@ -107,6 +107,8 @@ class Portfolio(models.Model):
 
     def __str__(self):
         return f"Portfolio {self.id}"
+    def save(self, *args, **kwargs):
+        super().save()
 
     class Meta:
         verbose_name = ("Portfolio")
