@@ -44,6 +44,7 @@ urlpatterns = [
     path('employer_profile/',app_views.employerProfile,name='employer_profile'),
     path('update_employer/',app_views.update_employer,name='update_employer'),
     path('portfolio/',app_views.add_portfolios,name='portfolio'),
+    path('calender/',app_views.calender,name='calender'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
