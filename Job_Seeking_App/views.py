@@ -3,6 +3,10 @@ from .email import send_verification_email
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
@@ -17,15 +21,19 @@ from .decorators import unauthenticated_user,allowed_users,admin_only
 from .models import JobSeeker,Employer 
 from .models import User
 
+# from django_daraja.mpesa.core import MpesaClient
+
 # Create your views here.
 
 def index(request):
     return render(request,'index.html')
 
+#                                   signup and login
 @unauthenticated_user
 def register(request):
     return render(request,'registration/register.html')
 
+#                                   signup and jobseeker
 @unauthenticated_user
 def registerJobseeker(request):
     registered=False
@@ -45,6 +53,8 @@ def registerJobseeker(request):
     else:
         job_seeker_form=UserSignUpForm()
     return render(request,'registration/registerJobseeker.html',{'job_seeker_form':job_seeker_form,'registered':registered})
+
+#                                   signup and employer
 
 @unauthenticated_user
 def registerEmployer(request):
@@ -67,6 +77,9 @@ def registerEmployer(request):
         
     return render(request,'registration/registerEmployer.html',{'employer_form':employer_form,'registered':registered})
 
+
+#                                   Login users
+
 @unauthenticated_user   
 def login(request):
   if request.method == 'POST':
@@ -88,6 +101,9 @@ def login(request):
   form = AuthenticationForm()
   return render(request = request,template_name = "registration/login.html",context={"form":form})
 
+
+#                                   Redirect users to their respective dashboards
+
 @login_required
 def dashboard(request):
     current = request.user
@@ -97,7 +113,9 @@ def dashboard(request):
         return redirect('admin_dashboard')
     else: 
         return redirect('jobseekerDash/')
-    return render(request,'dashboard.html')
+
+
+#                                   jobseeker profile and profile update
 
 @login_required
 @allowed_users(allowed_roles=['admin','jobseeker'])
@@ -132,6 +150,9 @@ def update_jobseeker_profile(request):
 def jobseekerDash(request):
     return render(request,'jobseekers/jobseeker_dashboard.html')
 
+
+#                                   jobseekers upload resumes
+
 @login_required
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def upload_file(request):
@@ -146,39 +167,94 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
+
+#                                     jobseekers Add portfolio
+
+def add_portfolios(request):
+  if request.method == 'POST':
+    port_form=AddPortfolio(request.POST,instance=request.user)
+    if port_form.is_valid():
+      port_form.save()
+      messages.success(request,'Your Portfolio has been added')
+      return redirect('jobseeker_profile')
+  else:
+    port_form = AddPortfolio(instance=request.user)
+  context = {
+    'port_form': port_form,
+    }
+  return render(request,"jobseekers/portfolio.html",context)
+
+
+#                                   Employers dashboard to view all available jobseekers
+
+# Mpesa payment
+def getAccessToken(request):
+    consumer_key = 'RzeH7NKGIqJQFo2GhnOYTiW2FIvIWxA2'
+    consumer_secret = 'DeGC9Ecimu5xB5Rw'
+    api_URL = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+    r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+    mpesa_access_token = json.loads(r.text)
+    validated_mpesa_access_token = mpesa_access_token['access_token']
+    return HttpResponse(validated_mpesa_access_token)
+
 # employers and misc
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
+    user = request.user
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
+    phone = request.POST.get('phone')
+    if request.method == 'POST':
+        verify_employer_form = VerifyEmployer(request.POST,instance=request.user)
+        if verify_employer_form.is_valid():
+            access_token = MpesaAccessToken.validated_mpesa_access_token
+            api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+            headers = {"Authorization": "Bearer %s" % access_token}
+            request = {
+                "BusinessShortCode": LipanaMpesaPpassword.Business_short_code,
+                "Password": LipanaMpesaPpassword.decode_password,
+                "Timestamp": LipanaMpesaPpassword.lipa_time,
+                "TransactionType": "CustomerPayBillOnline",
+                "Amount": 1,
+                "PartyA": 254725470732,  # replace with your phone number to get stk push
+                "PartyB": LipanaMpesaPpassword.Business_short_code,
+                "PhoneNumber": phone,  # replace with your phone number to get stk push
+                "CallBackURL": "https://sandbox.safaricom.co.ke/mpesa/",
+                "AccountReference": "Nicholas Ngetich",
+                "TransactionDesc": "Testing stk push"
+            }
+            response = requests.post(api_url, json=request, headers=headers)
+            user = verify_employer_form.save()
+            # user.verified = True
+            user.save()
+            return HttpResponse('You will receive mpesa pop up, please enter your pin')
+    else:
+        verify_employer_form = VerifyEmployer()
     context={
         "job_seekers":job_seekers,
-        "employer":employer
+        "employer":employer,
+        "verify_employer_form":verify_employer_form
     }
     return render(request,'employers/employer_dashboard.html',context)
 
-@login_required
-@allowed_users(allowed_roles=['admin','employer'])
-def employerProfile(request,id):
-    employer=Employer.objects.get(id=id)
-    context={
-        "employer":employer,
-    }
-    return render(request,'employers/employer_profile.html',context)
-  
-# test
+
+#                                   Employers profile and update profile
+
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def employerProfile(request):
     employer=request.user
+    available=User.objects.filter(is_jobseeker= True,verified=True).all() # notifications on avialable jobseeker
     context={
         "employer":employer,
+        "available":available,
     }
     return render(request,'employers/employer_profile.html',context)
-  
 
-# update employers
+
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def update_employer(request):
@@ -200,7 +276,9 @@ def update_employer(request):
   return render(request,'employers/update_employer.html',context)
 
   
-# specific jobseeker
+#                                   Employers view details of a specific_jobseeker
+
+
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
 def single_jobseeker(request,jobseeker_id):
@@ -215,30 +293,18 @@ def single_jobseeker(request,jobseeker_id):
   return render(request,'employers/single_jobseeker.html',{'documents':documents, 'jobseeker':jobseeker,"portfolios":portfolios})
 
 
-# jobseeker update portfolio
-def add_portfolios(request):
-  if request.method == 'POST':
-    port_form=AddPortfolio(request.POST,instance=request.user)
-    if port_form.is_valid():
-      port_form.save()
-      messages.success(request,'Your Portfolio has been added')
-      return redirect('jobseeker_profile')
-  else:
-    port_form = AddPortfolio(instance=request.user)
-  context = {
-    'port_form': port_form,
-    }
-  return render(request,"jobseekers/portfolio.html",context)
+#                                                         Admin
 
-# admin
+#                                   Admin view for all jobseekers and employers
 
 @login_required
 @admin_only
 def adminDash(request):
+    jobseekers=JobSeeker.objects.all()
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
     unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
-    return render(request,'admin/admin_dashboard.html',{'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
+    return render(request,'admin/admin_dashboard.html',{"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
 # ADMIN VIEWS
 # JobSeeker views
@@ -322,17 +388,30 @@ def unverified_employers(request):
 @login_required
 @allowed_users(allowed_roles=['admin'])
 def verify_employer(request, employer_id):
-  employer = Employer.objects.get(pk=employer_id)
+  employer = User.objects.get(pk=employer_id)
   if request.method == 'POST':
     update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
     if update_employer_form.is_valid():
+      cl = MpesaClient()
+      token = cl.access_token()
+      phone_number = '0725470732'
+      amount = 20
+      account_reference = 'reference'
+      transaction_desc = 'Description'
+      callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+      response = cl.stk_push(phone_number, amount, account_reference,  transaction_desc, callback_url)
       update_employer_form.save()
-      messages.success(request, f'employer updated!')
+      messages.success(request, f'employer verified!')
+      return HttpResponse(response.text)
       return redirect('admin_dashboard')
   else:
     update_employer_form = AdminVerifyUserForm(instance=employer)
 
   return render(request, 'admin/employers/update_employer.html', {"update_employer_form":update_employer_form})
+
+def stk_push_callback(request):
+  data = request.body
+  # You can do whatever you want with the notification received from MPESA here.
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
@@ -354,3 +433,4 @@ def employer_details(request,employer_id):
     raise Http404()
 
   return render(request,'admin/employers/employers_details.html',{'employer':employer})
+
