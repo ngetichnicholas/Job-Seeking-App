@@ -1,13 +1,17 @@
 import requests
 from requests.auth import HTTPBasicAuth
-
-from access_token import generate_access_token
-from encode import create_password
-from utils import get_timestamp
-import keys
+from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
 
 
-def mpesa_payment():
+from .access_token import generate_access_token
+from .encode import create_password
+from .utils import get_timestamp
+from . import keys
+
+
+def mpesa_payment(request):
+    user = request.user
+    phone = request.POST.get('mpesa_number')
     formatted_time = get_timestamp()
     decoded_password = create_password(formatted_time)
     access_token = generate_access_token()
@@ -24,7 +28,7 @@ def mpesa_payment():
         "Amount": "1",
         "PartyA": 254725470732,
         "PartyB": keys.business_shortCode,
-        "PhoneNumber": 254725470732,
+        "PhoneNumber": phone,
         "CallBackURL": "https://job-seeking-app.herokuapp.com/api/payments/transaction/",
         "AccountReference": "test aware",
         "TransactionDesc": "Pay School Fees",
@@ -34,5 +38,6 @@ def mpesa_payment():
 
     print(response.text)
 
+    return HttpResponse('You will receive mpesa pop up, please enter your pin')
 
-mpesa_payment()
+
