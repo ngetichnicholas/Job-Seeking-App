@@ -1,0 +1,25 @@
+{%extends 'employers/base.html'%} 
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    {% if jobseeker%}
+      <h2>Found {{ jobseeker|length }} of searched term {{message}}</h2>
+    {% else %}
+      <h2> Found 0 jobseekers for the search term</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+  {% if images %}
+    {% for jobseeker in jobseekers %}
+      <div class="col-md-4">
+          <h1>{{jobseeker.jobseeker_name}}</h1>
+      </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
