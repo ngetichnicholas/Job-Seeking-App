@@ -59,6 +59,11 @@ class JobSeeker(models.Model):
     def __str__(self):
         return self.user.username
 
+    @classmethod
+    def search_by_category(cls,search_term):
+        jobs = cls.objects.filter(job_category__name__icontains=search_term)
+        return jobs
+
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=100)
