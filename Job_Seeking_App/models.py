@@ -6,8 +6,7 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
-
-
+# from phonenumber_field.modelfields import PhoneNumberField
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
