@@ -438,3 +438,25 @@ def employer_details(request,employer_id):
 
 def calender(request):
   return render(request,'admin/calender.html')
+
+
+# Search View
+
+def search_results(request):
+
+    if 'jobseeker' in request.GET and request.GET["jobseeker"]:
+        search_term = request.GET.get("jobseeker")
+        searched_jobseekers_by_category = JobSeeker.search_by_category(search_term)
+        results = [*searched_jobseekers_by_category]
+        message = f"{search_term}"
+
+        return render(request, 'employers/search.html',{"message":message,"jobseekers": results})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'employers/search.html',{"message":message})
+
+def jobseeker(request):
+    jobseekers = JobSeeker.objects.all()
+    
+    return render(request,"jobseeker.html", {"jobseekers":jobseekers})
