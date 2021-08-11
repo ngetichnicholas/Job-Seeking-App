@@ -1,8 +1,11 @@
 from django.urls import path
+
+import mpesa
 from . import views as app_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from mpesa import payment
 
 urlpatterns = [
     path('',app_views.index,name='index'),
@@ -35,7 +38,9 @@ urlpatterns = [
 
     path('daraja/stk-push', app_views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('access/token', app_views.getAccessToken, name='get_mpesa_access_token'),
-    path('online/lipa', app_views.employerDash, name='lipa_na_mpesa'),
+    path('online/lipa', app_views.employerDash, name='mpesa_payment'),
+    path('successful', app_views.success, name='success'),
+    path('verify_employer',payment.mpesa_payment,name='verify_employer_payment'),
 
 
     # get single jobseeker details from
