@@ -2,12 +2,15 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="container">
-        <div class="container">
-            <div class="col-md-8">
-                <canvas id="myChart"></canvas>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="container">
+                <canvas id="myChart"></canvas>   
             </div>
         </div>
-        
+        <div class="col-md-2"></div>
+    </div>
 </div>
 <script>
     let myChart=document.getElementById("myChart").getContext("2d");

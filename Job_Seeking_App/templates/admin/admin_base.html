@@ -3,106 +3,61 @@
 {% load cloudinary %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144351462-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-144351462-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <!-- chart js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <link rel="icon" href="https://res.cloudinary.com/dbos9xidr/image/upload/v1626082454/as8ixvziyd2bq9i5yqzl.jpg">
+    <link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
+    <!-- styles -->
+    {% block styles %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    {% endblock styles %}
+    <!-- title -->
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Admin panel</title>
+    {% endif %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="icon" href="https://res.cloudinary.com/dbos9xidr/image/upload/v1626082454/as8ixvziyd2bq9i5yqzl.jpg">
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../../static/css/admin.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- chart js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  {% if title %}
-  <title>{{title}}</title>
-  {% else %}
-  <title>Admin panel</title>
-  {% endif %}
-
-  {% block styles %}
-  {% bootstrap_css %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  {% endblock styles %}
 </head>
+  
 
 <body>
+  
+  {% include 'admin/admin.html' %}
+  <div class="" id="inner">
+    <div class="header px-5"></div>  
+    <div class="info">
+{% block content %}
 
-  <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-      <div class="custom-menu">
-        <button type="button" id="sidebarCollapse" class="btn btn-primary">
-          <i class="fa fa-bars"></i>
-          <span class="sr-only">Toggle Menu</span>
-        </button>
-      </div>
-      <ul class="list-unstyled components mb-5">
-        {% if user.is_authenticated %}
-        <li class="active">
-          <a href="/logout">Logout</a>
-        </li>
-        {% else %}
-        <li class="active">
-            <a  href="{% url 'login' %}">Login</a>
-        </li>
-        {% endif %}
-        <!-- test -->
-        
-        
-
-        <!-- endtest -->
-
-        <li class="active">
-          <a href="{% url 'admin_dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
-        </li>
-        <li class="active">
-          <a href="">JOBSEEKERS</a>
-        </li>
-        <li class="active">
-            <a href="{% url 'all_jobseekers' %}"><i class="fas fa-book"></i>All Jobseekers</a>
-        </li>
-        <li class="active">
-          <a href="{% url 'verified_jobseekers' %}"><i class="fas fa-book"></i> Verified Jobseekers</a>
-        </li>
-        <li class="active">
-          <a href="{% url 'unverified_jobseekers' %}"><i class="fas fa-book"></i> Unverified Jobseekers</a>
-        </li>
-        <li class="active">
-          <a href="">EMPLOYERS</a>
-        </li>
-        <li class="active">
-            <a href="{% url 'all_employers' %}"><i class="fas fa-book"></i>All employers</a>
-        </li>
-        <li class="active">
-          <a href="{% url 'verified_employers' %}"><i class="fas fa-book"></i> Verified employers</a>
-        </li>
-        <li class="active">
-          <a href="{% url 'unverified_employers' %}"><i class="fas fa-book"></i> Unverified employers</a>
-        </li>
-        <li class="active">
-          <a href="{% url 'employerDash' %}"><i class="fas fa-book"></i> Employers Dash</a>
-        </li>
-        <!-- calender -->
-        <li class="active">
-          <a href="{% url 'calender' %}"><i class='far fa-calendar-alt' style='font-size:24px'></i> Calender</a>
-        </li>
-        
-      </ul>
-
-    </nav>
-
-      <!-- Page Content  -->
-    <div id="content" class="p-4 p-md-5 pt-5">
-      {% block content %}
-      {% endblock content %}
-    </div>
+{% endblock content %}
   </div>
+</div>
+  
+
   {% block scripts %}
-  <script src="../../static/js/jquery.min.js"></script>
-  <script src="../../static/js/popper.js"></script>
-  <script src="../../static/js/bootstrap.min.js"></script>
-  <script src="../../static/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+  <script src="https://assets.awwwards.com/dist/js/vendor.13df77655f5689a9b532.js" defer></script>
+  <script src="{%static 'js/main.js'%}" type="text/javascript"></script>
+
   {% bootstrap_javascript %}
   {% endblock scripts %}
 </body>
