@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from .email import send_verification_email
+from .email import *
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
@@ -35,7 +35,19 @@ def services(request):
     return render(request,'services.html')
 
 def contact(request):
-    return render(request,'contact.html')
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    message = request.POST.get('message')
+    if request.method == 'POST':
+      contact_form = ContactForm(request.POST)
+      if contact_form.is_valid():
+        contact_form.save()
+        send_contact_email(name, email)
+        data = {'success': 'Your message has been reaceived. Thank you for contacting us, we will get back to you shortly'}
+        messages.info(request, f"Messent submitted successfully")
+    else:
+      contact_form = ContactForm()
+    return render(request,'contact.html',{'contact_form':contact_form})
 
 #signup and login
 @unauthenticated_user
