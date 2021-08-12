@@ -10,9 +10,9 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}#contact">Contact</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item active">
                         <a class="nav-link" href="/logout">Logout</a>

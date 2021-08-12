@@ -9,6 +9,9 @@ from mpesa import payment
 
 urlpatterns = [
     path('',app_views.index,name='index'),
+    path('about',app_views.about,name='about'),
+    path('contact',app_views.contact,name='contact'),
+    path('services',app_views.services,name='services'),
     path('register/',app_views.register,name='register'),
     path('registerJobseeker/',app_views.registerJobseeker,name='registerJobseeker'),
     path('registerEmployer/',app_views.registerEmployer,name='registerEmployer'),

@@ -112,3 +112,8 @@ class Portfolio(models.Model):
         verbose_name = ("Portfolio")
         verbose_name_plural = ("Portfolio")
 
+class Contact(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()
+    message = models.TextField()
+
