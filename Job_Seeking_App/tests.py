@@ -57,4 +57,4 @@ class EmployerTestCase(TestCase):
 
 #     def test_post_title{self}:
 #         post=post.objects.get{id=4}
-#         Self.assertEqual(post.title'title')
+#         Self.assertEqual(post.title "title")
