@@ -1,4 +1,4 @@
-{% extends "employers/base.html" %}
+{% extends "base.html" %}
 {% load bootstrap4 %}
 {% block content %}
 <div class="container-fluid">
@@ -94,7 +94,26 @@
                       
                     </div>
                   </div>
-
+    
+                  <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                      <div class="card port h-100">
+                        <h2 class="text-center">Portfolio</h2>
+                        <div class="card-body port-body">
+                          {% if portfolios %}
+                                {% for portfolio in portfolios%}
+                          <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"></i>{{portfolio.name}}</h6>
+                              <small class="">
+                                <a  href="{{portfolio.link}}" class="btn btn-sm btn-outline-success">View Portfolio</a>
+                                {%endfor%}
+                                {%endif%}
+                            </small>
+                           
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
                 </div>
               </div>
     
