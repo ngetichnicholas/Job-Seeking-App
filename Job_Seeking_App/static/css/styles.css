@@ -64,7 +64,7 @@ body {
 .forms {
   margin-bottom: 10vh;
 }
-#about,#services {
+#about,#services, .map {
   background-color: #198754 !important;
   color:  white;
 }
@@ -89,4 +89,20 @@ body {
     color: #198754;
     text-decoration: underline;
 }
+.foot {
+  color: #198754 !important;
+}
+.doc {
+  width: 20vh;
+}
+.card {
+  padding: 1rem;
+}
+@media screen and (max-width:1000px) {
+  .about,.services,.contact {
+    height:auto !important;
+  }
+  
+}
+
 
