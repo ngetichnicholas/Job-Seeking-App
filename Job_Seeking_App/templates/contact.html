@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 {% block content %}
         <!-- Masthead-->
         <header class="masthead contact">
@@ -10,7 +11,7 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p style="color:rgb(255, 255, 255);text-size-adjust: 70px;">
-                            <strong style="font-size: xx-large;"> Fell free to reach out to us any time. We are on reach 24/7
+                            <strong style="font-size: xx-large;"> Feel free to reach out to us any time. We are on reach 24/7
                             </strong></p>
                     </div>
                 </div>
@@ -19,6 +20,16 @@
         <!-- Contact-->
         <section class="page-section" id="contact">
             <div class="container px-4 px-lg-5">
+                {% if messages %}
+                {% for message in messages %}
+                <p class="text-center"> {{ message }}</p>
+                  {% endfor %}
+              {% endif %}
+                <form class="forms" action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form contact_form %}
+                    <input type="submit" class="btn btn-primary" value="Send">
+                </form>
             </div>
         </section>
 {% endblock %}
