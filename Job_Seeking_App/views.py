@@ -171,17 +171,18 @@ def upload_file(request):
 # jobseekers Add portfolio
 @login_required
 def add_portfolios(request):
-  if request.method == "POST":
-    port_form=AddPortfolio(request.POST,request.FILES,instance=request.user)
+  if request.method == 'POST':
+    port_form=AddPortfolio(request.POST,request.FILES)
     if port_form.is_valid():
-      user=port_form.save(commit=False)
-      user.jobseeker = request.user.profile
-      user.save()
-      messages.success(request,f"Portfolios added successfully")
+      portfolio = port_form.save(commit=False)
+      portfolio.jobseeker = request.user.profile
+      portfolio.save()
+      messages.success(request,'Your Portfolio has been added')
       print(port_form)
-      return redirect("jobseeker_profile")
+      return redirect('jobseeker_profile')
+
   else:
-    port_form=AddPortfolio(instance=request.user)
+    port_form = AddPortfolio()
   context = {
     'port_form': port_form,
     }
