@@ -1,47 +1,6 @@
 body {
   background-color: #eeebe4;
 }
-.notification {
-  background-color: #258DC0;
-  color: white;
-  text-decoration: none;
-  padding: 15px 26px;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
-}
-
-.notification:hover {
-  background: rgb(255, 250, 250);
-}
-
-.unverified .badge3 {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 9px 15px;
-  border-radius: 50%;
-  background-color: red;
-  color: white;
-}
-.verified .badge2 {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 2px 15px;
-  border-radius: 50%;
-  background-color: rgb(19, 185, 69);
-  color: white;
-}
-.all-jobseekers .badge1 {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 2px 10px;
-  border-radius: 50%;
-  background-color: rgb(2, 57, 177);
-  color: rgb(126, 5, 5);
-}
 .seek{
     color: azure;
 }
@@ -57,23 +16,27 @@ body {
 .masthead {
   background-image: url('../images/banner4-carousel1.jpg') !important;
 }
+.about {
+  background-image: url('../images/blog-how-to-get-into-cybersecurity.jpeg') !important;
+  height: 30vh !important;
+}
+.services {
+  background-image: url('../images/jobs-background-image.jpg') !important;
+  height: 30vh !important;
+}
+.contact {
+  background-image: url('../images/contact.jpg') !important;
+  height: 30vh !important;
+}
 #mainNav {
   background-color: white;
 }
 
 .navbar-brand, #mainNav ul li a {
-  color: orangered!important;
+  color: #198754 !important;
   font-weight: 900 !important;
   text-transform: uppercase;
 }
-.fixed-top {
-  position: unset !important;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1030;
-}
-
 .btn, .card {
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -92,4 +55,38 @@ body {
   height: 5vh !important;
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
+  margin-top: 5vh !important;
 }
+.container-fluid {
+  margin-top: 10vh !important;
+  margin-bottom: 10vh !important;
+}
+.forms {
+  margin-bottom: 10vh;
+}
+#about,#services {
+  background-color: #198754 !important;
+  color:  white;
+}
+#about p {
+  color: white !important;
+}
+.divider {
+  background-color: #198754 !important;
+}
+.start {
+  background-color: #198754 !important;
+}
+.btn {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+.form-control {
+  border: 2px solid #198754 !important;
+}
+ a {
+    color: #198754;
+    text-decoration: underline;
+}
+

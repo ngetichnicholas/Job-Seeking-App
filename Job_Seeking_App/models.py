@@ -6,7 +6,8 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
-# from phonenumber_field.modelfields import PhoneNumberField
+
+
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
@@ -59,6 +60,11 @@ class JobSeeker(models.Model):
     def __str__(self):
         return self.user.username
 
+    @classmethod
+    def search_by_category(cls,search_term):
+        jobs = cls.objects.filter(job_category__name__icontains=search_term)
+        return jobs
+
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=100)
@@ -91,6 +97,7 @@ class Payments(models.Model):
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
     phone = models.CharField(max_length=144,null=True,blank=True)
+    mpesa_number = models.CharField(max_length=14)
 
 # previous projects
 class Portfolio(models.Model):
@@ -105,3 +112,10 @@ class Portfolio(models.Model):
         verbose_name = ("Portfolio")
         verbose_name_plural = ("Portfolio")
 
+class Contact(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()
+    message = models.TextField()
+    
+    def __str__(self):
+        return self.name
