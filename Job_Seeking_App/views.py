@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from .email import send_verification_email
+from .email import *
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
@@ -27,6 +27,27 @@ from .models import User
 
 def index(request):
     return render(request,'index.html')
+
+def about(request):
+    return render(request,'about.html')
+
+def services(request):
+    return render(request,'services.html')
+
+def contact(request):
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    message = request.POST.get('message')
+    if request.method == 'POST':
+      contact_form = ContactForm(request.POST)
+      if contact_form.is_valid():
+        contact_form.save()
+        send_contact_email(name, email)
+        data = {'success': 'Your message has been reaceived. Thank you for contacting us, we will get back to you shortly'}
+        messages.info(request, f"Messent submitted successfully")
+    else:
+      contact_form = ContactForm()
+    return render(request,'contact.html',{'contact_form':contact_form})
 
 #signup and login
 @unauthenticated_user
@@ -168,19 +189,21 @@ def upload_file(request):
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
 
-#                                     jobseekers Add portfolio
+#                                     jobseekers Add portfoli
 
 def add_portfolios(request):
   if request.method == 'POST':
-    port_form=AddPortfolio(request.POST,instance=request.user)
+    port_form=AddPortfolio(request.POST,request.FILES)
     if port_form.is_valid():
-      port_form.save()
+      portfolio = port_form.save(commit=False)
+      portfolio.jobseeker = request.user.profile
+      portfolio.save()
       messages.success(request,'Your Portfolio has been added')
       print(port_form)
       return redirect('jobseeker_profile')
 
   else:
-    port_form = AddPortfolio(instance=request.user)
+    port_form = AddPortfolio()
   context = {
     'port_form': port_form,
     }
