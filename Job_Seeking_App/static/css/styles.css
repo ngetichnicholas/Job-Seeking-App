@@ -64,8 +64,9 @@ body {
 .forms {
   margin-bottom: 10vh;
 }
-#about {
+#about,#services {
   background-color: #198754 !important;
+  color:  white;
 }
 #about p {
   color: white !important;
