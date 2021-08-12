@@ -17,11 +17,11 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from .decorators import unauthenticated_user,allowed_users,admin_only
-
+import os
 from .models import JobSeeker,Employer 
 from .models import User
 
-import os
+# from django_daraja.mpesa.core import MpesaClient
 
 # Create your views here.
 
@@ -168,17 +168,21 @@ def upload_file(request):
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
 
-#                                     jobseekers Add portfolio
+#                                     jobseekers Add portfoli
 
 def add_portfolios(request):
   if request.method == 'POST':
-    port_form=AddPortfolio(request.POST,instance=request.user)
+    port_form=AddPortfolio(request.POST,request.FILES)
     if port_form.is_valid():
-      port_form.save()
+      portfolio = port_form.save(commit=False)
+      portfolio.jobseeker = request.user.profile
+      portfolio.save()
       messages.success(request,'Your Portfolio has been added')
+      print(port_form)
       return redirect('jobseeker_profile')
+
   else:
-    port_form = AddPortfolio(instance=request.user)
+    port_form = AddPortfolio()
   context = {
     'port_form': port_form,
     }
@@ -401,3 +405,29 @@ def employer_details(request,employer_id):
 
   return render(request,'admin/employers/employers_details.html',{'employer':employer})
 
+#                           admin calender
+
+def calender(request):
+  return render(request,'admin/calender.html')
+
+
+# Search View
+
+def search_results(request):
+
+    if 'jobseeker' in request.GET and request.GET["jobseeker"]:
+        search_term = request.GET.get("jobseeker")
+        searched_jobseekers_by_category = JobSeeker.search_by_category(search_term)
+        results = [*searched_jobseekers_by_category]
+        message = f"{search_term}"
+
+        return render(request, 'employers/search.html',{"message":message,"jobseekers": results})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'employers/search.html',{"message":message})
+
+def jobseeker(request):
+    jobseekers = JobSeeker.objects.all()
+    
+    return render(request,"jobseeker.html", {"jobseekers":jobseekers})

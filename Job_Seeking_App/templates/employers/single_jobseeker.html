@@ -100,6 +100,7 @@
                       <div class="card port h-100">
                         <h2 class="text-center">Portfolio</h2>
                         <div class="card-body port-body">
+                          {{portfolios|length}}
                           {% if portfolios %}
                                 {% for portfolio in portfolios%}
                           <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"></i>{{portfolio.name}}</h6>
