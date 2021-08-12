@@ -1,10 +1,10 @@
 
 body {
   font-family: "Poppins", Arial, sans-serif;
-  font-size: 14px;
+  font-size: 25px;
   line-height: 1.8;
   font-weight: normal;
-  background: rgb(151, 145, 145);
+  background-color: #eeebe4;
   color: gray; }
 
 a {
@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  background: #3d405b;
+  background: #198754;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -206,3 +206,6 @@ a[data-toggle="collapse"] {
   }
 
 /* calender */
+.btn-danger {
+  background-color: red !important;
+}

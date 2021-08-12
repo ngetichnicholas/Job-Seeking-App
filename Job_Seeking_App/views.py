@@ -129,7 +129,7 @@ def login(request):
 def dashboard(request):
     current = request.user
     if current.is_employer:
-        return redirect('employer_profile/')
+        return redirect('employerDash/')
     elif current.is_admin:
         return redirect('admin_dashboard')
     else: 
@@ -169,7 +169,10 @@ def update_jobseeker_profile(request):
 @login_required
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def jobseekerDash(request):
-    return render(request,'jobseekers/jobseeker_dashboard.html')
+    current_user = request.user
+    documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
+    portfolios=Portfolio.objects.filter(jobseeker_id = current_user.id)
+    return render(request,'jobseekers/jobseeker_dashboard.html',{"documents":documents,"portfolios":portfolios})
 
 
 #jobseekers upload resumes
@@ -183,7 +186,7 @@ def upload_file(request):
             upload = upload_form.save(commit=False)
             upload.jobseeker = request.user.profile
             upload.save()
-            return redirect('jobseeker_profile')
+            return redirect('jobseekerDash')
     else:
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
@@ -270,7 +273,7 @@ def update_employer(request):
       u_form.save()
       p_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('employer_profile')
+      return redirect('employerDash')
   else:
     u_form = UpdateUserProfile(instance=request.user)
     p_form = UpdateEmployerProfile(instance=request.user.employer) 
