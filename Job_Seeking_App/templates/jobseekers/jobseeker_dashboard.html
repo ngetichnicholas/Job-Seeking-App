@@ -3,93 +3,44 @@
 {% block content %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 text-center">
+    <div class="col-md-3">
       {% if user.profile.profile_picture.url %}
       <img class="profile_picture my-4"
-         src="{{ user.profile.profile_picture.url }}" style="height: 20vh; width:20vh;" alt="">
+         src="{{ user.profile.profile_picture.url }}" style="height: 10vh; width:10vh;" alt="">
          {% else %}
         <img class="profile_picture my-4"
-           src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 20vh; width:20vh;" alt="">
+           src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
            {% endif %}
+      <h2 class="">{{user.username}}</h2>
+      <div class="card-header"><a href="{% url 'upload_file' %}">Upload document</a></div>
+      <div class="card-header"><a href="{% url 'update_jobseeker_profile' %}">Update Details</a></div>
+      <div class="card-header"><a href="{% url 'portfolio' %}">Add portfolio</a></div>
+      <div class="card-header"><a href="{% url 'jobseeker_profile' %}">See my Profile</a></div>
 
-        <h2 class="">{{user.username}}</h2>
-      </div>
-      <div class="col-md-3"></div>
     </div>
-      <div class="row">
-        <div class="col-md-3">
-          <a  href="{% url 'upload_file' %}">
-            <button class="btn btn-success">Upload document</button>
-          </a>
-          {% if documents %}
-          {% for document in documents %}
-          <div class="">
-            <h2>{{document.name}}</h2>
-            <a  href="{{ document.pdf.url }}" download="" class="btn btn-outline-success">View Document</a>
-        </div>
-        {% endfor %}
-        {% endif %} 
-        </div>
-        <div class="col-md-6">
-
-          <table class="table table-striped" border="1">
-            <tr>
-              <th>First Name</th>
-              <td>{{ user.first_name }}</td>
-            </tr>
-            <tr>
-              <th>Last Name</th>
-              <td>{{ user.last_name}}</td>
-            </tr>
-            <tr>
-              <th>Username</th>
-              <td>{{ user.username}}</td>
-            </tr>
-            <tr>
-              <th>Bio</th>
-              <td>{{ user.profile.bio }}</td>
-            </tr>
-            <tr>
-              <th>Email Address</th>
-              <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-              <th>Location</th>
-              <td>{{user.location}}</td>
-            </tr>
-            <tr>
-              <th>Availability</th>
-              <td>{{user.profile.availability}}</td>
-            </tr>
-            <tr>
-              <th>Job Category</th>
-              <td>{{user.profile.job_category}}</td>
-            </tr>
-            <tr>
-              <th>Availability</th>
-              <td>{{user.profile.availability}}</td>
-            </tr>
-            <tr>
-              <th>Job_Category</th>
-              <td>{{user.profile.job_category}}</td>
-            </tr>
-          </table>
-          <div class="d-flex justify-content-between">
-            <div class="text-center">
-              <a  href="{% url 'update_jobseeker_profile' %}">
-              <button class="btn btn-success">Update Details</button>
-            </a>
-          </div>
-          <!-- add button -->
-          <div class="text-center">
-            <a  href="{% url 'portfolio' %}">
-            <button class="btn btn-success">Add portfolio</button>
-          </a>
-        </div>
-          </div>
-        </div>
-        <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>My Documents and Resumes</h2>
+      {% if documents %}
+      {% for document in documents %}
+      <div class="card">
+        <h2><i class="fas fa-file-pdf"></i> {{document.name}}</h2>
+        <a href="{{ document.pdf.url }}" download="" class="btn btn-outline-success doc">View Document</a>
       </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      <h2>My Portfolios</h2>
+      {% if portfolios %}
+      {% for portfolio in portfolios %}
+      <div class="card">
+        <h2>{{portfolio.name}}</h2>
+        <a href="{{ portfolio.link }}" download="" class="btn btn-outline-success doc">View</a>
+      </div>
+      {% endfor %}
+      {% endif %}
+        
+    </div>
+  </div>
 </div>
 {% endblock %}
