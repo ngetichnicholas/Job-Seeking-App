@@ -129,7 +129,7 @@ def login(request):
 def dashboard(request):
     current = request.user
     if current.is_employer:
-        return redirect('employer_profile/')
+        return redirect('employerDash/')
     elif current.is_admin:
         return redirect('admin_dashboard')
     else: 
@@ -273,7 +273,7 @@ def update_employer(request):
       u_form.save()
       p_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('employer_profile')
+      return redirect('employerDash')
   else:
     u_form = UpdateUserProfile(instance=request.user)
     p_form = UpdateEmployerProfile(instance=request.user.employer) 
