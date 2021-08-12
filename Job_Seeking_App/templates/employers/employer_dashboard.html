@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'employers/base.html' %}
 {% load bootstrap4 %}
 {%load static%}
 {% block content %}
@@ -7,10 +7,10 @@
     <div class="col-md-11">
       {% if user.verified is False %}
       <h3>Pay to get verified</h3>
-      <form class="forms" action="{% url 'employerDash' %}" method="POST" enctype="multipart/form-data">
+      <form class="forms" action="{% url 'verify_employer_payment' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-          {% bootstrap_form verify_employer_form %}
+          {% bootstrap_form payment_form %}
         </fieldset>
         <div class="form-group">
           <button class="btn btn-outline-success" type="submit">Submit</button>

@@ -1,11 +1,17 @@
 from django.urls import path
+
+import mpesa
 from . import views as app_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from mpesa import payment
 
 urlpatterns = [
     path('',app_views.index,name='index'),
+    path('about',app_views.about,name='about'),
+    path('contact',app_views.contact,name='contact'),
+    path('services',app_views.services,name='services'),
     path('register/',app_views.register,name='register'),
     path('registerJobseeker/',app_views.registerJobseeker,name='registerJobseeker'),
     path('registerEmployer/',app_views.registerEmployer,name='registerEmployer'),
@@ -35,7 +41,9 @@ urlpatterns = [
 
     path('daraja/stk-push', app_views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('access/token', app_views.getAccessToken, name='get_mpesa_access_token'),
-    path('online/lipa', app_views.employerDash, name='lipa_na_mpesa'),
+    path('online/lipa', app_views.employerDash, name='mpesa_payment'),
+    path('successful', app_views.success, name='success'),
+    path('verify_employer',payment.mpesa_payment,name='verify_employer_payment'),
 
 
     # get single jobseeker details from
@@ -45,6 +53,7 @@ urlpatterns = [
     path('update_employer/',app_views.update_employer,name='update_employer'),
     path('portfolio/',app_views.add_portfolios,name='portfolio'),
     path('calender/',app_views.calender,name='calender'),
+    path('search/', app_views.search_results, name='search_results'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
