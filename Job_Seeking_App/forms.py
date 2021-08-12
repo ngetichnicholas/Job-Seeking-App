@@ -49,3 +49,8 @@ class PaymentForm(forms.ModelForm):
   class Meta:
     model = Payments
     fields = ['first_name', 'last_name','mpesa_number']
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+      model = Contact
+      fields = ['name','email','message']
