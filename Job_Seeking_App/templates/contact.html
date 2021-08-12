@@ -1,35 +1,77 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-        <!-- Masthead-->
-        <header class="masthead contact">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 style="color: white">Contact Us</h1>
-                        <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        <p style="color:rgb(255, 255, 255);text-size-adjust: 70px;">
-                            <strong style="font-size: xx-large;"> Feel free to reach out to us any time. We are on reach 24/7
-                            </strong></p>
+<div class="container-fluid">
+    <!-- Masthead-->
+    <header class="masthead contact">
+        <div class="container px-4 px-lg-5 h-100">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-8 align-self-end">
+                    <h1 style="color: white">Contact Us</h1>
+                    <hr class="divider" />
+                </div>
+                <div class="col-lg-8 align-self-baseline">
+                    <p style="color:rgb(255, 255, 255);text-size-adjust: 70px;">
+                        <strong style="font-size: xx-large;"> Feel free to reach out to us any time. We are on reach
+                            24/7
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="page-section bg-primary" id="about">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="text-white mt-0">Our premises</h2>
+
+                    <div class="row map">
+                        <div class="">
+                            <div class="info">
+                                <div class="address">
+                                    <i class="icofont-google-map"></i>
+                                    <h4>Location: <span>Kimathi Street, Nairobi, 535022</span></h4>
+                                </div>
+                                <div class="email">
+                                    <i class="icofont-envelope"></i>
+                                    <h4>Email: <span>flex.connectors@gmail.com</span></h4>
+                                </div>
+                                <div class="phone">
+                                    <i class="icofont-phone"></i>
+                                    <h4>Telephone No: <span>+254 72547032</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=kimathi%20street&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
-        </header>
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container px-4 px-lg-5">
-                {% if messages %}
-                {% for message in messages %}
-                <p class="text-center"> {{ message }}</p>
-                  {% endfor %}
-              {% endif %}
-                <form class="forms" action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% bootstrap_form contact_form %}
-                    <input type="submit" class="btn btn-primary" value="Send">
-                </form>
+    </section>
+    <!-- Contact-->
+    <section class="page-section" id="contact">
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h2>Leave a message for us</h2>
+                <div class="">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p class="text-center"> {{ message }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    <form class="forms" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form contact_form %}
+                        <input type="submit" class="btn btn-primary" value="Send">
+                    </form>
+                </div>
             </div>
-        </section>
+            <div class="col-md-3"></div>
+        </div>
+    </section>
+</div>
 {% endblock %}
