@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from .email import send_verification_email
+from .email import *
 from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
@@ -27,6 +27,27 @@ from .models import User
 
 def index(request):
     return render(request,'index.html')
+
+def about(request):
+    return render(request,'about.html')
+
+def services(request):
+    return render(request,'services.html')
+
+def contact(request):
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    message = request.POST.get('message')
+    if request.method == 'POST':
+      contact_form = ContactForm(request.POST)
+      if contact_form.is_valid():
+        contact_form.save()
+        send_contact_email(name, email)
+        data = {'success': 'Your message has been reaceived. Thank you for contacting us, we will get back to you shortly'}
+        messages.info(request, f"Messent submitted successfully")
+    else:
+      contact_form = ContactForm()
+    return render(request,'contact.html',{'contact_form':contact_form})
 
 #signup and login
 @unauthenticated_user
@@ -108,7 +129,7 @@ def login(request):
 def dashboard(request):
     current = request.user
     if current.is_employer:
-        return redirect('employer_profile/')
+        return redirect('employerDash/')
     elif current.is_admin:
         return redirect('admin_dashboard')
     else: 
@@ -135,7 +156,7 @@ def update_jobseeker_profile(request):
       user_form.save()
       jobseeker_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('jobseeker_profile')
+      return redirect('jobseekerDash')
   else:
     user_form = UpdateUserProfile(instance=request.user)
     jobseeker_form = UpdateJobseekerProfile(instance=request.user.profile) 
@@ -148,7 +169,10 @@ def update_jobseeker_profile(request):
 @login_required
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def jobseekerDash(request):
-    return render(request,'jobseekers/jobseeker_dashboard.html')
+    current_user = request.user
+    documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
+    portfolios=Portfolio.objects.filter(jobseeker_id = current_user.id)
+    return render(request,'jobseekers/jobseeker_dashboard.html',{"documents":documents,"portfolios":portfolios})
 
 
 #jobseekers upload resumes
@@ -162,7 +186,7 @@ def upload_file(request):
             upload = upload_form.save(commit=False)
             upload.jobseeker = request.user.profile
             upload.save()
-            return redirect('jobseeker_profile')
+            return redirect('jobseekerDash')
     else:
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
@@ -249,7 +273,7 @@ def update_employer(request):
       u_form.save()
       p_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('employer_profile')
+      return redirect('employerDash')
   else:
     u_form = UpdateUserProfile(instance=request.user)
     p_form = UpdateEmployerProfile(instance=request.user.employer) 
