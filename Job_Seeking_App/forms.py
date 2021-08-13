@@ -5,10 +5,16 @@ from .models import User
 from .models import *
 
 class UserSignUpForm(UserCreationForm):
-
-  class Meta:
-    model = User
-    fields = ('username', 'email', 'password1', 'password2', )
+    password1 = forms.CharField(label='Enter password', 
+                                widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm password', 
+                                widget=forms.PasswordInput)
+    class Meta:
+        model=User
+        fields=("username","email","password1","password2")
+        help_texts = {
+            "username":None,
+        }
 
 class UpdateJobseekerProfile(forms.ModelForm):
   class Meta:
@@ -45,7 +51,12 @@ class AddPortfolio(forms.ModelForm):
         model = Portfolio
         fields = ('name','link',  )
 
-class VerifyEmployer(forms.ModelForm):
+class PaymentForm(forms.ModelForm):
   class Meta:
     model = Payments
-    fields = ['first_name', 'last_name','phone']
+    fields = ['first_name', 'last_name','mpesa_number']
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+      model = Contact
+      fields = ['name','email','message']
