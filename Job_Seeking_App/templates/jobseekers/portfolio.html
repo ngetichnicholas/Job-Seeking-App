@@ -5,6 +5,11 @@
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-6">
+        {% if messages %}
+        {% for message in messages %}
+        <p class="text-center text-success"> {{ message }}</p>
+          {% endfor %}
+      {% endif %}
         <div class="" id="myContent">
           <form class="forms" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -12,7 +17,7 @@
               {% bootstrap_form port_form%}
             </fieldset>
             <div class="form-group">
-              <button class="btn btn-outline-success" type="submit">Add portfolio</button>
+              <button class="btn btn-outline-success" type="submit">Add</button>
             </div>
           </form>
         </div>
