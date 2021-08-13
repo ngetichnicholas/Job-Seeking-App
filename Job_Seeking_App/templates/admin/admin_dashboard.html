@@ -2,6 +2,11 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="text-center text-success"> {{ message }}</p>
+      {% endfor %}
+  {% endif %}
         <div class="container">
             <div class="col-md-8">
                 <canvas id="myChart"></canvas>
