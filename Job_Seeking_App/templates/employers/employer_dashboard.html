@@ -2,9 +2,26 @@
 {% load bootstrap4 %}
 {%load static%}
 {% block content %}
-<div class="container">
+<div class="container-fluid employ">
   <div class="row">
-    <div class="col-md-11">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="text-center text-success"> {{ message }}</p>
+      {% endfor %}
+  {% endif %}
+    <div class="col-md-3">
+      {% if user.profile.profile_picture.url %}
+      <img class="profile_picture my-4"
+         src="{{ user.profile.profile_picture.url }}" style="height: 10vh; width:10vh;" alt="">
+         {% else %}
+        <img class="profile_picture my-4"
+           src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
+           {% endif %}
+      <h2 class="">{{user.username}}</h2>
+      <div class="card-header"><a href="{% url 'update_employer' %}">Update Details</a></div>
+      <div class="card-header"><a href="{% url 'employer_profile' %}">See my Profile</a></div>
+    </div>
+    <div class="col-md-8">
       {% if user.verified is False %}
       <h3>Pay to get verified</h3>
       <form class="forms" action="{% url 'verify_employer_payment' %}" method="POST" enctype="multipart/form-data">
@@ -18,10 +35,10 @@
       </form>
       {% else %}
 
-      <h5>POTENTIAL CANDIDATES: </h5>
+      <h5 class="">POTENTIAL CANDIDATES: </h5>
       <hr>
       <div class="card card-body table-responsive">
-          <table class="table table-sm table-hover table-dark ">
+          <table class="table table-striped" border="1">
               <tr>
                   <th scope="col" >View</th>
                   <th scope="col">Names</th>
@@ -32,13 +49,13 @@
               </tr>
               {% for job_seeker in job_seekers %}
               <tr>
-                <td><a href="{% url 'specific_details' job_seeker.id%}" class="btn-btn-sm btn-outline-info">view</a></td>
+                <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="btn btn-outline-primary">View</button></a></td>
                 <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
                   <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
                   <td>{{job_seeker.location}}</td>
-                  <td><button class="btn btn-outline-info hireJobSeeker" data-product="{{job_seeker.id}}" data-action="add" ><a href="mailto:{{job_seeker.email}}">Contact</a></button></td>
+                  <td><a href="mailto:{{job_seeker.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
               </tr>
               {%endfor%}
              

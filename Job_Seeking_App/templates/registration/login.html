@@ -1,14 +1,14 @@
 {%extends "base.html"%}
 {% load bootstrap4 %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <!-- Empty div -->
     <div class="col-md-3"></div>
     <div class="col-md-6">
       {% if messages %}
         {% for message in messages %}
-        <p class="text-center"> {{ message }}</p>
+        <p class="text-center text-danger"> {{ message }}</p>
           {% endfor %}
       {% endif %}
       <div class="card">

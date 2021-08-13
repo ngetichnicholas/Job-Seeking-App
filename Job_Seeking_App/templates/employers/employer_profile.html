@@ -1,6 +1,6 @@
 {% extends 'employers/base.html' %} {%load static%} {% load crispy_forms_tags %} 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid employ">
   <div class="row">
       <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
           <div class="">
@@ -43,44 +43,49 @@
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-8">
-            <table class="table table-bordered">
-              <center>
-                <div class="image-holder my-4">
-                  <img src="{{user.profile_picture.url}}" class="img-responsive img-fluid col-md-8" alt="">
-                </div>
-                
-              </center>
-              <tr>
-                <th>First Name</th>
-                <td>{{user.first_name}}</td>
-              </tr>
-              <tr>
-                <th>Last Name</th>
-                <td>{{user.last_name}}</td>
-              </tr>
-              <tr>
-                <th>Username</th>
-                <td>{{ user.username}}</td>
-              </tr>
-              <tr>
-                <th>Phone</th>
-                <td>{{user.phone}}</td>
-              </tr>
-              <tr>
-                <th>Email Address</th>
-                <td>{{user.email}}</td>
-              </tr>
-              <tr>
-                <th>Location</th>
-                <td>{{user.location}}</td>
-              </tr>
-              <tr>
-                <th>Company</th>
-                <td>{{user.employer.company_name}}</td>
-              </tr>
-            </table>
-            
-            
+            <div class="row">
+              <div class="col-md-4">
+                {% if user.employer.profile_picture.url %}
+                <img src="{{user.profile_picture.url}}" class="img-responsive img-fluid col-md-8" alt="">
+                   {% else %}
+                  <img class="profile_picture my-4"
+                     src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 30vh; width:30vh;" alt="">
+                     {% endif %}
+
+              </div>
+              <div class="col-md-8">
+                <table class="table table-bordered">
+                  <tr>
+                    <th>First Name</th>
+                    <td>{{user.first_name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Last Name</th>
+                    <td>{{user.last_name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Username</th>
+                    <td>{{ user.username}}</td>
+                  </tr>
+                  <tr>
+                    <th>Phone</th>
+                    <td>{{user.phone}}</td>
+                  </tr>
+                  <tr>
+                    <th>Email Address</th>
+                    <td>{{user.email}}</td>
+                  </tr>
+                  <tr>
+                    <th>Location</th>
+                    <td>{{user.location}}</td>
+                  </tr>
+                  <tr>
+                    <th>Company</th>
+                    <td>{{user.employer.company_name}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
             <!-- test begin -->
           </div>
           <div class="col-md-2"></div>
