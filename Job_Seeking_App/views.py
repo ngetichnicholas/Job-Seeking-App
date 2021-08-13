@@ -192,8 +192,8 @@ def upload_file(request):
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
 
-#                                     jobseekers Add portfoli
-
+# jobseekers Add portfolio
+@login_required
 def add_portfolios(request):
   if request.method == 'POST':
     port_form=AddPortfolio(request.POST,request.FILES)
@@ -309,10 +309,14 @@ def single_jobseeker(request,jobseeker_id):
 @admin_only
 def adminDash(request):
     jobseekers=JobSeeker.objects.all()
+    employers=Employer.objects.all()
+    all_employers= User.objects.filter(is_employer=True).all()
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
     unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
-    return render(request,'admin/admin_dashboard.html',{"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
+    verified_employers = User.objects.filter(verified=True,is_employer = True).all()
+    unverified_employers = User.objects.filter(verified = False,is_employer = True).all()
+    return render(request,'admin/admin_dashboard.html',{"unverified_employers":unverified_employers  ,"verified_employers":verified_employers  ,"all_employers":all_employers ,"employers":employers ,"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
 # ADMIN VIEWS
 # JobSeeker views
