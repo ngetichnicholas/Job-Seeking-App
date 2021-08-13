@@ -2,8 +2,13 @@
 {% load bootstrap4 %}
 {%load static%}
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid employ">
   <div class="row">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="text-center text-success"> {{ message }}</p>
+      {% endfor %}
+  {% endif %}
     <div class="col-md-3">
       {% if user.profile.profile_picture.url %}
       <img class="profile_picture my-4"
@@ -30,7 +35,7 @@
       </form>
       {% else %}
 
-      <h5>POTENTIAL CANDIDATES: </h5>
+      <h5 class="">POTENTIAL CANDIDATES: </h5>
       <hr>
       <div class="card card-body table-responsive">
           <table class="table table-striped" border="1">

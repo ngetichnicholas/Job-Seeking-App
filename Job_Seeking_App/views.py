@@ -156,7 +156,7 @@ def update_jobseeker_profile(request):
       user_form.save()
       jobseeker_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('jobseeker_profile')
+      return redirect('jobseekerDash')
   else:
     user_form = UpdateUserProfile(instance=request.user)
     jobseeker_form = UpdateJobseekerProfile(instance=request.user.profile) 
