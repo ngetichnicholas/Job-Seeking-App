@@ -6,14 +6,17 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
+from django.utils.translation import gettext as _
 
 
 class User(AbstractUser):
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []#removes email from REQUIRED_FIELDS
     is_admin = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
-    email = models.EmailField()
+    email = models.EmailField(_('email address'), unique=True)# changes email to unique and blank to false
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
     profile_picture =CloudinaryField('image')
