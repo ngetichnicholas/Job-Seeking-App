@@ -4,6 +4,8 @@ from rest_framework.permissions import AllowAny
 
 from mpesa.models import Payment
 from mpesa.api.serializers import MpesaSerializer
+from ..email import send_payment_email
+
 
 
 class CallBackApiView(CreateAPIView):
@@ -12,6 +14,7 @@ class CallBackApiView(CreateAPIView):
     permission_classes = [AllowAny]
 
     def create(self, request):
+        user = request.user
         print(request.data, "this is request.data")
 
         """
@@ -68,6 +71,13 @@ class CallBackApiView(CreateAPIView):
         )
 
         new_transaction.save()
+        if mpesa_receipt_number:
+            email = user.email
+            name = user.username
+            send_payment_email(name, email)
+            user.verified = True
+            user.save()
+
 
         from rest_framework.response import Response
 

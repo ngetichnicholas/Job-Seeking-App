@@ -6,6 +6,8 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
+from django.core.validators import MaxLengthValidator,MinLengthValidator
+
 
 
 class User(AbstractUser):
@@ -97,7 +99,7 @@ class Payments(models.Model):
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
     phone = models.CharField(max_length=144,null=True,blank=True)
-    mpesa_number = models.CharField(max_length=14)
+    mpesa_number = models.BigIntegerField('Mpesa Phone Number', validators=[MinLengthValidator(12),MaxLengthValidator(13)])
 
 # previous projects
 class Portfolio(models.Model):
@@ -107,6 +109,8 @@ class Portfolio(models.Model):
 
     def __str__(self):
         return f"Portfolio {self.id}"
+    def save(self, *args, **kwargs):
+        super().save()
 
     class Meta:
         verbose_name = ("Portfolio")
