@@ -4,11 +4,6 @@
 {% block content %}
 <div class="container-fluid employ">
   <div class="row">
-    {% if messages %}
-    {% for message in messages %}
-    <p class="text-center text-success"> {{ message }}</p>
-      {% endfor %}
-  {% endif %}
     <div class="col-md-3">
       {% if user.profile.profile_picture.url %}
       <img class="profile_picture my-4"
@@ -24,10 +19,16 @@
     <div class="col-md-8">
       {% if user.verified is False %}
       <h3>Pay to get verified</h3>
+      <p>Note: Phone number format is 254725470732</p>
       <form class="forms" action="{% url 'verify_employer_payment' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
           {% bootstrap_form payment_form %}
+          {% if messages %}
+          {% for message in messages %}
+          <p class="text-danger"> {{ message }}</p>
+          {% endfor %}
+          {% endif %}
         </fieldset>
         <div class="form-group">
           <button class="btn btn-outline-success" type="submit">Submit</button>
