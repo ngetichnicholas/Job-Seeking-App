@@ -6,7 +6,6 @@ from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
@@ -44,7 +43,7 @@ def contact(request):
         contact_form.save()
         send_contact_email(name, email)
         data = {'success': 'Your message has been reaceived. Thank you for contacting us, we will get back to you shortly'}
-        messages.info(request, f"Messent submitted successfully")
+        messages.info(request, f"Message submitted successfully")
     else:
       contact_form = ContactForm()
     return render(request,'contact.html',{'contact_form':contact_form})
@@ -156,7 +155,7 @@ def update_jobseeker_profile(request):
       user_form.save()
       jobseeker_form.save()
       messages.success(request,'Your Profile account has been updated successfully')
-      return redirect('jobseeker_profile')
+      return redirect('jobseekerDash')
   else:
     user_form = UpdateUserProfile(instance=request.user)
     jobseeker_form = UpdateJobseekerProfile(instance=request.user.profile) 
@@ -192,8 +191,8 @@ def upload_file(request):
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
 
-#                                     jobseekers Add portfoli
-
+# jobseekers Add portfolio
+@login_required
 def add_portfolios(request):
   if request.method == 'POST':
     port_form=AddPortfolio(request.POST,request.FILES)
@@ -237,7 +236,7 @@ def stk_push_callback(request):
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
     user = request.user
-    payment_form = PaymentForm()
+    payment_form = PaymentForm(instance=request.user)
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
     
@@ -309,10 +308,14 @@ def single_jobseeker(request,jobseeker_id):
 @admin_only
 def adminDash(request):
     jobseekers=JobSeeker.objects.all()
+    employers=Employer.objects.all()
+    all_employers= User.objects.filter(is_employer=True).all()
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
     unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
-    return render(request,'admin/admin_dashboard.html',{"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
+    verified_employers = User.objects.filter(verified=True,is_employer = True).all()
+    unverified_employers = User.objects.filter(verified = False,is_employer = True).all()
+    return render(request,'admin/admin_dashboard.html',{"unverified_employers":unverified_employers  ,"verified_employers":verified_employers  ,"all_employers":all_employers ,"employers":employers ,"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
 # ADMIN VIEWS
 # JobSeeker views

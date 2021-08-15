@@ -6,6 +6,8 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
+from django.core.validators import MaxLengthValidator,MinLengthValidator
+
 
 
 class User(AbstractUser):
@@ -13,12 +15,12 @@ class User(AbstractUser):
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
     profile_picture =CloudinaryField('image')
     location = models.CharField(max_length=144,null=True,blank=True)
-    phone = models.IntegerField(null=True,blank=True)
+    phone = models.CharField(unique=True,max_length=13, null=True,blank=True, validators=[MinLengthValidator(10),MaxLengthValidator(13)])
 
 
     def delete_user(self):
@@ -93,12 +95,6 @@ class Employer(models.Model):
     def __str__(self):
         return self.user.username
 
-class Payments(models.Model):
-    first_name =models.CharField(max_length=144,null=True,blank=True)
-    last_name = models.CharField(max_length=144,null=True,blank=True)
-    phone = models.CharField(max_length=144,null=True,blank=True)
-    mpesa_number = models.CharField(max_length=14)
-
 # previous projects
 class Portfolio(models.Model):
     jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='portfolio')
@@ -107,6 +103,8 @@ class Portfolio(models.Model):
 
     def __str__(self):
         return f"Portfolio {self.id}"
+    def save(self, *args, **kwargs):
+        super().save()
 
     class Meta:
         verbose_name = ("Portfolio")
