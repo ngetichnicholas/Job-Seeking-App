@@ -9,8 +9,9 @@ from cloudinary.models import CloudinaryField
 from django.core.validators import MaxLengthValidator,MinLengthValidator
 
 
-
 class User(AbstractUser):
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []#removes email from REQUIRED_FIELDS
     is_admin = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
