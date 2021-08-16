@@ -34,6 +34,7 @@ urlpatterns = [
 
     path('all_employers',app_views.all_employers,name='all_employers'),
     path('verified_employers',app_views.verified_employers,name='verified_employers'),
+    path('payments',app_views.payments,name='payments'),
     path('unverified_employers',app_views.unverified_employers,name='unverified_employers'),
     path('verify_employer/<int:employer_id>',app_views.verify_employer,name='verify_employer'),
     path('delete_employer/<int:employer_id>', app_views.delete_employer,name='delete_employer'),
