@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import fields
 from .models import User
 from .models import *
+from django.core.validators import MinLengthValidator
+
 
 class UserSignUpForm(UserCreationForm):
     password1 = forms.CharField(label='Enter password', 
@@ -53,8 +55,8 @@ class AddPortfolio(forms.ModelForm):
 
 class PaymentForm(forms.ModelForm):
   class Meta:
-    model = Payments
-    fields = ['first_name', 'last_name','mpesa_number']
+    model = User
+    fields = ['first_name', 'last_name','phone']
 
 class ContactForm(forms.ModelForm):
     class Meta:

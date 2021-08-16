@@ -6,7 +6,6 @@ from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
@@ -19,6 +18,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .decorators import unauthenticated_user,allowed_users,admin_only
 import os
 from .models import JobSeeker,Employer 
+from mpesa.models import Payment as MpesaPayment
 from .models import User
 
 # from django_daraja.mpesa.core import MpesaClient
@@ -44,7 +44,7 @@ def contact(request):
         contact_form.save()
         send_contact_email(name, email)
         data = {'success': 'Your message has been reaceived. Thank you for contacting us, we will get back to you shortly'}
-        messages.info(request, f"Messent submitted successfully")
+        messages.info(request, f"Message submitted successfully")
     else:
       contact_form = ContactForm()
     return render(request,'contact.html',{'contact_form':contact_form})
@@ -237,7 +237,7 @@ def stk_push_callback(request):
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
     user = request.user
-    payment_form = PaymentForm()
+    payment_form = PaymentForm(instance=request.user)
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
     
@@ -349,7 +349,7 @@ def verify_jobseeker(request, jobseeker_id):
     if verify_jobseeker_form.is_valid():
       verify_jobseeker_form.save()
       send_verification_email(name, email)
-      data = {'success': 'Verification sent'}
+      data = {'success': 'Verification email sent'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
@@ -419,6 +419,14 @@ def delete_employer(request,employer_id):
   if employer:
     employer.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+#Get all payments
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def payments(request):
+  payments = MpesaPayment.objects.all().order_by('-TransactionDate')
+  
+  return render(request, 'admin/employers/payments.html',{'payments':payments})
 
 #Get single employer
 @login_required
