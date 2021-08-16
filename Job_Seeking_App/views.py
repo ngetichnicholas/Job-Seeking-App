@@ -451,19 +451,19 @@ def calender(request):
 
 def search_results(request):
 
-    if 'jobseeker' in request.GET and request.GET["jobseeker"]:
-        search_term = request.GET.get("jobseeker")
+    if 'profile' in request.GET and request.GET["profile"]:
+        search_term = request.GET.get("profile")
         searched_jobseekers_by_category = JobSeeker.search_by_category(search_term)
         results = [*searched_jobseekers_by_category]
         message = f"{search_term}"
 
-        return render(request, 'employers/search.html',{"message":message,"jobseekers": results})
+        return render(request, 'employers/search.html',{"message":message,"profiles": results})
 
     else:
         message = "You haven't searched for any term"
         return render(request, 'employers/search.html',{"message":message})
 
-def jobseeker(request):
-    jobseekers = JobSeeker.objects.all()
+def profile(request):
+    profiles = JobSeeker.objects.all()
     
-    return render(request,"jobseeker.html", {"jobseekers":jobseekers})
+    return render(request,"jobseeker.html", {"jobseekers":profiles})
