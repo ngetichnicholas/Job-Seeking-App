@@ -1,22 +1,2 @@
-@csrf_exempt
-def response_mpesa(request):
-
-    resp = {
-        "ResultCode": 0,
-        "ResultDesc": "Success"
-    }
-
-    with open('paymnt.txt', 'a+') as f:
-        f.write(request.body.decode('utf-8'))
-        f.close
-
-    body_unicode = request.body.decode('utf-8')
-    body = json.loads(body_unicode)
-
-    # Parse JSON into an object with attributes corresponding to dict keys.
-    
-    """
-    Check if transaction is successful
-    """
-   
-    if body['Body']['stkCallback']['ResultCode'] == 
+Optionally promote profiles (profile-”SEO”).
+Optional adverts.
