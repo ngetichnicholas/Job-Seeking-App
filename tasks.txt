@@ -1,7 +1,22 @@
-Nicholas - MPESA payment email notification
-Peter - Add graphs to admin dashboard
-Nancy - Portfolio and File uploads test
-Victor - Continue with SEO
-Anne - Continue with Admin tests
-Roney - Complete search for job seekers
-Yusuf - Jobseeker user tests
+@csrf_exempt
+def response_mpesa(request):
+
+    resp = {
+        "ResultCode": 0,
+        "ResultDesc": "Success"
+    }
+
+    with open('paymnt.txt', 'a+') as f:
+        f.write(request.body.decode('utf-8'))
+        f.close
+
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+
+    # Parse JSON into an object with attributes corresponding to dict keys.
+    
+    """
+    Check if transaction is successful
+    """
+   
+    if body['Body']['stkCallback']['ResultCode'] == 
