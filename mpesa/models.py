@@ -11,8 +11,8 @@ class Payment(models.Model):
     Amount = models.FloatField(blank=True, null=True)
     MpesaReceiptNumber = models.CharField(max_length=15, blank=True, null=True)
     Balance = models.CharField(max_length=12, blank=True, null=True)
-    TransactionDate = models.DateTimeField(blank=True, null=True)
+    TransactionDate = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     PhoneNumber = models.CharField(max_length=13, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.PhoneNumber} has sent {self.Amount} >> {self.MpesaReceiptNumber}"
+        return self.MpesaReceiptNumber
