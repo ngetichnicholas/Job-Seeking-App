@@ -44,17 +44,17 @@ class CallBackApiView(CreateAPIView):
         result_description = request.data["Body"]["stkCallback"]["ResultDesc"]
         amount = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0]["Value"]
         mpesa_receipt_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][1]["Value"]
-        transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Value"]
+        # transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Value"]
         phone_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][3]["Value"]
 
         from datetime import datetime
 
-        str_transaction_date = str(transaction_date)
+        # # str_transaction_date = str(transaction_date)
 
-        transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
+        # # transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
 
-        import pytz
-        aware_transaction_datetime = pytz.utc.localize(transaction_datetime)
+        # import pytz
+        # aware_transaction_datetime = pytz.utc.localize(transaction_datetime)
 
 
         from mpesa.models import Payment
@@ -66,7 +66,6 @@ class CallBackApiView(CreateAPIView):
             ResultCode=result_code,
             ResultDesc=result_description,
             MpesaReceiptNumber=mpesa_receipt_number,
-            TransactionDate=aware_transaction_datetime,
             PhoneNumber=phone_number,
         )
 
