@@ -18,6 +18,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .decorators import unauthenticated_user,allowed_users,admin_only
 import os
 from .models import JobSeeker,Employer 
+from mpesa.models import Payment as MpesaPayment
 from .models import User
 
 # from django_daraja.mpesa.core import MpesaClient
@@ -348,7 +349,7 @@ def verify_jobseeker(request, jobseeker_id):
     if verify_jobseeker_form.is_valid():
       verify_jobseeker_form.save()
       send_verification_email(name, email)
-      data = {'success': 'Verification sent'}
+      data = {'success': 'Verification email sent'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
@@ -418,6 +419,14 @@ def delete_employer(request,employer_id):
   if employer:
     employer.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+#Get all payments
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def payments(request):
+  payments = MpesaPayment.objects.all().order_by('-TransactionDate')
+  
+  return render(request, 'admin/employers/payments.html',{'payments':payments})
 
 #Get single employer
 @login_required
