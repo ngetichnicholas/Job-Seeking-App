@@ -4,11 +4,6 @@
 {% block content %}
 <div class="container-fluid employ">
   <div class="row">
-    {% if messages %}
-    {% for message in messages %}
-    <p class="text-center text-success"> {{ message }}</p>
-      {% endfor %}
-  {% endif %}
     <div class="col-md-3">
       {% if user.profile.profile_picture.url %}
       <img class="profile_picture my-4"

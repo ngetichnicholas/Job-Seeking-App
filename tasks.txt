@@ -1,3 +1,7 @@
-Optionally promote profiles (profile-”SEO”).
-Optional adverts.
-
+Victor Optionally promote profiles (profile-”SEO”).
+Yusuff and Anne -Optional adverts.
+Roney - Fix employer search function.
+Nancy - Can login with username/email/phone number.
+Nick- Polish Mpesa Integration.
+Roney - Polish UI
+Peter- Activity messages and ajax
