@@ -10,7 +10,7 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="loadDoc()" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                     {% if user.is_authenticated %}
@@ -34,3 +34,11 @@
         </div>
         </div>
     </nav>
+    <script>
+        $(document).ready(function() {
+           $.get('services.html',function (data){
+               $("#home").html(data)
+            
+           })
+        })
+    </script>

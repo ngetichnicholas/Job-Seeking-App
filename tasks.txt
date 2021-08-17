@@ -1,3 +1,7 @@
-Optionally promote profiles (profile-”SEO”).
-Optional adverts.
-Tests
+Nick - Work on tests
+Peter - Work on tests
+Nancy - Work on adverts
+Adam - Work on adverts
+Victor - Work on SEO
+Anne - Work on adverts
+Roney - Work on SEO
