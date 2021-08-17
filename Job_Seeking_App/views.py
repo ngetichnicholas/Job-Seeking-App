@@ -17,9 +17,8 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from .decorators import unauthenticated_user,allowed_users,admin_only
 import os
-from .models import JobSeeker,Employer 
+from .models import *
 from mpesa.models import Payment as MpesaPayment
-from .models import User
 
 # from django_daraja.mpesa.core import MpesaClient
 
@@ -142,7 +141,7 @@ def dashboard(request):
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def jobseeker_profile(request):
   current_user = request.user
-  documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
+  documents = FileUpload.objects.filter(user_id = current_user.id).all()
   
   return render(request,'jobseekers/profile.html',{"documents":documents,"current_user":current_user})
 
@@ -151,7 +150,7 @@ def jobseeker_profile(request):
 def update_jobseeker_profile(request):
   if request.method == 'POST':
     user_form = UpdateUserProfile(request.POST,request.FILES,instance=request.user)
-    jobseeker_form = UpdateJobseekerProfile(request.POST,instance=request.user.profile)
+    jobseeker_form = UpdateJobseekerProfile(request.POST,instance=request.user)
     if user_form.is_valid() and jobseeker_form.is_valid():
       user_form.save()
       jobseeker_form.save()
@@ -159,7 +158,7 @@ def update_jobseeker_profile(request):
       return redirect('jobseekerDash')
   else:
     user_form = UpdateUserProfile(instance=request.user)
-    jobseeker_form = UpdateJobseekerProfile(instance=request.user.profile) 
+    jobseeker_form = UpdateJobseekerProfile(instance=request.user) 
   params = {
     'user_form':user_form,
     'jobseeker_form':jobseeker_form
@@ -170,8 +169,8 @@ def update_jobseeker_profile(request):
 @allowed_users(allowed_roles=['admin','jobseeker'])
 def jobseekerDash(request):
     current_user = request.user
-    documents = FileUpload.objects.filter(jobseeker_id = current_user.id).all()
-    portfolios=Portfolio.objects.filter(jobseeker_id = current_user.id)
+    documents = FileUpload.objects.filter(user_id = current_user.id).all()
+    portfolios=Portfolio.objects.filter(user_id = current_user.id)
     return render(request,'jobseekers/jobseeker_dashboard.html',{"documents":documents,"portfolios":portfolios})
 
 
@@ -184,7 +183,7 @@ def upload_file(request):
         upload_form = UploadFileForm(request.POST, request.FILES)
         if upload_form.is_valid():
             upload = upload_form.save(commit=False)
-            upload.jobseeker = request.user.profile
+            upload.user = request.user
             upload.save()
             return redirect('jobseekerDash')
     else:
@@ -199,11 +198,11 @@ def add_portfolios(request):
     port_form=AddPortfolio(request.POST,request.FILES)
     if port_form.is_valid():
       portfolio = port_form.save(commit=False)
-      portfolio.jobseeker = request.user.profile
+      portfolio.user = request.user
       portfolio.save()
       messages.success(request,'Your Portfolio has been added')
       print(port_form)
-      return redirect('jobseeker_profile')
+      return redirect('jobseekerDash')
 
   else:
     port_form = AddPortfolio()
@@ -239,7 +238,7 @@ def employerDash(request):
     user = request.user
     payment_form = PaymentForm(instance=request.user)
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
-    employer=Employer.objects.all()
+    employer=User.objects.all()
     
     context={
         "job_seekers":job_seekers,
@@ -268,7 +267,7 @@ def employerProfile(request):
 def update_employer(request):
   if request.method == 'POST':
     u_form = UpdateUserProfile(request.POST,request.FILES,instance=request.user)
-    p_form = UpdateEmployerProfile(request.POST,instance=request.user.employer)
+    p_form = UpdateEmployerProfile(request.POST,instance=request.user)
     if u_form.is_valid() and p_form.is_valid():
       u_form.save()
       p_form.save()
@@ -276,7 +275,7 @@ def update_employer(request):
       return redirect('employerDash')
   else:
     u_form = UpdateUserProfile(instance=request.user)
-    p_form = UpdateEmployerProfile(instance=request.user.employer) 
+    p_form = UpdateEmployerProfile(instance=request.user) 
   context = {
     'u_form':u_form,
     'p_form':p_form
@@ -289,11 +288,11 @@ def update_employer(request):
 
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
-def single_jobseeker(request,jobseeker_id):
+def single_jobseeker(request,user_id):
   try:
-    jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
-    documents = FileUpload.objects.filter(jobseeker_id = jobseeker_id)
-    portfolios=Portfolio.objects.filter(jobseeker_id = jobseeker_id)
+    jobseeker =get_object_or_404(User, pk = user_id)
+    documents = FileUpload.objects.filter(user_id = user_id)
+    portfolios=Portfolio.objects.filter(user_id = user_id)
 
   except ObjectDoesNotExist:
     raise Http404()
@@ -308,15 +307,13 @@ def single_jobseeker(request,jobseeker_id):
 @login_required
 @admin_only
 def adminDash(request):
-    jobseekers=JobSeeker.objects.all()
-    employers=Employer.objects.all()
     all_employers= User.objects.filter(is_employer=True).all()
     all_jobseekers = User.objects.filter(is_jobseeker=True).all()
     verified_jobseekers = User.objects.filter(verified=True,is_jobseeker = True).all()
     unverified_jobseekers = User.objects.filter(verified = False,is_jobseeker = True).all()
     verified_employers = User.objects.filter(verified=True,is_employer = True).all()
     unverified_employers = User.objects.filter(verified = False,is_employer = True).all()
-    return render(request,'admin/admin_dashboard.html',{"unverified_employers":unverified_employers  ,"verified_employers":verified_employers  ,"all_employers":all_employers ,"employers":employers ,"jobseekers":jobseekers,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
+    return render(request,'admin/admin_dashboard.html',{"unverified_employers":unverified_employers  ,"verified_employers":verified_employers  ,"all_employers":all_employers ,'verified_jobseekers':verified_jobseekers,'unverified_jobseekers':unverified_jobseekers,'all_jobseekers':all_jobseekers})
 
 # ADMIN VIEWS
 # JobSeeker views
@@ -340,8 +337,8 @@ def unverified_jobseekers(request):
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
-def verify_jobseeker(request, jobseeker_id):
-  user = User.objects.get(pk=jobseeker_id)
+def verify_jobseeker(request, user_id):
+  user = User.objects.get(pk=user_id)
   name = user.username
   email = user.email
   if request.method == 'POST':
@@ -359,8 +356,8 @@ def verify_jobseeker(request, jobseeker_id):
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
-def delete_jobseeker(request,jobseeker_id):
-  jobseeker = User.objects.get(pk=jobseeker_id)
+def delete_jobseeker(request,user_id):
+  jobseeker = User.objects.get(pk=user_id)
   if jobseeker:
     jobseeker.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -368,9 +365,9 @@ def delete_jobseeker(request,jobseeker_id):
 #Get single jobseeker
 @login_required
 @allowed_users(allowed_roles=['admin'])
-def jobseeker_details(request,jobseeker_id):
+def jobseeker_details(request,user_id):
   try:
-    jobseeker =get_object_or_404(JobSeeker, pk = jobseeker_id)
+    jobseeker =get_object_or_404(User, pk = user_id)
 
   except ObjectDoesNotExist:
     raise Http404()
@@ -399,8 +396,8 @@ def unverified_employers(request):
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
-def verify_employer(request, employer_id):
-  employer = User.objects.get(pk=employer_id)
+def verify_employer(request, user_id):
+  employer = User.objects.get(pk=user_id)
   if request.method == 'POST':
     update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
     if update_employer_form.is_valid():
@@ -414,8 +411,8 @@ def verify_employer(request, employer_id):
 
 @login_required
 @allowed_users(allowed_roles=['admin'])
-def delete_employer(request,employer_id):
-  employer = User.objects.get(pk=employer_id)
+def delete_employer(request,user_id):
+  employer = User.objects.get(pk=user_id)
   if employer:
     employer.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -431,9 +428,9 @@ def payments(request):
 #Get single employer
 @login_required
 @allowed_users(allowed_roles=['admin'])
-def employer_details(request,employer_id):
+def employer_details(request,user_id):
   try:
-    employer =get_object_or_404(Employer, pk = employer_id)
+    employer =get_object_or_404(User, pk = user_id)
     
   
   except ObjectDoesNotExist:
@@ -451,7 +448,7 @@ def calender(request):
 def search_jobseekers(request):
   if 'job_category' in request.GET and request.GET["job_category"]:
     search_term = request.GET.get("job_category")
-    searched_jobseekers = JobSeeker.search_jobseekers_by_job_category(search_term)
+    searched_jobseekers = User.search_jobseekers_by_job_category(search_term)
     message = f"{search_term}"
 
     return render(request, 'employers/search.html', {"message":message,"jobseekers":searched_jobseekers})
