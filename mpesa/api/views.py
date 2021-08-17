@@ -37,6 +37,7 @@ class CallBackApiView(CreateAPIView):
             }
         }
         """
+        
         """
         {'Body':
             {'stkCallback':
@@ -58,7 +59,6 @@ class CallBackApiView(CreateAPIView):
             }
         }
         """
-
         if request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Name"]=='TransactionDate':
 
             merchant_request_id = request.data["Body"]["stkCallback"]["MerchantRequestID"]
