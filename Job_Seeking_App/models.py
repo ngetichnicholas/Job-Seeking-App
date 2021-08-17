@@ -66,9 +66,9 @@ class JobSeeker(models.Model):
         return self.user.username
 
     @classmethod
-    def search_by_category(cls,search_term):
-        jobs = cls.objects.filter(job_category__name__icontains=search_term)
-        return jobs
+    def search_jobseekers_by_job_category(cls,job_category):
+        jobseekers = JobSeeker.objects.filter(job_category__icontains=job_category)
+        return jobseekers
 
 
 class FileUpload(models.Model):
