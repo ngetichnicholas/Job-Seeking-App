@@ -55,8 +55,8 @@ class AddPortfolio(forms.ModelForm):
 
 class PaymentForm(forms.ModelForm):
   class Meta:
-    model = Payments
-    fields = ['first_name', 'last_name','mpesa_number']
+    model = User
+    fields = ['first_name', 'last_name','phone']
 
 class ContactForm(forms.ModelForm):
     class Meta:
