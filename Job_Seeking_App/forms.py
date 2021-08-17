@@ -20,14 +20,14 @@ class UserSignUpForm(UserCreationForm):
 
 class UpdateJobseekerProfile(forms.ModelForm):
   class Meta:
-    model = JobSeeker
-    fields = ('job_category','availability', 'salary','bio')
+    model = User
+    fields = ('job_category','availability', 'salary')
 
 class UpdateUserProfile(forms.ModelForm):
   email = forms.EmailField()
   class Meta:
     model = User
-    fields = ['username','first_name', 'last_name','email','phone','location', 'profile_picture']
+    fields = ['username','first_name', 'last_name','email','phone','location', 'profile_picture','bio']
 
 class UploadFileForm(forms.ModelForm):
     class Meta:
@@ -44,7 +44,7 @@ class AdminVerifyUserForm(forms.ModelForm):
 
 class UpdateEmployerProfile(forms.ModelForm):
     class Meta:
-        model = Employer
+        model = User
         fields = ('company_name',  )
 
 # update and add portfolio
