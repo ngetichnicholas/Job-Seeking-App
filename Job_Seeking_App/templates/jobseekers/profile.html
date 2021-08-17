@@ -15,8 +15,8 @@
     {% endif %}
       <div class="row">
         <div class="col-md-4">
-          {% if user.profile.profile_picture.url %}
-          <img class="profile_picture my-4" src="{{ user.profile.profile_picture.url }}"
+          {% if user_picture.url %}
+          <img class="profile_picture my-4" src="{{ user_picture.url }}"
             style="height: 30vh; width:30vh;" alt="">
           {% else %}
           <img class="profile_picture my-4"
@@ -40,7 +40,7 @@
             </tr>
             <tr>
               <th>Bio</th>
-              <td>{{ user.profile.bio }}</td>
+              <td>{{ user.bio }}</td>
             </tr>
             <tr>
               <th>Email Address</th>
@@ -52,11 +52,11 @@
             </tr>
             <tr>
               <th>Availability</th>
-              <td>{{user.profile.availability}}</td>
+              <td>{{user.availability}}</td>
             </tr>
             <tr>
               <th>Job_Category</th>
-              <td>{{user.profile.job_category}}</td>
+              <td>{{user.job_category}}</td>
             </tr>
           </table>
         </div>

@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from mpesa.models import Payment
 from mpesa.api.serializers import MpesaSerializer
 from ..email import send_payment_email
+from Job_Seeking_App.models import *
 
 
 
@@ -14,7 +15,6 @@ class CallBackApiView(CreateAPIView):
     permission_classes = [AllowAny]
 
     def create(self, request):
-        user = request.user
         print(request.data, "this is request.data")
 
         """
@@ -37,7 +37,6 @@ class CallBackApiView(CreateAPIView):
             }
         }
         """
-        
         """
         {'Body':
             {'stkCallback':
@@ -59,6 +58,7 @@ class CallBackApiView(CreateAPIView):
             }
         }
         """
+
         if request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Name"]=='TransactionDate':
 
             merchant_request_id = request.data["Body"]["stkCallback"]["MerchantRequestID"]
@@ -105,11 +105,12 @@ class CallBackApiView(CreateAPIView):
 
         new_transaction.save()
         if mpesa_receipt_number:
-            email = user.email
-            name = user.username
+            employer = User.objects.get(phone = phone_number)
+            email = employer.email
+            name = employer.username
             send_payment_email(name, email)
-            user.verified = True
-            user.save()
+            employer.verified = True
+            employer.save()
 
 
         from rest_framework.response import Response

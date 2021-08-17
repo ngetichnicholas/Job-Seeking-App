@@ -13,40 +13,47 @@ from . import keys
 
 
 def mpesa_payment(render_request):
-    user = render_request.user
-    phone = render_request.POST.get('mpesa_number')
-    first_name = render_request.POST.get('first_name')
     last_name = render_request.POST.get('last_name')
-    payment_form = PaymentForm()
+    first_name = render_request.POST.get('first_name')
+    phone = render_request.POST.get('phone')
     phone_length = len(phone)
     if phone_length < 12:
-        payment_form = PaymentForm()
         messages.error(render_request,'Phone number must be in format 254725470732')
         return redirect('employerDash')
-    formatted_time = get_timestamp()
-    decoded_password = create_password(formatted_time)
-    access_token = generate_access_token()
 
-    api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    if render_request.method == 'POST':
+        payment_form = PaymentForm(render_request.POST,instance=render_request.user)
+        if payment_form.is_valid():
+            payment_form.save()
+            formatted_time = get_timestamp()
+            decoded_password = create_password(formatted_time)
+            access_token = generate_access_token()
 
-    headers = {"Authorization": "Bearer %s" % access_token}
+            api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
 
-    request = {
-        "BusinessShortCode": keys.business_shortCode,
-        "Password": decoded_password,
-        "Timestamp": formatted_time,
-        "TransactionType": "CustomerPayBillOnline",
-        "Amount": "1",
-        "PartyA": phone,
-        "PartyB": keys.business_shortCode,
-        "PhoneNumber": phone,
-        "CallBackURL": "https://job-seeking-app.herokuapp.com/api/payments/transaction/",
-        "AccountReference": "Jobseeker Agency",
-        "TransactionDesc": "This is for mpesa payment testing",
-    }
+            headers = {"Authorization": "Bearer %s" % access_token}
 
-    response = requests.post(api_url, json=request, headers=headers)
-    print(response.text)
-    return render(render_request,'mpesa/success.html',{'phone':phone,'first_name':first_name,'last_name':last_name})
+            request = {
+                "BusinessShortCode": keys.business_shortCode,
+                "Password": decoded_password,
+                "Timestamp": formatted_time,
+                "TransactionType": "CustomerPayBillOnline",
+                "Amount": "1",
+                "PartyA": phone,
+                "PartyB": keys.business_shortCode,
+                "PhoneNumber": phone,
+                "CallBackURL": "https://job-seeking-app.herokuapp.com/api/payments/transaction/",
+                "AccountReference": "Jobseeker Agency",
+                "TransactionDesc": "This is for mpesa payment testing",
+            }
+
+            response = requests.post(api_url, json=request, headers=headers)
+            print(response.text)
+
+            return render(render_request,'mpesa/success.html',{'payment_form':payment_form,'phone':phone,'first_name':first_name,'last_name':last_name})
+    else:
+        payment_form = PaymentForm(instance=render_request.user)
+
+    return render(render_request,'employers/employer_dashboard.html',{'payment_form':payment_form})
 
 
