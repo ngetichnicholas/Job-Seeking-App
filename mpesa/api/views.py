@@ -37,15 +37,48 @@ class CallBackApiView(CreateAPIView):
             }
         }
         """
+        
+        """
+        {'Body':
+            {'stkCallback':
+                {
+                    'MerchantRequestID': '92207-59467726-1',
+                    'CheckoutRequestID': 'ws_CO_160820211325367182',
+                    'ResultCode': 0,
+                    'ResultDesc': 'The service request is processed successfully.',
+                    'CallbackMetadata': {
+                                            'Item': [
+                                                    {'Name': 'Amount', 'Value': 1.0},
+                                                    {'Name': 'MpesaReceiptNumber', 'Value': 'PHG2O85C7G'},
+                                                    {'Name': 'Balance'},
+                                                    {'Name': 'TransactionDate', 'Value': 20210816132545},
+                                                    {'Name': 'PhoneNumber', 'Value': 254792625077}
+                                                    ]
+                                        }
+                }
+            }
+        }
+        """
+        if request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Name"]=='TransactionDate':
 
-        merchant_request_id = request.data["Body"]["stkCallback"]["MerchantRequestID"]
-        checkout_request_id = request.data["Body"]["stkCallback"]["CheckoutRequestID"]
-        result_code = request.data["Body"]["stkCallback"]["ResultCode"]
-        result_description = request.data["Body"]["stkCallback"]["ResultDesc"]
-        amount = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0]["Value"]
-        mpesa_receipt_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][1]["Value"]
-        transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Value"]
-        phone_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][3]["Value"]
+            merchant_request_id = request.data["Body"]["stkCallback"]["MerchantRequestID"]
+            checkout_request_id = request.data["Body"]["stkCallback"]["CheckoutRequestID"]
+            result_code = request.data["Body"]["stkCallback"]["ResultCode"]
+            result_description = request.data["Body"]["stkCallback"]["ResultDesc"]
+            amount = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0]["Value"]
+            mpesa_receipt_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][1]["Value"]
+            transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][2]["Value"]
+            phone_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][3]["Value"]
+
+        else:
+            merchant_request_id = request.data["Body"]["stkCallback"]["MerchantRequestID"]
+            checkout_request_id = request.data["Body"]["stkCallback"]["CheckoutRequestID"]
+            result_code = request.data["Body"]["stkCallback"]["ResultCode"]
+            result_description = request.data["Body"]["stkCallback"]["ResultDesc"]
+            amount = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0]["Value"]
+            mpesa_receipt_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][1]["Value"]
+            transaction_date = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][3]["Value"]
+            phone_number = request.data["Body"]["stkCallback"]["CallbackMetadata"]["Item"][4]["Value"]
 
         from datetime import datetime
 

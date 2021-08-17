@@ -1,0 +1,37 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="head">
+        <center>
+          <h5 class="title">PAYMENTS</h5>
+        </center>
+      </div>
+        <div class="" >
+          <table class="table table-bordered">
+            <tr>
+              <th>Phone NUmber</th>
+              <th>Receipt No</th>
+              <th>Amount</th>
+              <th>Transaction Date</th>
+            </tr>
+            {% if payments %}
+            {% for payment in payments %}
+            <tr>
+              <td>{{payment.PhoneNumber}}</td>
+              <td>{{payment.MpesaReceiptNumber}}</td>
+              <td>{{payment.Amount}}</td>
+              <td>{{payment.TransactionDate|date}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </table>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+{% endblock %}
