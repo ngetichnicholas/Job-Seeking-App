@@ -23,6 +23,8 @@ class User(AbstractUser):
     location = models.CharField(max_length=144,null=True,blank=True)
     phone = models.CharField(unique=True,max_length=13, null=True,blank=True, validators=[MinLengthValidator(10),MaxLengthValidator(13)])
 
+    def save_user(self):
+        self.save()
 
     def delete_user(self):
         self.delete()
@@ -73,6 +75,27 @@ class FileUpload(models.Model):
     name = models.CharField(max_length=100)
     pdf = models.FileField(upload_to='documents/pdfs/')
     jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='documents')
+
+    def save_upload(self):
+        self.save()
+
+    def delete_upload(self):
+        self.delete()
+    
+    @classmethod
+    def update_upload(cls, id ,name,pdf ,jobseeker):
+        update = cls.objects.filter(id = id).update(name = name,pdf = pdf,jobseeker=jobseeker)
+        return update
+
+    @classmethod
+    def get_all_uploads(cls):
+        uploads = cls.objects.all()
+        return uploads
+
+    @classmethod
+    def get_upload_id(cls,id):
+        upload_id = cls.objects.filter(id= id).all()
+        return upload_id
 
     def __str__(self):
         return self.name
