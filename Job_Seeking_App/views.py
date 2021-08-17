@@ -448,22 +448,14 @@ def calender(request):
 
 
 # Search View
+def search_jobseekers(request):
+  if 'job_category' in request.GET and request.GET["job_category"]:
+    search_term = request.GET.get("job_category")
+    searched_jobseekers = JobSeeker.search_jobseekers_by_job_category(search_term)
+    message = f"{search_term}"
 
-def search_results(request):
+    return render(request, 'employers/search.html', {"message":message,"jobseekers":searched_jobseekers})
 
-    if 'profile' in request.GET and request.GET["profile"]:
-        search_term = request.GET.get("profile")
-        searched_jobseekers_by_category = JobSeeker.search_by_category(search_term)
-        results = [*searched_jobseekers_by_category]
-        message = f"{search_term}"
-
-        return render(request, 'employers/search.html',{"message":message,"profiles": results})
-
-    else:
-        message = "You haven't searched for any term"
-        return render(request, 'employers/search.html',{"message":message})
-
-def profile(request):
-    profiles = JobSeeker.objects.all()
-    
-    return render(request,"jobseeker.html", {"jobseekers":profiles})
+  else:
+    message = 'You have not searched for any term'
+    return render(request, 'employers/search.html', {"message":message})
