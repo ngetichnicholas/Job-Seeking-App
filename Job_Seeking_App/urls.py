@@ -34,6 +34,7 @@ urlpatterns = [
 
     path('all_employers',app_views.all_employers,name='all_employers'),
     path('verified_employers',app_views.verified_employers,name='verified_employers'),
+    path('payments',app_views.payments,name='payments'),
     path('unverified_employers',app_views.unverified_employers,name='unverified_employers'),
     path('verify_employer/<int:employer_id>',app_views.verify_employer,name='verify_employer'),
     path('delete_employer/<int:employer_id>', app_views.delete_employer,name='delete_employer'),
@@ -53,7 +54,7 @@ urlpatterns = [
     path('update_employer/',app_views.update_employer,name='update_employer'),
     path('portfolio/',app_views.add_portfolios,name='portfolio'),
     path('calender/',app_views.calender,name='calender'),
-    path('search/', app_views.search_results, name='search_results'),
+    path('search_jobseekers/', app_views.search_jobseekers, name='search_jobseekers'),
 ]
 if settings.DEBUG:
   urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

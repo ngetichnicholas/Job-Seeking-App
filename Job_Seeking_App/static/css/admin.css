@@ -154,4 +154,7 @@
    .rotate{
      transform: rotate(180deg);
    }
+   .l-navbar {
+      width: 15rem;
+   }
    

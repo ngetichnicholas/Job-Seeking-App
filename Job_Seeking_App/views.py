@@ -6,7 +6,6 @@ from django.http import HttpResponse,HttpResponseRedirect,Http404,JsonResponse
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
@@ -19,6 +18,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .decorators import unauthenticated_user,allowed_users,admin_only
 import os
 from .models import JobSeeker,Employer 
+from mpesa.models import Payment as MpesaPayment
 from .models import User
 
 # from django_daraja.mpesa.core import MpesaClient
@@ -237,7 +237,7 @@ def stk_push_callback(request):
 @allowed_users(allowed_roles=['admin','employer'])
 def employerDash(request):
     user = request.user
-    payment_form = PaymentForm()
+    payment_form = PaymentForm(instance=request.user)
     job_seekers = User.objects.filter(verified = True,is_jobseeker = True).all()
     employer=Employer.objects.all()
     
@@ -349,7 +349,7 @@ def verify_jobseeker(request, jobseeker_id):
     if verify_jobseeker_form.is_valid():
       verify_jobseeker_form.save()
       send_verification_email(name, email)
-      data = {'success': 'Verification sent'}
+      data = {'success': 'Verification email sent'}
       messages.success(request, f'jobseeker updated!')
       return redirect('admin_dashboard')
   else:
@@ -420,6 +420,14 @@ def delete_employer(request,employer_id):
     employer.delete_user()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+#Get all payments
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def payments(request):
+  payments = MpesaPayment.objects.all().order_by('-TransactionDate')
+  
+  return render(request, 'admin/employers/payments.html',{'payments':payments})
+
 #Get single employer
 @login_required
 @allowed_users(allowed_roles=['admin'])
@@ -440,22 +448,14 @@ def calender(request):
 
 
 # Search View
+def search_jobseekers(request):
+  if 'job_category' in request.GET and request.GET["job_category"]:
+    search_term = request.GET.get("job_category")
+    searched_jobseekers = JobSeeker.search_jobseekers_by_job_category(search_term)
+    message = f"{search_term}"
 
-def search_results(request):
+    return render(request, 'employers/search.html', {"message":message,"jobseekers":searched_jobseekers})
 
-    if 'jobseeker' in request.GET and request.GET["jobseeker"]:
-        search_term = request.GET.get("jobseeker")
-        searched_jobseekers_by_category = JobSeeker.search_by_category(search_term)
-        results = [*searched_jobseekers_by_category]
-        message = f"{search_term}"
-
-        return render(request, 'employers/search.html',{"message":message,"jobseekers": results})
-
-    else:
-        message = "You haven't searched for any term"
-        return render(request, 'employers/search.html',{"message":message})
-
-def jobseeker(request):
-    jobseekers = JobSeeker.objects.all()
-    
-    return render(request,"jobseeker.html", {"jobseekers":jobseekers})
+  else:
+    message = 'You have not searched for any term'
+    return render(request, 'employers/search.html', {"message":message})

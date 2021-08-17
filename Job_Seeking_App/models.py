@@ -9,19 +9,22 @@ from cloudinary.models import CloudinaryField
 from django.core.validators import MaxLengthValidator,MinLengthValidator
 
 
-
 class User(AbstractUser):
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []#removes email from REQUIRED_FIELDS
     is_admin = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
     is_jobseeker = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
     profile_picture =CloudinaryField('image')
     location = models.CharField(max_length=144,null=True,blank=True)
-    phone = models.IntegerField(null=True,blank=True)
+    phone = models.CharField(unique=True,max_length=13, null=True,blank=True, validators=[MinLengthValidator(10),MaxLengthValidator(13)])
 
+    def save_user(self):
+        self.save()
 
     def delete_user(self):
         self.delete()
@@ -63,15 +66,36 @@ class JobSeeker(models.Model):
         return self.user.username
 
     @classmethod
-    def search_by_category(cls,search_term):
-        jobs = cls.objects.filter(job_category__name__icontains=search_term)
-        return jobs
+    def search_jobseekers_by_job_category(cls,job_category):
+        jobseekers = JobSeeker.objects.filter(job_category__icontains=job_category)
+        return jobseekers
 
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=100)
     pdf = models.FileField(upload_to='documents/pdfs/')
     jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE, related_name='documents')
+
+    def save_upload(self):
+        self.save()
+
+    def delete_upload(self):
+        self.delete()
+    
+    @classmethod
+    def update_upload(cls, id ,name,pdf ,jobseeker):
+        update = cls.objects.filter(id = id).update(name = name,pdf = pdf,jobseeker=jobseeker)
+        return update
+
+    @classmethod
+    def get_all_uploads(cls):
+        uploads = cls.objects.all()
+        return uploads
+
+    @classmethod
+    def get_upload_id(cls,id):
+        upload_id = cls.objects.filter(id= id).all()
+        return upload_id
 
     def __str__(self):
         return self.name
