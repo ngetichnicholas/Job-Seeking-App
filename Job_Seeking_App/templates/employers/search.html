@@ -18,7 +18,7 @@
           <img class="profile_picture my-4"
              src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
              {% endif %}
-        <h2 class="">{{user.username}}</h2>
+        <h2 class="">{{username}}</h2>
         <div class="card-header"><a href="{% url 'update_employer' %}">Update Details</a></div>
         <div class="card-header"><a href="{% url 'employer_profile' %}">See my Profile</a></div>
       </div>
@@ -49,11 +49,11 @@
               <tr>
                 <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="btn btn-outline-primary">View</button></a></td>
                 <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
-                  <td>{{job_seeker.user.first_name}} {{job_seeker.user.last_name}}</td>
-                  <td>{{job_seeker.user.email}}</td>
-                  <td>{{job_seeker.user.phone}}</td>
-                  <td>{{job_seeker.user.location}}</td>
-                  <td><a href="mailto:{{job_seeker.user.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
+                  <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
+                  <td>{{job_seeker.email}}</td>
+                  <td>{{job_seeker.phone}}</td>
+                  <td>{{job_seeker.location}}</td>
+                  <td><a href="mailto:{{job_seeker.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
               </tr>
               {%endfor%}
              
