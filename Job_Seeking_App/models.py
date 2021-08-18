@@ -38,7 +38,7 @@ class User(AbstractUser):
     location = models.CharField(max_length=144,null=True,blank=True)
     phone = models.CharField(unique=True,max_length=13, null=True,blank=True, validators=[MinLengthValidator(10),MaxLengthValidator(13)])
     company_name = models.CharField(max_length=144,null=True,blank=True)
-    availability = models.CharField(choices=JOBSEEKER_AVAILABILITY, default="Available", max_length=20)
+    availability = models.CharField(null=True,blank=True,choices=JOBSEEKER_AVAILABILITY, max_length=20)
     salary = models.IntegerField(null=True,blank=True)
     job_category = models.CharField(null=True,blank=True,max_length=300,choices=JOb_CATEGORIES)
     bio =models.TextField(null=True,blank=True)
