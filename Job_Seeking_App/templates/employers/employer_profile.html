@@ -1,0 +1,141 @@
+{% extends 'employers/base.html' %} {%load static%} {% load crispy_forms_tags %} 
+{% block content %}
+<div class="container-fluid employ">
+  <div class="row">
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="">
+              <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                      <span class="ml-2">Dashboard</span>
+                    </a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'employerDash'%}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                      <span class="ml-2">Jobseekers:  <span class="text-info">{{available|length}}</span></span>
+                    </a>
+                  </li>
+                  <!-- profile -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'update_employer'%}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-person" viewBox="0 0 16 16">
+                        <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+                        <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                      </svg>
+                      <span class="ml-2">Update Profile</span>
+                      
+                    </a>
+                  </li>
+                  <!-- calender -->
+                  
+                  
+                </ul>
+          </div>
+      </nav>
+     
+  </div>
+</div>
+
+      <div class="col-12 col-md-12  mb-4 mb-lg-0 col-lg-12 ">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-4">
+                {% if user.profile_picture.url %}
+                <img src="{{user.profile_picture.url}}" class="img-responsive img-fluid col-md-8" alt="">
+                   {% else %}
+                  <img class="profile_picture my-4"
+                     src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 30vh; width:30vh;" alt="">
+                     {% endif %}
+
+              </div>
+              <div class="col-md-8">
+                <table class="table table-bordered">
+                  <tr>
+                    <th>First Name</th>
+                    <td>{{user.first_name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Last Name</th>
+                    <td>{{user.last_name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Username</th>
+                    <td>{{ user.username}}</td>
+                  </tr>
+                  <tr>
+                    <th>Phone</th>
+                    <td>{{user.phone}}</td>
+                  </tr>
+                  <tr>
+                    <th>Email Address</th>
+                    <td>{{user.email}}</td>
+                  </tr>
+                  <tr>
+                    <th>Location</th>
+                    <td>{{user.location}}</td>
+                  </tr>
+                  <tr>
+                    <th>Company</th>
+                    <td>{{user.company_name}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <!-- test begin -->
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+
+      
+
+      <!--  -->
+    </main>
+  </div>
+</div>
+<style>
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 90px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+    z-index: 99;
+  }
+
+  @media (max-width: 767.98px) {
+    .sidebar {
+      top: 11.5rem;
+      padding: 0;
+    }
+  }
+
+  .navbar {
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  @media (min-width: 767.98px) {
+    .navbar {
+      top: 0;
+      position: sticky;
+      z-index: 999;
+    }
+  }
+
+  .sidebar .nav-link {
+    color: #333;
+  }
+
+  .sidebar .nav-link.active {
+    color: #0d6efd;
+  }
+</style>
+
+{% endblock %}
