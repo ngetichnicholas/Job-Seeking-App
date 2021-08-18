@@ -38,12 +38,14 @@
     </div>
     <div class="col-md-3">
       <h4>Portfolios</h4>
+      {% if portfolios %}
       {% for portfolio in portfolios %}
       <div class="card">
         <h2><i class="fas fa-globe"></i> {{portfolio.name}}</h2>
         <a href="{{ portfolio.link }}" download="" class="btn btn-outline-success doc">View</a>
       </div>
       {% endfor %}
+      {% endif %}
         
     </div>
   </div>
