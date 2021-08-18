@@ -71,24 +71,4 @@ class EmployerTestCase(TestCase):
         password='test')
 
         self.user.save()
-<<<<<<< HEAD
-        
-        self.employer=Employer(user=self.user,company_name="TestLtd")
-        self.employer.save_employer()
-    # test instance
-    def test_instance(self):
-        self.assertTrue(isinstance(self.employer, Employer))
-
-
-# Create your tests here.
-# class UserTestClass(TestCase):
-#     def setUp(self):
-#         post_object.create(title='test', content='something')
-
-
-#     def test_post_title{self}:
-#         post=post.objects.get{id=4}
-#         Self.assertEqual(post.title "title")
-=======
  
->>>>>>> fd9efb01fc3cb4ad34a5fe8c0bf4ff4eeada75ac
