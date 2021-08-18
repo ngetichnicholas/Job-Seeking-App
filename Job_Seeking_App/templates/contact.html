@@ -1,39 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<<<<<<< HEAD
-        <!-- Masthead-->
-        <header class="masthead contact">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 style="color: white">Contact Us</h1>
-                        <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        <p style="color:rgb(255, 255, 255);text-size-adjust: 70px;">
-                            <strong style="font-size: xx-large;"> Feel free to reach out to us any time. We are on reach 24/7
-                            </strong></p>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container px-4 px-lg-5">
-                {% if messages %}
-                {% for message in messages %}
-                <p class="text-center"> {{ message }}</p>
-                  {% endfor %}
-              {% endif %}
-                <form class="forms" action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% bootstrap_form contact_form %}
-                    <input type="submit" class="btn btn-primary" value="Send">
-                </form>
-            </div>
-        </section>
-=======
 <div class="container-fluid">
     <!-- Masthead-->
     <header class="masthead contact">
@@ -131,5 +98,4 @@
     });
 </script>
 
->>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
 {% endblock %}
