@@ -109,6 +109,10 @@ body {
 .employ {
   margin-top: 15vh !important;
 }
+.search-form {
+  height: 1cm !important;
+  margin: 0 !important;
+}
 @media screen and (max-width:1000px) {
   .about,.services,.contact {
     height:auto !important;

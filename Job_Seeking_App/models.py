@@ -12,9 +12,7 @@ from django.core.validators import MaxLengthValidator,MinLengthValidator
 JOBSEEKER_AVAILABILITY = (
     ('Available', "Available"),
     ('Not Available', "Not Available"),
-
 )
-
 JOb_CATEGORIES = (
     ('IT support technician', "IT support technician"),
     ('Software developer', "Software developer"),
