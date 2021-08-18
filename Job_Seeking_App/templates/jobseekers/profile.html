@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container-fluid">
   <div class="row">
+<<<<<<< HEAD
     <div class="col-md-3"></div>
     <div class="col-md-6 text-center">
       {% if user.profile.profile_picture.url %}
@@ -28,11 +29,30 @@
             <h2>{{document.name}}</h2>
             <a  href="{{ document.pdf.url }}" download="" class="btn btn-outline-success">View Document</a>
         </div>
+=======
+    <h2 class="text-center">{{user.username}}</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      {% if messages %}
+      {% for message in messages %}
+      <p class="text-center text-success"> {{ message }}</p>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
         {% endfor %}
-        {% endif %} 
+    {% endif %}
+      <div class="row">
+        <div class="col-md-4">
+          {% if user_picture.url %}
+          <img class="profile_picture my-4" src="{{ user_picture.url }}"
+            style="height: 30vh; width:30vh;" alt="">
+          {% else %}
+          <img class="profile_picture my-4"
+            src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png"
+            style="height: 30vh; width:30vh;" alt="">
+          {% endif %}
         </div>
-        <div class="col-md-6">
-
+        <div class="col-md-8">
           <table class="table table-striped" border="1">
             <tr>
               <th>First Name</th>
@@ -48,7 +68,7 @@
             </tr>
             <tr>
               <th>Bio</th>
-              <td>{{ user.profile.bio }}</td>
+              <td>{{ user.bio }}</td>
             </tr>
             <tr>
               <th>Email Address</th>
@@ -60,13 +80,14 @@
             </tr>
             <tr>
               <th>Availability</th>
-              <td>{{user.profile.availability}}</td>
+              <td>{{user.availability}}</td>
             </tr>
             <tr>
               <th>Job_Category</th>
-              <td>{{user.profile.job_category}}</td>
+              <td>{{user.job_category}}</td>
             </tr>
           </table>
+<<<<<<< HEAD
           <div class="d-flex justify-content-center">
             <div class="text-center">
               <a  href="{% url 'update_jobseeker_profile' %}">
@@ -80,8 +101,19 @@
           </a>
         </div>
           </div>
+=======
         </div>
-        <div class="col-md-3"></div>
       </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="text-center">
+          <a href="{% url 'update_jobseeker_profile' %}">
+            <button class="btn btn-success">Update Details</button>
+          </a>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-{% endblock %}
+  {% endblock %}

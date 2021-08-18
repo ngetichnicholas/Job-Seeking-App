@@ -6,6 +6,7 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
       <div class="head">
+<<<<<<< HEAD
         <h5 class="title">UNVERIFIED EMPLOYERS</h5>
       </div>
         <table class="table table-bordered">
@@ -30,6 +31,36 @@
           {% endfor %}
           {% endif %}
         </table>
+=======
+        <center>
+          <h5 class="title">UNVERIFIED EMPLOYERS</h5>
+        </center>
+      </div>
+        <div class="" >
+          <table class="table table-bordered">
+            <tr>
+              <th>First Name</th>
+              <th>Second Name</th>
+              <th>Phone No</th>
+              <th>Edit</th>
+              <th>View</th>
+              <th>Delete</th>
+            </tr>
+            {% if unverified_employers %}
+            {% for employer in unverified_employers %}
+            <tr>
+              <td>{{employer.first_name}}</td>
+              <td>{{employer.last_name}}</td>
+              <td>{{employer.phone}}</td>
+              <td><a href="{% url 'verify_employer' employer.id %}" class="btn btn-primary"><i class="fas fa-pen-nib"></i> Verify</a></td>
+              <td><a href="{% url 'employer_details' employer.id %}" class="btn btn-success"><i class="fas fa-eye"></i> View</a></td>
+              <td><a href="{% url 'delete_employer' employer.id %}" class="btn  btn-danger"><i class="fas fa-trash-alt"></i> Delete</a></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </table>
+        </div>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
     </div>
     <div class="col-md-1"></div>
   </div>

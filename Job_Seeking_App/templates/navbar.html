@@ -10,7 +10,11 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
+<<<<<<< HEAD
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+=======
+                    <li class="nav-item"><a class="nav-link" onclick="loadDoc()" href="{% url 'about' %}">About</a></li>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                     <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                     {% if user.is_authenticated %}
@@ -34,3 +38,14 @@
         </div>
         </div>
     </nav>
+<<<<<<< HEAD
+=======
+    <script>
+        $(document).ready(function() {
+           $.get('services.html',function (data){
+               $("#home").html(data)
+            
+           })
+        })
+    </script>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366

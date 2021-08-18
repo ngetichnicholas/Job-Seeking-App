@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import fields
 from .models import User
 from .models import *
+from django.core.validators import MinLengthValidator
 
 class UserSignUpForm(UserCreationForm):
     password1 = forms.CharField(label='Enter password', 
@@ -18,14 +19,14 @@ class UserSignUpForm(UserCreationForm):
 
 class UpdateJobseekerProfile(forms.ModelForm):
   class Meta:
-    model = JobSeeker
-    fields = ('job_category','availability', 'salary','bio')
+    model = User
+    fields = ('job_category','availability', 'salary')
 
 class UpdateUserProfile(forms.ModelForm):
   email = forms.EmailField()
   class Meta:
     model = User
-    fields = ['username','first_name', 'last_name','email','phone','location', 'profile_picture']
+    fields = ['username','first_name', 'last_name','email','phone','location', 'profile_picture','bio']
 
 class UploadFileForm(forms.ModelForm):
     class Meta:
@@ -42,7 +43,7 @@ class AdminVerifyUserForm(forms.ModelForm):
 
 class UpdateEmployerProfile(forms.ModelForm):
     class Meta:
-        model = Employer
+        model = User
         fields = ('company_name',  )
 
 # update and add portfolio
@@ -53,8 +54,8 @@ class AddPortfolio(forms.ModelForm):
 
 class PaymentForm(forms.ModelForm):
   class Meta:
-    model = Payments
-    fields = ['first_name', 'last_name','mpesa_number']
+    model = User
+    fields = ['first_name', 'last_name','phone']
 
 class ContactForm(forms.ModelForm):
     class Meta:

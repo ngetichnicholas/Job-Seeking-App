@@ -8,7 +8,11 @@
     <div class="col-md-6">
       {% if messages %}
         {% for message in messages %}
+<<<<<<< HEAD
         <p class="text-center"> {{ message }}</p>
+=======
+        <p class="text-center text-danger"> {{ message }}</p>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
           {% endfor %}
       {% endif %}
       <div class="card">
@@ -17,7 +21,11 @@
         </div>
         <div class="card-body">
 
+<<<<<<< HEAD
           <form action="" method="post">
+=======
+          <form action="" method="post" id="loginForm">
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
             {% csrf_token %}
             {% bootstrap_form form%}
 

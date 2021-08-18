@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 {% extends "employers/base.html" %}
 {% load bootstrap4 %}
 {% block content %}
 <div class="container-fluid">
+=======
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid employ">
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
@@ -16,11 +23,19 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
+<<<<<<< HEAD
                         <img src="{{jobseeker.user.profile_picture.url }}" alt="Admin" class="rounded-circle" width="150">
                         <div class="mt-3">
                           <h4>{{jobseeker.user.first_name}} {{jobseeker.user.last_name}}</h4>
                           <p class="text-secondary mb-1">Profession: {{jobseeker.job_category}}</p>
                           <p class="text-muted font-size-sm">Location: {{jobseeker.user.location}}</p>
+=======
+                        <img src="{{jobseeker.profile_picture.url }}" alt="Admin" class="rounded-circle" width="150">
+                        <div class="mt-3">
+                          <h4>{{jobseeker.first_name}} {{jobseeker.last_name}}</h4>
+                          <p class="text-secondary mb-1">Profession: {{jobseeker.job_category}}</p>
+                          <p class="text-muted font-size-sm">Location: {{jobseeker.location}}</p>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                           <p class="text-muted font-size-sm">{{jobseeker.bio}}</p>
                         </div>
                       </div>
@@ -36,7 +51,11 @@
                           <h6 class="mb-0">Full Name</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
+<<<<<<< HEAD
                           {{jobseeker.user.first_name}} {{jobseeker.user.last_name}}
+=======
+                          {{jobseeker.first_name}} {{jobseeker.last_name}}
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                         </div>
                       </div>
                       <hr>
@@ -45,7 +64,11 @@
                           <h6 class="mb-0">Email</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
+<<<<<<< HEAD
                           {{jobseeker.user.email}}
+=======
+                          {{jobseeker.email}}
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                         </div>
                       </div>
                       <hr>
@@ -54,7 +77,11 @@
                           <h6 class="mb-0">Phone</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
+<<<<<<< HEAD
                           {{jobseeker.user.phone}}
+=======
+                          {{jobseeker.phone}}
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                         </div>
                       </div>
                       <hr>
@@ -82,6 +109,7 @@
                         </div>
                         <div class="col-sm-9 text-secondary">
                           {% if documents %}
+<<<<<<< HEAD
                               {% for document in documents %}
                               <div class="">
                                 <a  href="{{ document.pdf.url }}" download="" class="btn btn-sm btn-outline-success">View Document</a>
@@ -89,12 +117,38 @@
                             {% endfor %}
                           {% endif %}
                         </div>
+=======
+                          {% for document in documents %}
+                          <div class="card">
+                            <h2><i class="fas fa-file-pdf"></i> {{document.name}}</h2>
+                            <a href="{{ document.pdf.url }}" download="" class="btn btn-outline-success doc">View Document</a>
+                          </div>
+                          {% endfor %}
+                          {% endif %}
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <h6 class="mb-0">Portfolios</h6>
+                          </div>
+                        <div class="col-sm-9 text-secondary">
+                          {% if portfolios %}
+                          {% for portfolio in portfolios %}
+                          <div class="card">
+                            <h2><i class="fas fa-globe"></i> {{portfolio.name}}</h2>
+                            <a href="{{ portfolio.link }}" download="" class="btn btn-outline-success doc">View site</a>
+                          </div>
+                          {% endfor %}
+                          {% endif %}
+ 
+                        </div>
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                       </div>
                       <hr>
                       
                     </div>
                   </div>
     
+<<<<<<< HEAD
                   <div class="row gutters-sm">
                     <div class="col-sm-12 mb-3">
                       <div class="card port h-100">
@@ -115,6 +169,8 @@
                     </div>
                     
                   </div>
+=======
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
                 </div>
               </div>
     

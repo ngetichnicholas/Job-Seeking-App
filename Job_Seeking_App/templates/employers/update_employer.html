@@ -1,10 +1,22 @@
 {% extends "employers/base.html" %}
 {% load bootstrap4 %}
 {% block content %}
+<<<<<<< HEAD
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-6">
+=======
+  <div class="container-fluid employ">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        {% if messages %}
+        {% for message in messages %}
+        <p class="text-center text-success"> {{ message }}</p>
+          {% endfor %}
+      {% endif %}
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
         <div class="text-center">
           <div>
             {% if user.profile.profile_picture.url %}
@@ -21,7 +33,11 @@
         </div>
         <hr>
 
+<<<<<<< HEAD
         <div class="" id="myContent">
+=======
+        <div class="card" id="myContent">
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
           <form class="forms" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">

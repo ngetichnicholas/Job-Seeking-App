@@ -64,7 +64,16 @@ body {
 .forms {
   margin-bottom: 10vh;
 }
+<<<<<<< HEAD
 #about,#services {
+=======
+
+/* test */
+
+
+
+#about,#services, .map {
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
   background-color: #198754 !important;
   color:  white;
 }
@@ -87,6 +96,33 @@ body {
 }
  a {
     color: #198754;
+<<<<<<< HEAD
     text-decoration: underline;
 }
+=======
+    text-decoration: none;
+}
+.foot {
+  color: #198754 !important;
+}
+.doc {
+  width: 20vh;
+}
+.card {
+  padding: 1rem;
+}
+.btn-danger {
+  background-color: red !important;
+}
+.employ {
+  margin-top: 15vh !important;
+}
+@media screen and (max-width:1000px) {
+  .about,.services,.contact {
+    height:auto !important;
+  }
+  
+}
+
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
 

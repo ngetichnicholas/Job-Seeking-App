@@ -80,5 +80,19 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 // test
+<<<<<<< HEAD
+=======
+function loadDoc() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+		document.getElementById("demo").innerHTML =
+		this.responseText;
+	  }
+	};
+	xhttp.open("GET", "about.html", true);
+	xhttp.send();
+  }
+>>>>>>> 47587e9aaf79c659fd7124e0fd2cf3add8dd5366
 
 

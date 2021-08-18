@@ -1,7 +1,7 @@
-Nicholas - MPESA payment email notification
-Peter - Add graphs to admin dashboard
-Nancy - Portfolio and File uploads test
-Victor - Continue with SEO
-Anne - Continue with Admin tests
-Roney - Complete search for job seekers
-Yusuf - Jobseeker user tests
+Anne - Slides
+Nick - Tests
+Yussuf - UI>Messages and general appearance
+Victor - SEO- add description on image alt
+Peter - Modals in update forms
+Roney - 
+Nancy - 
