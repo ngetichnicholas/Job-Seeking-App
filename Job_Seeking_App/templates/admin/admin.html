@@ -1,0 +1,64 @@
+
+    <div id="body-pd">
+        <div class="l-navbar" id="navbar">
+            <nav class="nav">
+                <div>
+                    <div class="nav__brand">
+                        <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                    </div>
+                    <div class="nav__list">
+                        <a href="{% url 'admin_dashboard' %}" class="nav__link active">
+                            <ion-icon name="pulse-outline"></ion-icon>
+                            <span class="nav__name">Dashboard</span>
+                        </a>
+                        <a href="{% url 'payments' %}" class="nav__link">
+                            <ion-icon name="logo-usd"></ion-icon>
+                            <span class="nav__name">Payments</span>
+                        </a>
+
+                        <a href="{% url 'all_employers' %}" class="nav__link">
+                            <ion-icon name="people-outline"></ion-icon>
+                            <span class="nav__name">Employers</span>
+                        </a>
+                        <a href="{% url 'verified_employers' %}" class="nav__link">
+                            <ion-icon name="person-add-outline"></ion-icon>
+                            <span class="nav__name">verified employers</span>
+                        </a>
+                        <a href="{% url 'unverified_employers' %}" class="nav__link">
+                            <ion-icon name="person-remove-outline"></ion-icon>
+                            <span class="nav__name">unverified_employers</span>
+                        </a>
+                        <a href="{% url 'all_jobseekers' %}" class="nav__link">
+                            <ion-icon name="walk-outline"></ion-icon>
+                            <span class="nav__name">Jobseeker</span>
+                        </a>
+                        <a href="{% url 'verified_jobseekers' %}" class="nav__link">
+                            <ion-icon name="person-add-outline"></ion-icon>
+                            <span class="nav__name">verified jobseekers</span>
+                        </a>
+                        <a href="{% url 'unverified_jobseekers' %}" class="nav__link">
+                            <ion-icon name="person-remove-outline"></ion-icon>
+                            <span class="nav__name">unverified jobseekers</span>
+                        </a>
+                        
+                        <a href="{% url 'calender' %}" class="nav__link">
+                            <ion-icon name="calendar"></ion-icon>
+                            <span class="nav__name">Calendar</span>
+                        </a>
+                        <a href="{% url 'logout' %}" class="nav__link">
+                            <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
+                            <span class="nav__name">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                
+            </nav>
+        </div>
+
+        <div id="inner" class="">
+        </div>
+        <!-- ===== IONICONS ===== -->
+        <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+        
+    </div>

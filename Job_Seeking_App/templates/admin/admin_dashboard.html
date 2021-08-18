@@ -1,6 +1,7 @@
 {%extends "admin/admin_base.html"%}
 {% load bootstrap4 %}
 {% block content %}
+<<<<<<< HEAD
 <div class="container">
   <div class="row">
     <div class="col-md-3">
@@ -26,4 +27,167 @@
   </div>
 </div>
 
+=======
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row">
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="col-sm-6 col-md-6">
+                    <div class="card">
+                        <div class="card-header">Jobseekers and their salary expectations</div> 
+                        <div class="card-body" style="height: 420px">
+                            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                                </div>
+                            </div> <canvas id="myChart" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- verified employers -->
+                    <div class="card">
+                        <div class="card-header">
+                          Verified Employers
+                        </div>
+                        <table class="card-table table">
+                          <thead>
+                            <tr>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Second Name</th>
+                              <th scope="col">Phone Number</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for verified_employers in verified_employers %}
+                            <tr>
+                              <td>{{verified_employers.first_name}}</td>
+                              <td>{{verified_employers.last_name}}</td>
+                              <td>{{verified_employers.phone}}</td>
+                            </tr>
+                            {% endfor %}
+                          
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <!-- all employers -->
+                    <div class="card" styles="">
+                        <div class="card-header">
+                          All Employers
+                        </div>
+                        <table class="card-table table">
+                          <thead>
+                            <tr>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Second Name</th>
+                              <th scope="col">Phone Number</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for all_employers in all_employers %}
+                            <tr>
+                              <td>{{all_employers.first_name}}</td>
+                              <td>{{all_employers.last_name}}</td>
+                              <td>{{all_employers.phone}}</td>
+                            </tr>
+                            {%endfor%}
+                          </tbody>
+                        </table>
+                      </div>
+                      <br>
+                      <!-- verified jobseekers -->
+                      <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                          Verified Jobseekers
+                        </div>
+                        <table class="card-table table">
+                          <thead>
+                            <tr>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Second Name</th>
+                              <th scope="col">Phone Number</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for verified_jobseekers in verified_jobseekers  %}
+                            <tr>
+                              <td>{{verified_jobseekers.first_name}}</td>
+                              <td>{{verified_jobseekers.last_name}}</td>
+                              <td>{{verified_jobseekers.phone}}</td>
+                            </tr>
+                            {% endfor %}
+                          
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+                <div class="clear"></div>
+                <div class=" col col-sm-3 col-md-3">
+                    <!-- all jobseekers -->
+                    <div class="card" styles="">
+                        <div class="card-header">
+                          All Jobseekers
+                        </div>
+                        <table class="card-table table">
+                          <thead>
+                            <tr>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Second Name</th>
+                              <th scope="col">Phone Number</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for all_jobseekers in all_jobseekers  %}
+                            <tr>
+                              <td>{{all_jobseekers.first_name}}</td>
+                              <td>{{all_jobseekers.last_name}}</td>
+                              <td>{{all_jobseekers.phone}}</td>
+                            </tr>
+                            {% endfor %}
+                          
+                          </tbody>
+                        </table>
+                      </div>                      
+                </div>
+                <!-- end tables -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let myChart=document.getElementById("myChart").getContext("2d");
+
+let massChart=new Chart(myChart, {
+    type: "bar",
+    data: {
+        labels: [{% for jobseeker in all_jobseekers %} "{{jobseeker.user}}" ,{%endfor%}],
+        datasets:[{
+            label:"Salary expectations",
+            data: [{% for jobseeker in all_jobseekers %} "{{jobseeker.salary}}" ,{%endfor%}],
+            backgroundColor:[
+                "black",
+                "red",
+                "blue",
+                "green",
+                "brown",
+                "purple",
+            ],
+            borderColor:"red",
+            borderWidth:2,
+            hoverBorderWidth:6,
+            hoverBorderColor: "#fff",
+        }]
+    },
+    options: {}
+})
+
+// jobseekers count
+
+
+</script>
+>>>>>>> cb3845013ff8bbf538262d92c8eedeb8fff53f08
 {% endblock %}

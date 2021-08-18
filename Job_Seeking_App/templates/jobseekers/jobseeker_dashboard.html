@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="text-center text-success"> {{ message }}</p>
+      {% endfor %}
+  {% endif %}
+    <div class="col-md-3">
+      <div class="card">
+        {% if user.profile_picture.url %}
+        <img class="profile_picture my-4"
+           src="{{ user.profile_picture.url }}" style="height: 10vh; width:10vh;" alt="">
+           {% else %}
+          <img class="profile_picture my-4"
+             src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
+             {% endif %}
+        <h2 class="">{{user.username}}</h2>
+        <div class="card-header"><a href="{% url 'upload_file' %}">Upload document</a></div>
+        <div class="card-header"><a href="{% url 'update_jobseeker_profile' %}">Update Details</a></div>
+        <div class="card-header"><a href="{% url 'portfolio' %}">Add portfolio</a></div>
+        <div class="card-header"><a href="{% url 'jobseeker_profile' %}">See my Profile</a></div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+      <h4>Documents and Resumes</h4>
+      {% if documents %}
+      {% for document in documents %}
+      <div class="card">
+        <h2><i class="fas fa-file-pdf"></i> {{document.name}}</h2>
+        <a href="{{ document.pdf.url }}" download="" class="btn btn-outline-success doc">View Document</a>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      <h4>Portfolios</h4>
+      {% if portfolios %}
+      {% for portfolio in portfolios %}
+      <div class="card">
+        <h2><i class="fas fa-globe"></i> {{portfolio.name}}</h2>
+        <a href="{{ portfolio.link }}" download="" class="btn btn-outline-success doc">View</a>
+      </div>
+      {% endfor %}
+      {% endif %}
+        
+    </div>
+  </div>
+</div>
+{% endblock %}

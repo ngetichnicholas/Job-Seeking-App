@@ -1,0 +1,79 @@
+{% extends 'employers/base.html' %}
+{% load bootstrap4 %}
+{%load static%}
+{% block content %}
+<div class="container-fluid employ">
+  <div class="row">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="text-center text-success"> {{ message }}</p>
+      {% endfor %}
+  {% endif %}
+    <div class="col-md-3">
+      <div class="card">
+        {% if user.profile.profile_picture.url %}
+        <img class="profile_picture my-4"
+           src="{{ user.profile.profile_picture.url }}" style="height: 10vh; width:10vh;" alt="">
+           {% else %}
+          <img class="profile_picture my-4"
+             src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
+             {% endif %}
+        <h2 class="">{{username}}</h2>
+        <div class="card-header"><a href="{% url 'update_employer' %}">Update Details</a></div>
+        <div class="card-header"><a href="{% url 'employer_profile' %}">See my Profile</a></div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        {% if jobseekers%}
+          <h2>Found {{ jobseekers|length }} jobseekers  of searched term {{message}}</h2>
+        {% else %}
+          <h2> Found 0 jobseekers for the search term {{message}}</h2>
+        {% endif %}
+    
+      </div>
+
+      <h5 class="">POTENTIAL CANDIDATES: </h5>
+      <hr>
+      <div class="card card-body table-responsive">
+          <table class="table table-striped" border="1">
+              <tr>
+                  <th scope="col" >View</th>
+                  <th scope="col">Names</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Hire</th>
+              </tr>
+              {% for job_seeker in jobseekers %}
+              <tr>
+                <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="btn btn-outline-primary">View</button></a></td>
+                <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
+                  <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
+                  <td>{{job_seeker.email}}</td>
+                  <td>{{job_seeker.phone}}</td>
+                  <td>{{job_seeker.location}}</td>
+                  <td><a href="mailto:{{job_seeker.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
+              </tr>
+              {%endfor%}
+             
+          </table>
+          
+      </div>
+  </div>
+  <div class="col-md-1"></div>
+  </div>
+</div>
+<script>
+let hireJobSeeker = document.getElementsByClassName("hireJobSeeker");
+
+for (let i =0; i<hireJobSeeker.length; i++) {
+  hireJobSeeker[i].addEventListener("click",function (){
+    let seekerId=this.dataset.product;
+    let action=this.dataset.action;
+    console.log("seekerId:",seekerId); 
+  })
+}
+
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="register" style="margin-top: 140px;">
+    <div class="container-fluid text-center">
+      <h3 class="display-4">Sign up for an account today.</h3>
+      <p class="lead">Select below the type of account you want to create</p>
+      <hr class="my-2">
+      <p class="lead">
+          <a style=" width: 100px; height: 70px;" class="btn btn-success lg" href="{% url 'registerJobseeker' %}" role="button" disabled>
+            <span class="spinner-grow spinner-grow-sm"></span>
+            Jobseeker..</a>
+            <a style=" width: 100px; height: 70px;" class="btn btn-success lg"href="{% url 'registerEmployer' %}" role="button" disabled>
+              <span class="spinner-grow spinner-grow-sm"></span>
+              Employer..</a>
+      </p>
+    </div>
+  </div>
+  
+  
+{% endblock %}

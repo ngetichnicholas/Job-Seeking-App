@@ -1,29 +1,31 @@
 {%extends "base.html"%}
 {%load bootstrap4%}
 {% block content %}
-<div class="container"> 
-    <div class="row">
-        <!-- Empty div -->
-        <div class="col-md-4">
+<div class="container-fluid">
+  <div class="row">
+    <!-- Empty div -->
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      {% if messages %}
+        {% for message in messages %}
+        <p class="text-center text-danger"> {{ message }}</p>
+          {% endfor %}
+      {% endif %}
+      <div class="card">
+        <div class="card-header">
+            <h3>Sign In</h3>
         </div>
-        <div class="col-md-4">
-            {% if form.errors %}
-            <p> Password or Username is incorrect </p>
-            {% endif %}
-            <div class="panel panel-light">
+        <div class="card-body">
 
-                <div class="panel-body card p-5 mb-5 mt-5" style="background-color: #BF2180;">
-                    <h3 class="text-center" style="color:#BF2180;"><i class="fa fa-user-circle" style="font-size:48px;color:#000000"></i></h3>
-                    <form method="post">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
+          <form action="" method="post" id="loginForm">
+            {% csrf_token %}
+            {% bootstrap_form form%}
 
-                        <div class="form-group">
-                          <br>
-                          <br>
-                            <input type="submit" class="btn btn-light btn-block" value="Login">
-                        </div>
-                        <p class="container" style="color: white;">You dont have an account? <a href="/register" style="color: black;"> Register</a></p>
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary btn-sm" value="Login">
+            </div>
+            <input type="hidden" name="next" value="{{next}}">
+            <p>You dont have an account? <a href="{% url 'register' %}"> Register</a></p>
 
                     </form>
 

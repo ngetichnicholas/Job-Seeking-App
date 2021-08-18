@@ -6,16 +6,13 @@ from django.dispatch import receiver
 import datetime as dt
 from django.db import IntegrityError
 from cloudinary.models import CloudinaryField
+from django.core.validators import MaxLengthValidator,MinLengthValidator
 
-
-class User(AbstractUser):
-    is_admin = models.BooleanField(default=False)
-    is_employer = models.BooleanField(default=False)
-    is_jobseeker = models.BooleanField(default=False)
 
 JOBSEEKER_AVAILABILITY = (
     ('Available', "Available"),
     ('Not Available', "Not Available"),
+
 )
 
 JOb_CATEGORIES = (
@@ -27,87 +24,96 @@ JOb_CATEGORIES = (
     ('Network manager', "Network manager"),
 )
 
-class JobSeeker(models.Model):
-    first_name =models.CharField(max_length=144)
-    last_name = models.CharField(max_length=144)
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
-    availability = models.CharField(choices=JOBSEEKER_AVAILABILITY, default="Available", max_length=20)
-    salary = models.IntegerField(default=0)
-    job_category = models.CharField(max_length=300,choices=JOb_CATEGORIES)
-    email = models.EmailField()
-    phone = models.IntegerField(null=True,blank=True)
-    location = models.CharField(max_length=144,null=True,blank=True)
-    bio =models.TextField(null=True,blank=True)
-    profile_picture =CloudinaryField('image')
+class User(AbstractUser):
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []#removes email from REQUIRED_FIELDS
+    is_admin = models.BooleanField(default=False)
+    is_employer = models.BooleanField(default=False)
+    is_jobseeker = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
-
-    @receiver(post_save, sender=User)
-    def update_jobseeker_signal(sender, instance, created, **kwargs):
-        if created:
-            JobSeeker.objects.create(user=instance)
-        instance.profile.save()
-
-    def save_jobseeker(self):
-        self.save()
-
-    def delete_jobseeker(self):
-        self.delete()
-
-    def __str__(self):
-        return self.user.username
-
-class Employer(models.Model):
-    first_name =models.CharField(max_length=144)
-    last_name = models.CharField(max_length=144)
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="employer")
-    email = models.EmailField()
-    phone = models.IntegerField(null=True,blank=True)
+    email = models.EmailField(unique=True)
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
+    profile_picture =CloudinaryField('image',null=True,blank=True)
     location = models.CharField(max_length=144,null=True,blank=True)
+    phone = models.CharField(unique=True,max_length=13, null=True,blank=True, validators=[MinLengthValidator(10),MaxLengthValidator(13)])
     company_name = models.CharField(max_length=144,null=True,blank=True)
+    availability = models.CharField(null=True,blank=True,choices=JOBSEEKER_AVAILABILITY, max_length=20)
+    salary = models.IntegerField(null=True,blank=True)
+    job_category = models.CharField(null=True,blank=True,max_length=300,choices=JOb_CATEGORIES)
+    bio =models.TextField(null=True,blank=True)
 
-    @receiver(post_save, sender=User)
-    def update_employer_signal(sender, instance, created, **kwargs):
-        if created:
-            Employer.objects.create(user=instance)
-        instance.employer.save()
 
-    def save_employer(self):
+    def save_user(self):
         self.save()
 
-    def delete_employer(self):
+    def delete_user(self):
         self.delete()
 
+    @classmethod
+    def search_jobseekers_by_job_category(cls,job_category):
+        jobseekers = User.objects.filter(job_category__icontains=job_category)
+        return jobseekers
+
     def __str__(self):
-        return self.user.username
+        return self.username
 
-JOB_TYPE = (
-    ('1', "Full time"),
-    ('2', "Part time"),
-    ('3', "Internship"),
-)
 
-class Category(models.Model):
-    name = models.CharField(max_length=200)
+class FileUpload(models.Model):
+    name = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='documents/pdfs/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='documents')
+
+    def save_upload(self):
+        self.save()
+
+    def delete_upload(self):
+        self.delete()
+    
+    @classmethod
+    def update_upload(cls, id ,name,pdf ,user):
+        update = cls.objects.filter(id = id).update(name = name,pdf = pdf,user=user)
+        return update
+
+    @classmethod
+    def get_all_uploads(cls):
+        uploads = cls.objects.all()
+        return uploads
+
+    @classmethod
+    def get_upload_id(cls,id):
+        upload_id = cls.objects.filter(id= id).all()
+        return upload_id
 
     def __str__(self):
         return self.name
 
-class Jobs(models.Model):
-    user = models.ForeignKey(User, related_name='User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=300)
-    description = models.TextField(max_length=3000,null=True)
-    tags = models.CharField(max_length=144,null=True)
-    location = models.CharField(max_length=300)
-    job_type = models.CharField(choices=JOB_TYPE, max_length=1)
-    category = models.ForeignKey(Category, related_name='Category', on_delete=models.CASCADE)
-    salary = models.CharField(max_length=30, blank=True)
-    company_name = models.CharField(max_length=300)
-    company_description = models.TextField(max_length=3000,null=True)
-    published_date = models.DateTimeField(auto_now_add=True)
+
+class Payments(models.Model):
+    first_name =models.CharField(max_length=144,null=True,blank=True)
+    last_name = models.CharField(max_length=144,null=True,blank=True)
+    phone = models.CharField(max_length=144,null=True,blank=True)
+    mpesa_number = models.BigIntegerField('Mpesa Phone Number', validators=[MinLengthValidator(12),MaxLengthValidator(13)])
+
+# previous projects
+class Portfolio(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='portfolio')
+    name = models.CharField(max_length=50)
+    link=models.URLField(max_length=555)
 
     def __str__(self):
-        return self.title
+        return f"Portfolio {self.id}"
+    def save(self, *args, **kwargs):
+        super().save()
 
+    class Meta:
+        verbose_name = ("Portfolio")
+        verbose_name_plural = ("Portfolio")
 
-
-
+class Contact(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()
+    message = models.TextField()
+    
+    def __str__(self):
+        return self.name

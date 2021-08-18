@@ -1,31 +1,40 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import fields
 from .models import User
-from .models import JobSeeker,Employer
-
-class JobseekerSignUpForm(UserCreationForm):
-  first_name = forms.CharField(max_length=100, help_text='Last Name')
-  last_name = forms.CharField(max_length=100, help_text='Last Name')
-  email = forms.EmailField(max_length=150, help_text='Email')
-  phone = forms.CharField(max_length=10, help_text='Phone Number')
+from .models import *
+from django.core.validators import MinLengthValidator
 
 
-  class Meta:
-    model = User
-    fields = ('username', 'first_name', 'last_name', 'email','phone', 'password1', 'password2', )
+class UserSignUpForm(UserCreationForm):
+    password1 = forms.CharField(label='Enter password', 
+                                widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm password', 
+                                widget=forms.PasswordInput)
+    class Meta:
+        model=User
+        fields=("username","email","password1","password2")
+        help_texts = {
+            "username":None,
+        }
 
 class UpdateJobseekerProfile(forms.ModelForm):
   class Meta:
-    model = JobSeeker
-    fields = ('phone', 'availability', 'salary','location', 'bio', 'profile_picture', )
+    model = User
+    fields = ('job_category','availability', 'salary')
 
-class UpdateJobseeker(forms.ModelForm):
+class UpdateUserProfile(forms.ModelForm):
   email = forms.EmailField()
   class Meta:
     model = User
-    fields = ['username','first_name', 'last_name','email']
+    fields = ['username','first_name', 'last_name','email','phone','location', 'profile_picture','bio']
 
-class AdminJobseekerVerifyForm(forms.ModelForm):
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = FileUpload
+        fields = ('name','pdf')
+
+class AdminVerifyUserForm(forms.ModelForm):
   verified = forms.BooleanField()
 
   class Meta:
@@ -33,23 +42,23 @@ class AdminJobseekerVerifyForm(forms.ModelForm):
 
     fields = ('verified',)
 
+class UpdateEmployerProfile(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('company_name',  )
 
-class EmployerSignUpForm(UserCreationForm):
-  first_name = forms.CharField(max_length=100, help_text='Last Name')
-  last_name = forms.CharField(max_length=100, help_text='Last Name')
-  email = forms.EmailField(max_length=150, help_text='Email')
-  phone = forms.CharField(max_length=10, help_text='Phone Number')
+# update and add portfolio
+class AddPortfolio(forms.ModelForm):
+    class Meta:
+        model = Portfolio
+        fields = ('name','link',  )
 
-
+class PaymentForm(forms.ModelForm):
   class Meta:
     model = User
-    fields = ('username', 'first_name', 'last_name', 'email','phone', 'password1', 'password2', )
+    fields = ['first_name', 'last_name','phone']
 
-
-class UpdateEmployerForm(forms.ModelForm):
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
-
+class ContactForm(forms.ModelForm):
     class Meta:
-        model = Employer
-        fields = ('first_name', 'last_name', 'email','phone', )
-
+      model = Contact
+      fields = ['name','email','message']
