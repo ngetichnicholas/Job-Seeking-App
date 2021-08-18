@@ -21,6 +21,7 @@ class PortfolioTest(TestCase):
     portfolio = Portfolio.objects.all()
     self.assertTrue(len(portfolio) > 0)
 
+
 class FileUploadTestClass(TestCase):
     # Set up Method
     def setUp(self):
@@ -71,4 +72,5 @@ class EmployerTestCase(TestCase):
         password='test')
 
         self.user.save()
+    
  
