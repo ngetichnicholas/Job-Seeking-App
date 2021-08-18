@@ -60,17 +60,8 @@ def test_update_upload(self):
         self.assertTrue(upload.name == 'test update')
 
 
-class EmployerTestCase(TestCase):
-    def setUp(self):
-        self.user = User(
-        first_name="John",
-        last_name="Doe",
-        email="john@gmail.com",
-        location="compton",
-        phone="123",
-        username='Test',
-        password='test')
-
-        self.user.save()
+class UserTestCase(TestCase):
+  def setUp(self):
+    
     
  
