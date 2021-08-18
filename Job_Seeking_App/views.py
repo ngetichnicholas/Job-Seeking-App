@@ -368,11 +368,13 @@ def delete_jobseeker(request,user_id):
 def jobseeker_details(request,user_id):
   try:
     jobseeker =get_object_or_404(User, pk = user_id)
+    documents = FileUpload.objects.filter(user_id = user_id).all()
+    portfolios=Portfolio.objects.filter(user_id = user_id).all()
 
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'admin/jobseekers/jobseeker_details.html',{'jobseeker':jobseeker})
+  return render(request,'admin/jobseekers/jobseeker_details.html',{'jobseeker':jobseeker,'documents':documents,'portfolios':portfolios})
 
 
   #Admin Employer views

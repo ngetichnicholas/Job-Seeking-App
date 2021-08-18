@@ -7,12 +7,20 @@
     <div class="col-md-10">
         <table class="table table-bordered">
           <tr>
+            <th>Username</th>
+            <td>{{jobseeker.username}}</td>
+          </tr>
+          <tr>
             <th>First Name</th>
             <td>{{jobseeker.first_name}}</td>
           </tr>
           <tr>
             <th>Last Name</th>
             <td>{{jobseeker.last_name}}</td>
+          </tr>
+          <tr>
+            <th>Email Address</th>
+            <td>{{jobseeker.email}}</td>
           </tr>
           <tr>
             <th>Availability</th>
@@ -34,7 +42,61 @@
             <th>Phone No</th>
             <td>{{jobseeker.phone}}</td>
           </tr>
+          <tr>
+            <th>Location</th>
+            <td>{{jobseeker.location}}</td>
+          </tr>
+          <tr>
+            <th>Bio</th>
+            <td>{{jobseeker.bio}}</td>
+          </tr>
         </table>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+      <h4>Profile</h4>
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <img src="{{jobseeker.profile_picture.url }}" alt="Admin" class="rounded-circle" width="150">
+            <div class="mt-3">
+              <h4>{{jobseeker.first_name}} {{jobseeker.last_name}}</h4>
+              <p class="text-secondary mb-1">Profession: {{jobseeker.job_category}}</p>
+              <p class="text-muted font-size-sm">Location: {{jobseeker.location}}</p>
+              <p class="text-muted font-size-sm">{{jobseeker.bio}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col-md-4">
+      <h4>Documents and Resumes</h4>
+      {% if documents %}
+      {% for document in documents %}
+      <div class="card">
+        <h2><i class="fas fa-file-pdf"></i> {{document.name}}</h2>
+        <a href="{{ document.pdf.url }}" download="" class="btn btn-outline-success doc">View Document</a>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      <h4>Portfolios</h4>
+      {% if portfolios %}
+      {% for portfolio in portfolios %}
+      <div class="card">
+        <h2><i class="fas fa-globe"></i> {{portfolio.name}}</h2>
+        <a href="{{ portfolio.link }}" download="" class="btn btn-outline-success doc">View</a>
+      </div>
+      {% endfor %}
+      {% endif %}
+        
     </div>
     <div class="col-md-1"></div>
   </div>
