@@ -28,17 +28,17 @@ urlpatterns = [
     path('all_jobseekers',app_views.all_jobseekers,name='all_jobseekers'),
     path('verified_jobseekers',app_views.verified_jobseekers,name='verified_jobseekers'),
     path('unverified_jobseekers',app_views.unverified_jobseekers,name='unverified_jobseekers'),
-    path('verify_jobseeker/<int:jobseeker_id>',app_views.verify_jobseeker,name='verify_jobseeker'),
-    path('delete_jobseeker/<int:jobseeker_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
-    path('jobseeker_details/<int:jobseeker_id>', app_views.jobseeker_details,name='jobseeker_details'),
+    path('verify_jobseeker/<int:user_id>',app_views.verify_jobseeker,name='verify_jobseeker'),
+    path('delete_jobseeker/<int:user_id>', app_views.delete_jobseeker,name='delete_jobseeker'),
+    path('jobseeker_details/<int:user_id>', app_views.jobseeker_details,name='jobseeker_details'),
 
     path('all_employers',app_views.all_employers,name='all_employers'),
     path('verified_employers',app_views.verified_employers,name='verified_employers'),
     path('payments',app_views.payments,name='payments'),
     path('unverified_employers',app_views.unverified_employers,name='unverified_employers'),
-    path('verify_employer/<int:employer_id>',app_views.verify_employer,name='verify_employer'),
-    path('delete_employer/<int:employer_id>', app_views.delete_employer,name='delete_employer'),
-    path('employer_details/<int:employer_id>', app_views.employer_details,name='employer_details'),
+    path('verify_employer/<int:user_id>',app_views.verify_employer,name='verify_employer'),
+    path('delete_employer/<int:user_id>', app_views.delete_employer,name='delete_employer'),
+    path('employer_details/<int:user_id>', app_views.employer_details,name='employer_details'),
 
     path('daraja/stk-push', app_views.stk_push_callback, name='mpesa_stk_push_callback'),
     path('access/token', app_views.getAccessToken, name='get_mpesa_access_token'),
@@ -48,7 +48,7 @@ urlpatterns = [
 
 
     # get single jobseeker details from
-    path('specific_jobseeker/<int:jobseeker_id>', app_views.single_jobseeker,name='specific_details'),
+    path('specific_jobseeker/<int:user_id>', app_views.single_jobseeker,name='specific_details'),
     path('employerDash/',app_views.employerDash,name='employerDash'),
     path('employer_profile/',app_views.employerProfile,name='employer_profile'),
     path('update_employer/',app_views.update_employer,name='update_employer'),
