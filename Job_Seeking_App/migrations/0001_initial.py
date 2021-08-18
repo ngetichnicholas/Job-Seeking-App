@@ -85,24 +85,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Jobs',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=300)),
-                ('description', models.TextField(max_length=3000, null=True)),
-                ('tags', models.CharField(max_length=144, null=True)),
-                ('location', models.CharField(max_length=300)),
-                ('job_type', models.CharField(choices=[('1', 'Full time'), ('2', 'Part time'), ('3', 'Internship')], max_length=1)),
-                ('salary', models.CharField(blank=True, max_length=30)),
-                ('company_name', models.CharField(max_length=300)),
-                ('company_description', models.TextField(max_length=3000, null=True)),
-                ('published_date', models.DateTimeField(auto_now_add=True)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Category', to='Job_Seeking_App.category')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='User', to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Employer',
+            name='JobSeeker',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('availability', models.CharField(choices=[('Available', 'Available'), ('Not Available', 'Not Available')], default='Available', max_length=20)),
