@@ -1,33 +1,6 @@
 {%extends "admin/admin_base.html"%}
 {% load bootstrap4 %}
 {% block content %}
-<<<<<<< HEAD
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <a href="{% url 'all_jobseekers' %}" class="notification all_jobseekers">
-        <span class="btns">All Jobseekers</span>
-        <span class="badge1">{{all_jobseekers.count}}</span>
-      </a>
-     </div>
-     <div class="col-md-3">
-      <a href="{% url 'verified_jobseekers' %}" class="notification verified">
-        <span class="btns">Verified Jobseeker Profiles</span>
-        <span class="badge2">{{verified_jobseekers.count}}</span>
-      </a>
-
-     </div>
-     <div class="col-md-3">
-      <a href="{% url 'unverified_jobseekers' %}" class="notification unverified">
-        <span class="btns">Unverified Jobseeker Profiles </span>
-        <span class="badge3">{{unverified_jobseekers.count}}</span>
-      </a>
-
-     </div>
-  </div>
-</div>
-
-=======
 <div class="page-content page-container" id="page-content">
     <div class="padding">
         <div class="row">
@@ -189,5 +162,4 @@ let massChart=new Chart(myChart, {
 
 
 </script>
->>>>>>> cb3845013ff8bbf538262d92c8eedeb8fff53f08
 {% endblock %}

@@ -1,5 +1,5 @@
 {%extends "base.html"%}
-{%load bootstrap4%}
+{% load bootstrap4 %}
 {% block content %}
 <div class="container-fluid">
   <div class="row">
@@ -27,15 +27,16 @@
             <input type="hidden" name="next" value="{{next}}">
             <p>You dont have an account? <a href="{% url 'register' %}"> Register</a></p>
 
-                    </form>
-
-                </div>
-
-            </div>
+          </form>
 
         </div>
-        <!-- empty div -->
+
+      </div>
+
     </div>
+    <!-- empty div -->
+    <div class="col-md-3"></div>
+  </div>
 </div>
 
 {% endblock %}
