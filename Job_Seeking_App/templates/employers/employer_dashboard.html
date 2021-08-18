@@ -64,8 +64,8 @@
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
                   <td>{{job_seeker.location}}</td>
-                  <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="btn btn-outline-primary">View</button></a></td>
-                  <td><a href="mailto:{{job_seeker.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
+                  <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="button">View</button></a></td>
+                  <td><a href="mailto:{{job_seeker.email}}"><button class="button">Contact</button></a></td>
               </tr>
               {%endfor%}
              
