@@ -51,6 +51,21 @@ class User(AbstractUser):
         self.delete()
 
     @classmethod
+    def update_user(cls, id ,username,first_name ,last_name,email,phone,location):
+        update = cls.objects.filter(id = id).update(username = username,first_name = first_name,last_name=last_name,email=email,phone=phone,location=location)
+        return update
+
+    @classmethod
+    def get_all_users(cls):
+        users = cls.objects.all()
+        return users
+
+    @classmethod
+    def get_user_id(cls,id):
+        user_id = cls.objects.filter(id= id).all()
+        return user_id
+
+    @classmethod
     def search_jobseekers_by_job_category(cls,job_category):
         jobseekers = User.objects.filter(job_category__icontains=job_category)
         return jobseekers
@@ -93,7 +108,6 @@ class Payments(models.Model):
     first_name =models.CharField(max_length=144,null=True,blank=True)
     last_name = models.CharField(max_length=144,null=True,blank=True)
     phone = models.CharField(max_length=144,null=True,blank=True)
-    mpesa_number = models.BigIntegerField('Mpesa Phone Number', validators=[MinLengthValidator(12),MaxLengthValidator(13)])
 
 # previous projects
 class Portfolio(models.Model):
@@ -101,19 +115,55 @@ class Portfolio(models.Model):
     name = models.CharField(max_length=50)
     link=models.URLField(max_length=555)
 
-    def __str__(self):
-        return f"Portfolio {self.id}"
-    def save(self, *args, **kwargs):
-        super().save()
+    def save_portfolio(self):
+        self.save()
 
-    class Meta:
-        verbose_name = ("Portfolio")
-        verbose_name_plural = ("Portfolio")
+    def delete_portfolio(self):
+        self.delete()
+    
+    @classmethod
+    def update_portfolio(cls, id ,name,link ,user):
+        update = cls.objects.filter(id = id).update(name = name,link = link,user=user)
+        return update
+
+    @classmethod
+    def get_all_portfolios(cls):
+        portfolios = cls.objects.all()
+        return portfolios
+
+    @classmethod
+    def get_portfolio_id(cls,id):
+        portfolio_id = cls.objects.filter(id= id).all()
+        return portfolio_id
+
+    def __str__(self):
+        return self.name
 
 class Contact(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()
     message = models.TextField()
+
+    def save_contact(self):
+        self.save()
+
+    def delete_contact(self):
+        self.delete()
+    
+    @classmethod
+    def update_contact(cls, id ,name,email ,message):
+        update = cls.objects.filter(id = id).update(name = name,email = email,message=message)
+        return update
+
+    @classmethod
+    def get_all_contacts(cls):
+        contacts = cls.objects.all()
+        return contacts
+
+    @classmethod
+    def get_contact_id(cls,id):
+        contact_id = cls.objects.filter(id= id).all()
+        return contact_id
     
     def __str__(self):
         return self.name
