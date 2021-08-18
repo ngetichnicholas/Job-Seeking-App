@@ -3,6 +3,7 @@
 {% load cloudinary %}
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
   <meta charset="UTF-8">
@@ -69,6 +70,66 @@
   <script src="../../static/js/popper.js"></script>
   <script src="../../static/js/bootstrap.min.js"></script>
   <script src="../../static/js/main.js"></script>
+=======
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144351462-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-144351462-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <!-- chart js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <link rel="icon" href="https://res.cloudinary.com/dbos9xidr/image/upload/v1626082454/as8ixvziyd2bq9i5yqzl.jpg">
+    <link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
+    <!-- styles -->
+    {% block styles %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    {% endblock styles %}
+    <!-- title -->
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Admin panel</title>
+    {% endif %}
+
+</head>
+  
+
+<body>
+  
+  {% include 'admin/admin.html' %}
+  <div class="" id="inner">
+    <div class="header px-5"></div>  
+    <div class="info">
+{% block content %}
+
+{% endblock content %}
+  </div>
+</div>
+  
+
+  {% block scripts %}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+  <!-- jquery scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- custom scripts -->
+  <script src="{%static 'js/main.js'%}" type="text/javascript"></script>
+  <script src="{%static 'js/admin.js'%}" type="text/javascript"></script>
+
+>>>>>>> cb3845013ff8bbf538262d92c8eedeb8fff53f08
   {% bootstrap_javascript %}
   {% endblock scripts %}
 </body>
