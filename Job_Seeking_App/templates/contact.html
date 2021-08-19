@@ -27,7 +27,7 @@
                     <h2 class="text-white mt-0">Our premises</h2>
                     {% if messages %}
                     {% for message in messages %}
-                    <p class="text-center text-success"> {{ message }}</p>
+                    <p id="messages" class="text-center text-success"> {{ message }}</p>
                       {% endfor %}
                   {% endif %}
                     <div class="row map">
@@ -64,7 +64,7 @@
                 <div class="">
                     {% if messages %}
                     {% for message in messages %}
-                    <p class="text-center"> {{ message }}</p>
+                    <p id="messages" class="text-center"> {{ message }}</p>
                     {% endfor %}
                     {% endif %}
                     <form class="forms" action="" id="contactForm" method="POST">

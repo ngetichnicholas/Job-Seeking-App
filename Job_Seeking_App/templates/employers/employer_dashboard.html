@@ -30,7 +30,7 @@
               {% bootstrap_form payment_form %}
               {% if messages %}
               {% for message in messages %}
-              <p class="text-danger"> {{ message }}</p>
+              <p id="messages" class="text-danger"> {{ message }}</p>
               {% endfor %}
               {% endif %}
             </fieldset>

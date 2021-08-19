@@ -8,7 +8,7 @@
         <div class="col-md-8 m-auto card" style="margin-bottom:30px; background-color: rgb(17, 17, 16);color: white;">
             {% if messages %}
             {% for message in messages %}
-            <p class="text-center text-success"> {{ message }}</p>
+            <p id="messages" class="text-center text-success"> {{ message }}</p>
               {% endfor %}
           {% endif %}
             <div class=" content-section container card-body" style="padding-top: 30px;">

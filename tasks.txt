@@ -1,7 +1,0 @@
-Anne - Slides
-Nick - Tests
-Yussuf - UI>Messages and general appearance
-Victor - SEO- add description on image alt
-Peter - Modals in update forms
-Roney - 
-Nancy - 
