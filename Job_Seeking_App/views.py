@@ -344,13 +344,15 @@ def unverified_jobseekers(request):
 @allowed_users(allowed_roles=['admin'])
 def verify_jobseeker(request, user_id):
   user = User.objects.get(pk=user_id)
-  name = user.username
+  first_name = user.first_name
+  last_name = user.last_name
+
   email = user.email
   if request.method == 'POST':
     verify_jobseeker_form = AdminVerifyUserForm(request.POST,request.FILES, instance=user)
     if verify_jobseeker_form.is_valid():
       verify_jobseeker_form.save()
-      send_verification_email(name, email)
+      send_verification_email(first_name,last_name, email)
       data = {'success': 'Verification email sent'}
       messages.success(request, f'jobseeker verified succesfully!')
       return redirect('admin_dashboard')
@@ -406,13 +408,14 @@ def unverified_employers(request):
 @allowed_users(allowed_roles=['admin'])
 def verify_employer(request, user_id):
   employer = User.objects.get(pk=user_id)
-  name = employer.username
+  first_name = employer.first_name
+  last_name = employer.last_name
   email = employer.email
   if request.method == 'POST':
     update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
     if update_employer_form.is_valid():
       update_employer_form.save()
-      send_verification_email(name, email)
+      send_verification_email(first_name,last_name, email)
       data = {'success': 'Verification email sent'}
       messages.success(request, f'employer verified!')
       return redirect('admin_dashboard')
