@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{%load crispy_forms_tags%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 m-auto card" style="margin-bottom:30px; background-color: rgb(17, 17, 16);color: white;">
+            {% if messages %}
+            {% for message in messages %}
+            <p id="messages" class="text-center text-success"> {{ message }}</p>
+              {% endfor %}
+          {% endif %}
+            <div class=" content-section container card-body" style="padding-top: 30px;">
+                <div class="media">
+                    <div class="col-sm-4">
+                        <div style="width: 150px; height:150px; overflow:hidden; border-radius:50%" class="img-wrapper">
+                            <img width="120%" height="120%" src="{{user.profile.profile_pic.url }}" alt="profile">
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="account-heading" style="font-family: 'Lobster Two', cursive;">{{user.username}}</h2>
+                        <p class="text-secondary">{{user.email}}</p>
+                        <p>{{user.profile.bio}}</p>
+                        <p><b>Created on:</b> {{user.profile.date_created}}</p>
+                    </div>
+                </div>
+                
+                <div class="container">
+                    <form method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <fieldset class="form-group">
+                            <h2 style="color:white; text-decoration: underline; font-family: 'Lobster Two', cursive;" >Profile</h2>
+                            {{ user_form|crispy }}
+                            {{ profile_form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-info" type="submit">update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+{%endblock content%}
