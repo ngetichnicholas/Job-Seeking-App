@@ -193,7 +193,7 @@ def upload_file(request):
 
 def pdf_view(request,file_id):
     file =get_object_or_404(FileUpload, pk = file_id)
-    image_data = open(f"https://job-seeking-app.herokuapp.com/media/{file.pdf}", "rb").read()
+    image_data = open(f"https://job-seeking-app.herokuapp.com/job-seeking-app/media/{file.pdf}", "rb").read()
     return HttpResponse(image_data, content_type="application/pdf")
 
 
