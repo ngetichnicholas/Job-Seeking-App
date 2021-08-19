@@ -193,7 +193,7 @@ def upload_file(request):
 
 def pdf_view(request,file_id):
     file =get_object_or_404(FileUpload, pk = file_id)
-    image_data = open(f"/home/moringa/Documents/Core-Django/Job-Seeking-App/media/{file.pdf}", "rb").read()
+    image_data = open(f"https://job-seeking-app.herokuapp.com{file.pdf.url}", "rb").read()
     return HttpResponse(image_data, content_type="application/pdf")
 
 
