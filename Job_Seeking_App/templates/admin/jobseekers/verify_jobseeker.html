@@ -6,10 +6,22 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
       {% if messages %}
-      {% for message in messages %}
-      <p id="messages" class="text-center text-success"> {{ message }}</p>
-        {% endfor %}
-    {% endif %}
+    {% for message in messages %}
+    <div class="row ">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  {% endfor %}
+{% endif %}
+
       <hr>
 
       <div class="" id="myContent">

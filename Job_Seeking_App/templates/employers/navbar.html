@@ -10,16 +10,13 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <!-- Adding a search form  -->
-            <div class="col-sm-4 col-md-4 navbar-right">
-
                 <form class="navbar-form" role="search" action="{% url 'search_jobseekers' %}">
                     <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by job category e.g IT" name="job_category">
-                        <input class="btn btn-success" type="submit">
+                    <input type="text"  class="form-control search-form" placeholder="Search by job category e.g IT" name="job_category">
+                        <input class="btn btn-success search-form" type="submit">
                     </div>
 
                 </form>
-            </div>
             <!-- search form end -->
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#about">About</a></li>

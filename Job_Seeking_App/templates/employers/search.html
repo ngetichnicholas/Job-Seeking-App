@@ -6,9 +6,21 @@
   <div class="row">
     {% if messages %}
     {% for message in messages %}
-    <p id="messages" class="text-center text-success"> {{ message }}</p>
-      {% endfor %}
-  {% endif %}
+    <div class="row ">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  {% endfor %}
+{% endif %}
+
     <div class="col-md-3">
       <div class="card">
         {% if user.profile.profile_picture.url %}
@@ -38,22 +50,22 @@
       <div class="card card-body table-responsive">
           <table class="table table-striped" border="1">
               <tr>
-                  <th scope="col" >View</th>
                   <th scope="col">Names</th>
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Location</th>
-                  <th scope="col">Hire</th>
+                  <th scope="col" >View</th>
+                  <th scope="col">Contact</th>
               </tr>
               {% for job_seeker in jobseekers %}
-              <tr>
-                <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="btn btn-outline-primary">View</button></a></td>
+              <tr class="tr1">
                 <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
                   <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
                   <td>{{job_seeker.email}}</td>
                   <td>{{job_seeker.phone}}</td>
                   <td>{{job_seeker.location}}</td>
-                  <td><a href="mailto:{{job_seeker.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
+                  <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="button">View</button></a></td>
+                  <td><a href="mailto:{{job_seeker.email}}"><button class="button">Contact</button></a></td>
               </tr>
               {%endfor%}
              

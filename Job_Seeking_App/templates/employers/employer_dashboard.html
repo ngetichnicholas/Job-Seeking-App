@@ -3,16 +3,32 @@
 {%load static%}
 {% block content %}
 <div class="container-fluid employ">
+  {% if messages %}
+    {% for message in messages %}
+    <div class="row ">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  {% endfor %}
+{% endif %}
   <div class="row">
     <div class="col-md-3">
       <div class="card">
         {% if user.profile_picture.url %}
+        <img class="profile_picture my-4" src="{{ user.profile_picture.url }}" style="height: 10vh; width:10vh;" alt="">
+        {% else %}
         <img class="profile_picture my-4"
-           src="{{ user.profile_picture.url }}" style="height: 10vh; width:10vh;" alt="">
-           {% else %}
-          <img class="profile_picture my-4"
-             src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
-             {% endif %}
+          src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png"
+          style="height: 10vh; width:10vh;" alt="">
+        {% endif %}
         <h2 class="">{{user.username}}</h2>
         <div class="card-header"><a href="{% url 'update_employer' %}">Update Details</a></div>
         <div class="card-header"><a href="{% url 'employer_profile' %}">See my Profile</a></div>
@@ -24,15 +40,28 @@
         <div class="col-md-8">
           <h3>Pay to get verified</h3>
           <p>Note: Phone number format is 254725470732</p>
-          <form class="forms card" action="{% url 'verify_employer_payment' %}" method="POST" enctype="multipart/form-data">
+          <form class="forms card" action="{% url 'verify_employer_payment' %}" method="POST"
+            enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
               {% bootstrap_form payment_form %}
               {% if messages %}
               {% for message in messages %}
-              <p id="messages" class="text-danger"> {{ message }}</p>
+              <div class="row ">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                  <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                  </div>
+                </div>
+                <div class="col-md-4"></div>
+              </div>
               {% endfor %}
               {% endif %}
+
             </fieldset>
             <div class="form-group">
               <button class="btn btn-outline-success" type="submit">Submit</button>
@@ -48,45 +77,44 @@
       <h5 class="">POTENTIAL CANDIDATES: </h5>
       <hr>
       <div class="card card-body table-responsive">
-          <table class="table table-striped" border="1">
-              <tr>
-                  <th scope="col">Names</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">View</th>
-                  <th scope="col">Hire</th>
-              </tr>
-              {% for job_seeker in job_seekers %}
-              <tr>
-                <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
-                  <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
-                  <td>{{job_seeker.email}}</td>
-                  <td>{{job_seeker.phone}}</td>
-                  <td>{{job_seeker.location}}</td>
-                  <td><a href="{% url 'specific_details' job_seeker.id%}" ><button class="btn btn-outline-primary">View</button></a></td>
-                  <td><a href="mailto:{{job_seeker.email}}"><button class="btn btn-outline-success">Contact</button></a></td>
-              </tr>
-              {%endfor%}
-             
-          </table>
-          
+        <table class="table table-striped" border="1">
+          <tr>
+            <th scope="col">Names</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Location</th>
+            <th scope="col">View</th>
+            <th scope="col">Hire</th>
+          </tr>
+          {% for job_seeker in job_seekers %}
+          <tr>
+            <!-- a href="" data-product="{{job_seeker.id}}" data-action="add" class="btn btn-outline-info btn-sm hire">Hire</a> -->
+            <td>{{job_seeker.first_name}} {{job_seeker.last_name}}</td>
+            <td>{{job_seeker.email}}</td>
+            <td>{{job_seeker.phone}}</td>
+            <td>{{job_seeker.location}}</td>
+            <td><a href="{% url 'specific_details' job_seeker.id%}"><button class="button">View</button></a></td>
+            <td><a href="mailto:{{job_seeker.email}}"><button class="button">Contact</button></a></td>
+          </tr>
+          {%endfor%}
+
+        </table>
+
       </div>
       {% endif %}
-  </div>
-  <div class="col-md-1"></div>
+    </div>
+    <div class="col-md-1"></div>
   </div>
 </div>
 <script>
-let hireJobSeeker = document.getElementsByClassName("hireJobSeeker");
+  let hireJobSeeker = document.getElementsByClassName("hireJobSeeker");
 
-for (let i =0; i<hireJobSeeker.length; i++) {
-  hireJobSeeker[i].addEventListener("click",function (){
-    let seekerId=this.dataset.product;
-    let action=this.dataset.action;
-    console.log("seekerId:",seekerId); 
-  })
-}
-
+  for (let i = 0; i < hireJobSeeker.length; i++) {
+    hireJobSeeker[i].addEventListener("click", function () {
+      let seekerId = this.dataset.product;
+      let action = this.dataset.action;
+      console.log("seekerId:", seekerId);
+    })
+  }
 </script>
 {% endblock %}

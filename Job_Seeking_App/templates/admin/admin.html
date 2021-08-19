@@ -1,3 +1,4 @@
+<div class="container-fluid">
 
     <div id="body-pd">
         <div class="l-navbar" id="navbar">
@@ -7,7 +8,7 @@
                         <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
                     </div>
                     <div class="nav__list">
-                        <a href="{% url 'admin_dashboard' %}" class="nav__link active">
+                        <a href="{% url 'admin_dashboard' %}" class="nav__link item active">
                             <ion-icon name="pulse-outline"></ion-icon>
                             <span class="nav__name">Dashboard</span>
                         </a>
@@ -18,7 +19,7 @@
 
                         <a href="{% url 'all_employers' %}" class="nav__link">
                             <ion-icon name="people-outline"></ion-icon>
-                            <span class="nav__name">Employers</span>
+                            <span class="nav__name">All Employers</span>
                         </a>
                         <a href="{% url 'verified_employers' %}" class="nav__link">
                             <ion-icon name="person-add-outline"></ion-icon>
@@ -26,11 +27,11 @@
                         </a>
                         <a href="{% url 'unverified_employers' %}" class="nav__link">
                             <ion-icon name="person-remove-outline"></ion-icon>
-                            <span class="nav__name">unverified_employers</span>
+                            <span class="nav__name">unverified employers</span>
                         </a>
                         <a href="{% url 'all_jobseekers' %}" class="nav__link">
                             <ion-icon name="walk-outline"></ion-icon>
-                            <span class="nav__name">Jobseeker</span>
+                            <span class="nav__name">All Jobseekers</span>
                         </a>
                         <a href="{% url 'verified_jobseekers' %}" class="nav__link">
                             <ion-icon name="person-add-outline"></ion-icon>
@@ -62,3 +63,4 @@
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         
     </div>
+</div>

@@ -43,7 +43,7 @@ def contact(request):
         contact_form.save()
         send_contact_email(name, email)
         data = {'success': 'Your message has been reaceived. Thank you for contacting us, we will get back to you shortly'}
-        messages.info(request, f"Message submitted successfully")
+        messages.success(request, f"Message submitted successfully")
     else:
       contact_form = ContactForm()
     return render(request,'contact.html',{'contact_form':contact_form})
@@ -185,6 +185,7 @@ def upload_file(request):
             upload = upload_form.save(commit=False)
             upload.user = request.user
             upload.save()
+            messages.success(request,"File uploaded successfully")
             return redirect('jobseekerDash')
     else:
         upload_form = UploadFileForm()
@@ -260,7 +261,6 @@ def employerProfile(request):
         "available":available,
     }
     return render(request,'employers/employer_profile.html',context)
-
 
 @login_required
 @allowed_users(allowed_roles=['admin','employer'])
@@ -347,7 +347,7 @@ def verify_jobseeker(request, user_id):
       verify_jobseeker_form.save()
       send_verification_email(name, email)
       data = {'success': 'Verification email sent'}
-      messages.success(request, f'jobseeker updated!')
+      messages.success(request, f'jobseeker verified succesfully!')
       return redirect('admin_dashboard')
   else:
     verify_jobseeker_form = AdminVerifyUserForm(instance=user)
@@ -360,6 +360,7 @@ def delete_jobseeker(request,user_id):
   jobseeker = User.objects.get(pk=user_id)
   if jobseeker:
     jobseeker.delete_user()
+    messages.success(request, f'User deleted successfully!')
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 #Get single jobseeker
@@ -368,11 +369,13 @@ def delete_jobseeker(request,user_id):
 def jobseeker_details(request,user_id):
   try:
     jobseeker =get_object_or_404(User, pk = user_id)
+    documents = FileUpload.objects.filter(user_id = user_id).all()
+    portfolios=Portfolio.objects.filter(user_id = user_id).all()
 
   except ObjectDoesNotExist:
     raise Http404()
 
-  return render(request,'admin/jobseekers/jobseeker_details.html',{'jobseeker':jobseeker})
+  return render(request,'admin/jobseekers/jobseeker_details.html',{'jobseeker':jobseeker,'documents':documents,'portfolios':portfolios})
 
 
   #Admin Employer views
@@ -398,10 +401,14 @@ def unverified_employers(request):
 @allowed_users(allowed_roles=['admin'])
 def verify_employer(request, user_id):
   employer = User.objects.get(pk=user_id)
+  name = employer.username
+  email = employer.email
   if request.method == 'POST':
     update_employer_form = AdminVerifyUserForm(request.POST,request.FILES, instance=employer)
     if update_employer_form.is_valid():
       update_employer_form.save()
+      send_verification_email(name, email)
+      data = {'success': 'Verification email sent'}
       messages.success(request, f'employer verified!')
       return redirect('admin_dashboard')
   else:
@@ -415,6 +422,7 @@ def delete_employer(request,user_id):
   employer = User.objects.get(pk=user_id)
   if employer:
     employer.delete_user()
+    messages.success(request, f'User deleted successfully!')
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 #Get all payments

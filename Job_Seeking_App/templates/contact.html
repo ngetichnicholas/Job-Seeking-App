@@ -25,11 +25,6 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 text-center">
                     <h2 class="text-white mt-0">Our premises</h2>
-                    {% if messages %}
-                    {% for message in messages %}
-                    <p id="messages" class="text-center text-success"> {{ message }}</p>
-                      {% endfor %}
-                  {% endif %}
                     <div class="row map">
                         <div class="">
                             <div class="info">
@@ -64,9 +59,21 @@
                 <div class="">
                     {% if messages %}
                     {% for message in messages %}
-                    <p id="messages" class="text-center"> {{ message }}</p>
+                    <div class="row ">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{ message }}
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
                     {% endfor %}
                     {% endif %}
+
                     <form class="forms" action="" id="contactForm" method="POST">
                         {% csrf_token %}
                         {% bootstrap_form contact_form %}
@@ -79,22 +86,22 @@
     </section>
 </div>
 <script type="text/javascript">
-    $(document).on("submit", "#contactForm",function (e){
-      e.preventDefault()
-      $.ajax({
-        type: "POST",
-        url: "/contact",
-        data:{
-            name:$("#id_username").val(),
-            email:$("#id_email").val(),
-            message:$("#id_message").val(),
-            csrfmiddlewaretoken:$("input=[name=csrfmiddlewaretoken]").val(),
-        },
-        succes:function(){
+    $(document).on("submit", "#contactForm", function (e) {
+        e.preventDefault()
+        $.ajax({
+            type: "POST",
+            url: "/contact",
+            data: {
+                name: $("#id_username").val(),
+                email: $("#id_email").val(),
+                message: $("#id_message").val(),
+                csrfmiddlewaretoken: $("input=[name=csrfmiddlewaretoken]").val(),
+            },
+            succes: function () {
 
-        }
-      });
-     
+            }
+        });
+
     });
 </script>
 
