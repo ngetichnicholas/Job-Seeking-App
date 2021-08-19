@@ -1,11 +1,13 @@
-{% extends "base.html" %} {% load bootstrap4 %} {% load static %} {% block
-content %}
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %} {% block content %}
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-      {% if messages %} {% for message in messages %}
-      <div class="row">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="row ">
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
@@ -17,7 +19,8 @@ content %}
         </div>
         <div class="col-md-4"></div>
       </div>
-      {% endfor %} {% endif %}
+    {% endfor %}
+  {% endif %}
 
       <div class="card">
         <form class="forms" action="" method="POST" enctype="multipart/form-data">
