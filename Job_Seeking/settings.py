@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'media',
     'Job_Seeking_App',
     'bootstrap4',
     'cloudinary',

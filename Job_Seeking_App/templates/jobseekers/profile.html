@@ -27,8 +27,8 @@
   
       <div class="row">
         <div class="col-md-4">
-          {% if user_picture.url %}
-          <img class="profile_picture my-4" src="{{ user_picture.url }}"
+          {% if user.profile_picture.url %}
+          <img class="profile_picture my-4" src="{{ user.profile_picture.url }}"
             style="height: 30vh; width:30vh;" alt="">
           {% else %}
           <img class="profile_picture my-4"
