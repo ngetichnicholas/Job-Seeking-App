@@ -19,9 +19,9 @@ from .decorators import unauthenticated_user,allowed_users,admin_only
 import os
 from .models import *
 from mpesa.models import Payment as MpesaPayment
-from django.http import FileResponse
 
-import webbrowser
+# from django_daraja.mpesa.core import MpesaClient
+
 # Create your views here.
 
 def index(request):
@@ -190,11 +190,6 @@ def upload_file(request):
     else:
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
-
-def pdf_view(request,file_id):
-    file =get_object_or_404(FileUpload, pk = file_id)
-    image_data = open(f"/home/moringa/Documents/Core-Django/Job-Seeking-App/media/{file.pdf}", "rb").read()
-    return HttpResponse(image_data, content_type="application/pdf")
 
 
 # jobseekers Add portfolio
