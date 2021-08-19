@@ -21,6 +21,7 @@ urlpatterns = [
     path('jobseekerDash/',app_views.jobseekerDash,name='jobseekerDash'),
     path('dashboard',app_views.dashboard,name='dashboard'),
     path('upload_file',app_views.upload_file,name='upload_file'),
+    path('view-pdf/<int:file_id>', app_views.pdf_view, name='pdf_view'),
     path('accounts/profile/',app_views.jobseeker_profile,name='jobseeker_profile'),
     path('update_jobseeker_profile/',app_views.update_jobseeker_profile,name='update_jobseeker_profile'),
 

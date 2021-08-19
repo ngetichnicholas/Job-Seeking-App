@@ -191,6 +191,11 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
+def pdf_view(request,file_id):
+    file =get_object_or_404(FileUpload, pk = file_id)
+    image_data = open(f"/home/moringa/Documents/Core-Django/Job-Seeking-App/media/{file.pdf}", "rb").read()
+    return HttpResponse(image_data, content_type="application/pdf")
+
 
 # jobseekers Add portfolio
 @login_required
