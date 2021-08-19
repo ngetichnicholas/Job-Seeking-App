@@ -130,6 +130,10 @@ body {
 .lower {
   text-transform: capitalize !important;
 }
+.alert {
+  text-align: center !important;
+}
+
 @media screen and (max-width:1000px) {
   .about,.services,.contact {
     height:auto !important;
