@@ -7,7 +7,14 @@ from .models import *
 class UserTestClass(TestCase):
     # Set up Method
     def setUp(self):
-        self.user = User(id=1,username='NickMoringa',email= 'nick@moringa.com',first_name='Nicholas',last_name='Ngetich',phone='254725470732',is_jobseeker=True)
+        self.user = User(
+            id=1,
+            username='NickMoringa',
+            email= 'nick@moringa.com',
+            first_name='Nicholas',
+            last_name='Ngetich',
+            phone='254725470732',
+            is_jobseeker=True)
         self.user.save()
 
     def test_instance(self):
@@ -31,7 +38,14 @@ class UserTestClass(TestCase):
 
 def test_update_user(self):
         self.user.save_user()
-        user = User.update_user( self.user.id, 'Nick@Moringa','nick@moringa.com','Nick','Korgoren','254725470732',True)
+        user = User.update_user(
+            self.user.id, 
+            'Nick@Moringa',
+            'nick@moringa.com',
+            'Nick',
+            'Korgoren',
+            '254725470732',
+            True)
         user_item = user.objects.filter(id = self.user.id)
         print(user_item)
         self.assertTrue(user.name == 'Nick@Moringa')
@@ -112,7 +126,10 @@ def test_update_portfolio(self):
 class ContactTestClass(TestCase):
     # Set up Method
     def setUp(self):
-        self.contact = Contact(name='Paul Jeoffrey', email='pauljeff@gmail.com',message= 'Hello Flex-Connectors, how long will it take to verify my employer account once I make the payment')
+        self.contact = Contact(
+            name='Paul Jeoffrey', 
+            email='pauljeff@gmail.com',
+            message= 'Hello Flex-Connectors, how long will it take to verify my employer account once I make the payment')
         self.contact.save()
 
     def test_instance(self):
