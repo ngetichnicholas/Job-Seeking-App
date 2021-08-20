@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render
 from rest_framework.generics import CreateAPIView
 
 from rest_framework.permissions import AllowAny
@@ -119,5 +119,8 @@ class CallBackApiView(CreateAPIView):
 
             return redirect('employerDash')
 
-        else:
+        elif result_code is not 0:
             return redirect('employerDash')
+
+
+        return render(request,'employers/employer_dashboard.html')
