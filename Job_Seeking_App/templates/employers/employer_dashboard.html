@@ -4,21 +4,21 @@
 {% block content %}
 <div class="container-fluid employ">
   {% if messages %}
-    {% for message in messages %}
-    <div class="row ">
-      <div class="col-md-4"></div>
-      <div class="col-md-4">
-        <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert" id="messages">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          {{ message }}
-        </div>
+  {% for message in messages %}
+  <div class="row ">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert" id="messages">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
       </div>
-      <div class="col-md-4"></div>
     </div>
+    <div class="col-md-4"></div>
+  </div>
   {% endfor %}
-{% endif %}
+  {% endif %}
   <div class="row">
     <div class="col-md-3">
       <div class="card">
@@ -38,29 +38,15 @@
       {% if user.verified is False %}
       <div class="row">
         <div class="col-md-8">
-          <h3>Pay to get verified</h3>
-          <p>Note: Phone number format is 254725470732</p>
           <form class="forms card" action="{% url 'verify_employer_payment' %}" method="POST"
             enctype="multipart/form-data">
+            <div class="card-header">
+              <h3>Get verified and enjoy our service,pay Ksh 3000 only using the form below to get started</h3>
+              <p>Note: Phone number format is 254725470732</p>
+            </div>
             {% csrf_token %}
             <fieldset class="form-group">
               {% bootstrap_form payment_form %}
-              {% if messages %}
-              {% for message in messages %}
-              <div class="row ">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                  <div class="alert text-center {{ message.tags }} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                  </div>
-                </div>
-                <div class="col-md-4"></div>
-              </div>
-              {% endfor %}
-              {% endif %}
 
             </fieldset>
             <div class="form-group">
@@ -69,7 +55,20 @@
           </form>
         </div>
         <div class="col-md-4">
-          <h4>Payment Procedure</h4>
+          <div class="card">
+            <div class="card-header">
+              <h4>Payment Procedure</h4>
+              <p><strong>MPESA STK payment</strong></p>
+            </div>
+            <ol>
+              <li>Fill in the form.</li>
+              <li>Ensure you enter mpesa no.</li>
+              <li>Submit the form and wait for mpesa notification.</li>
+              <li>Enter your pin.</li>
+              <li>Press ok to send.</li>
+              <li>Upon successful payment you will receive email notification.</li>
+            </ol>
+          </div>
         </div>
       </div>
       {% else %}

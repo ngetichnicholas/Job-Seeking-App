@@ -99,6 +99,7 @@ body {
 }
 .doc {
   width: 20vh;
+  text-align: left;
 }
 .card {
   padding: 1rem;

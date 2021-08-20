@@ -3,4 +3,4 @@ Hello {{name}}
 We have received your payment. Your profile will be verified in a few...
 
 Regards,
-Nicholas Ngetich
+Flex-Connectors

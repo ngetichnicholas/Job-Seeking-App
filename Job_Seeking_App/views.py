@@ -191,19 +191,11 @@ def upload_file(request):
         upload_form = UploadFileForm()
     return render(request, 'jobseekers/upload_file.html', {'upload_form': upload_form})
 
-# def pdf_view(request,file_id):
-#     file =get_object_or_404(FileUpload, pk = file_id)
-#     image_data = open(f"https://job-seeking-app.herokuapp.com/job-seeking-app/media/{file.pdf}", "rb").read()
-#     return HttpResponse(image_data, content_type="application/pdf")
-
-from django.http import FileResponse, Http404
-
 def pdf_view(request,file_id):
-    try:
-        file =get_object_or_404(FileUpload, pk = file_id)
-        return FileResponse(open(f"https://job-seeking-app.herokuapp.com/job-seeking-app/media/{file.pdf.url}", 'rb'), content_type='application/pdf')
-    except FileNotFoundError:
-        raise Http404()
+    file =get_object_or_404(FileUpload, pk = file_id)
+    image_data = open(f"/home/moringa/Documents/Core-Django/Job-Seeking-App/media/{file.pdf}", "rb").read()
+    return HttpResponse(image_data, content_type="application/pdf")
+
 
 
 # jobseekers Add portfolio

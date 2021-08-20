@@ -3,4 +3,4 @@ Hello {{first_name}} {{last_name}}
 Your profile has been successfully verified
 
 Regards,
-Nicholas Ngetich
+Flex-Connectors

@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from rest_framework.generics import CreateAPIView
 
 from rest_framework.permissions import AllowAny
@@ -5,7 +6,11 @@ from rest_framework.permissions import AllowAny
 from mpesa.models import Payment
 from mpesa.api.serializers import MpesaSerializer
 from ..email import send_payment_email
+from Job_Seeking_App import views
+from Job_Seeking_App.email import send_verification_email
 from Job_Seeking_App.models import *
+from django.contrib import messages
+
 
 
 
@@ -107,12 +112,12 @@ class CallBackApiView(CreateAPIView):
         if mpesa_receipt_number:
             employer = User.objects.get(phone = phone_number)
             email = employer.email
-            name = employer.username
+            name = employer.first_name
             send_payment_email(name, email)
             employer.verified = True
             employer.save()
 
-
+        
         from rest_framework.response import Response
 
-        return Response({"Transaction saved to database"})
+        return redirect('employerDash')
