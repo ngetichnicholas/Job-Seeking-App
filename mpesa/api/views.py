@@ -117,10 +117,9 @@ class CallBackApiView(CreateAPIView):
             employer.verified = True
             employer.save()
 
-            if employer.verified is True:
-                return redirect('employerDash')
+            return redirect('Job_Seeking_App:employerDash')
 
         
         from rest_framework.response import Response
 
-        return redirect('employerDash')
+        return redirect('Job_Seeking_App:employerDash')
