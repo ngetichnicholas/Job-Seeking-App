@@ -9,3 +9,8 @@
    <h3 class="text-center">Mpesa push notification sent to {{phone}}, enter your pin to confirm payment</h3>
 </div>
 {% endblock %}
+<script>
+   setTimeout(function(){
+        window.location.href = "{% url 'employerDash' %}"
+     }, 10000);
+</script>

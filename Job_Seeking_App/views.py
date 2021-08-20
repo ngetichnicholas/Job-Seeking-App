@@ -235,7 +235,7 @@ import time
    
 def success(request):
   time.sleep(10)
-  return HttpResponseRedirect("employerDash/")
+  return HttpResponseRedirect("/employerDash")
 
   return render('mpesa/success.html')
 
