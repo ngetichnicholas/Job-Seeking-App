@@ -121,9 +121,3 @@ class CallBackApiView(CreateAPIView):
 
         else:
             return redirect('employerDash')
-
-
-        
-        from rest_framework.response import Response
-
-        return redirect('Job_Seeking_App:employerDash')

@@ -232,6 +232,10 @@ def getAccessToken(request):
     return HttpResponse(validated_mpesa_access_token)
 
 def success(request):
+  current_user = request.user
+  if current_user.verified is True:
+    messages.success(request,'Your Profile is verified!')
+    return redirect('employerDash')
   return render('mpesa/success.html')
 
 def stk_push_callback(request):
