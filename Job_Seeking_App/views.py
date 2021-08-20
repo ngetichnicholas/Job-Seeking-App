@@ -231,11 +231,12 @@ def getAccessToken(request):
     validated_mpesa_access_token = mpesa_access_token['access_token']
     return HttpResponse(validated_mpesa_access_token)
 
+import time
+   
 def success(request):
-  current_user = request.user
-  if current_user.verified is True:
-    messages.success(request,'Your Profile is verified!')
-    return redirect('employerDash')
+  time.sleep(10)
+  return HttpResponseRedirect("employerDash/")
+
   return render('mpesa/success.html')
 
 def stk_push_callback(request):
