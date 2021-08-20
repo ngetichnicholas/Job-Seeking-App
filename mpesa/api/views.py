@@ -109,7 +109,7 @@ class CallBackApiView(CreateAPIView):
         )
 
         new_transaction.save()
-        if mpesa_receipt_number:
+        if result_code == 0:
             employer = User.objects.get(phone = phone_number)
             email = employer.email
             name = employer.first_name
@@ -117,7 +117,11 @@ class CallBackApiView(CreateAPIView):
             employer.verified = True
             employer.save()
 
-            return redirect('Job_Seeking_App:employerDash')
+            return redirect('employerDash')
+
+        else:
+            return redirect('employerDash')
+
 
         
         from rest_framework.response import Response
