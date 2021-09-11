@@ -1,7 +1,7 @@
-Anne - Slides
-Nick - Tests
-Yussuf - UI>Messages and general appearance
-Victor - SEO- add description on image alt
-Peter - Modals in update forms
-Roney - 
-Nancy - 
+Anne - File uploads
+Nick - Admin and Mpesa API
+Yussuf - Registration and authentication  & UI
+Victor - SEO and UI
+Peter - Employers dashboard and pages
+Roney - Job seeker dashboard pages
+Nancy - Profile update and mpesa Integration

@@ -462,6 +462,7 @@ def employer_details(request,user_id):
 
 #                           admin calender
 
+
 def calender(request):
   return render(request,'admin/calender.html')
 
